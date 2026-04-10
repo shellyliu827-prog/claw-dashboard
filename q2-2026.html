@@ -463,10 +463,23 @@
         + '</div>';
 
     } else if (g.type === 'checkin') {
-      // 自媒体卡片：从 POST_LOG 动态计算本季发帖数
+      // checkin 卡片：舞蹈从 DANCE_LOG 动态计算本季节数，自媒体从 POST_LOG 计算发帖数
       var displayText = g.checkinText;
       var displaySub = g.checkinSub || '';
-      if (g.id === 'social' && typeof POST_LOG !== 'undefined') {
+      if (g.id === 'dance' && typeof DANCE_LOG !== 'undefined') {
+        var q2DanceCount = 0;
+        var q2DanceDetails = [];
+        DANCE_LOG.forEach(function(d) {
+          if (d.month >= 4 && d.month <= 6) {
+            q2DanceCount += (d.count || 1);
+            q2DanceDetails.push((d.genre || '') + '·' + d.song);
+          }
+        });
+        displayText = '本季已跳 ' + q2DanceCount + ' 节';
+        if (q2DanceCount > 0) {
+          displaySub = [...new Set(q2DanceDetails)].join('、');
+        }
+      } else if (g.id === 'social' && typeof POST_LOG !== 'undefined') {
         var q2Posts = POST_LOG.filter(function(p) { return p.month >= 4 && p.month <= 6; });
         displayText = '本季已发 ' + q2Posts.length + ' 条';
         if (q2Posts.length > 0) {

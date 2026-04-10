@@ -22,7 +22,7 @@ const Q2_GOALS = [
     hint: 'G社 160次 · 每周2节 · 到期 2027/7/27',
     status: 'active',
     type: 'checkin',
-    checkinText: '本季已跳 4 节',
+    checkinText: '本季已跳 0 节',
     checkinStyle: 'font-size:1.05rem;color:#f0c040;font-weight:600;',
     showInMonthBadge: true,
     showInMonthCard: true,
