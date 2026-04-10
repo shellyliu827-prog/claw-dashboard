@@ -383,13 +383,8 @@
     align-items: flex-start;
   }
 
-  /* 金额遮罩 */
-  .amount { transition: opacity 0.15s; }
-  body.hidden-amounts .amount { opacity: 0; }
-  body.hidden-amounts .amount::after {
-    content: '***';
-    opacity: 1;
-  }
+  /* 金额遮罩 - 由 JS 控制显示/隐藏 */
+  .amount { transition: color 0.15s; }
 
   /* 响应式 */
   @media (max-width: 768px) {
@@ -410,7 +405,7 @@
   }
 </style>
 </head>
-<body class="hidden-amounts">
+<body>
 
 <!-- 密码锁屏 -->
 <div id="lock-screen">
@@ -514,14 +509,37 @@ function checkPin() {
 // ── 金额显示/隐藏 ──
 function toggleAmounts() {
   amountsVisible = !amountsVisible;
+  var spans = document.querySelectorAll('.amount');
+  for (var i = 0; i < spans.length; i++) {
+    var span = spans[i];
+    if (amountsVisible) {
+      // 恢复真实值
+      var real = span.getAttribute('data-real');
+      if (real) span.textContent = real;
+    } else {
+      // 保存真实值后替换为 ***
+      if (!span.getAttribute('data-real')) {
+        span.setAttribute('data-real', span.textContent);
+      }
+      span.textContent = '***';
+    }
+  }
   if (amountsVisible) {
-    document.body.classList.remove('hidden-amounts');
     document.getElementById('eye-icon').textContent = '🙈';
     document.getElementById('eye-text').textContent = '隐藏金额';
   } else {
-    document.body.classList.add('hidden-amounts');
     document.getElementById('eye-icon').textContent = '👁';
     document.getElementById('eye-text').textContent = '显示金额';
+  }
+}
+
+// 渲染完后自动执行一次隐藏（把真实值存起来再替换为***）
+function hideAmountsAfterRender() {
+  var spans = document.querySelectorAll('.amount');
+  for (var i = 0; i < spans.length; i++) {
+    var span = spans[i];
+    span.setAttribute('data-real', span.textContent);
+    span.textContent = '***';
   }
 }
 
@@ -706,6 +724,9 @@ function renderAll() {
       }).join('')
       + '</div>';
   }
+
+  // 渲染完成后执行初始隐藏
+  hideAmountsAfterRender();
 }
 </script>
 </body>
