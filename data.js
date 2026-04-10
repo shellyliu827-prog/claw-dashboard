@@ -505,6 +505,14 @@ const MEDIA_LOG = [
 //   income_items: 收入明细 [{name, amount}]
 //   expense_items: 支出明细 [{name, amount}]
 
+// ── 豆瓣历史总量（由豆瓣同步脚本定期更新，勿手改） ───────────────────────
+// 最后同步时间：2026-04-10
+const DOUBAN_STATS = {
+  movie: 582,   // 影视（含电影+剧集）
+  book: 158,    // 图书
+  lastSync: '2026-04-10'
+};
+
 const FINANCE_DATA = [
   {
     month: '2025-09',

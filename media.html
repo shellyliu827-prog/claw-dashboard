@@ -287,9 +287,13 @@ function renderAll(filter) {
   data.forEach(function(d) { if (counts[d.type] !== undefined) counts[d.type]++; });
 
   document.getElementById('statsBar').innerHTML =
-    '<div class="stat-card"><div class="stat-num movie">' + counts.movie + '</div><div class="stat-label">🎬 电影</div></div>'
-    + '<div class="stat-card"><div class="stat-num tv">' + counts.tv + '</div><div class="stat-label">📺 剧集</div></div>'
-    + '<div class="stat-card"><div class="stat-num book">' + counts.book + '</div><div class="stat-label">📚 图书</div></div>';
+    '<div class="stat-card"><div class="stat-num movie">' + counts.movie + '</div><div class="stat-label">🎬 电影 · 今年</div>'
+    + (typeof DOUBAN_STATS !== 'undefined' ? '<div style="font-size:11px;color:#ccc;margin-top:4px;">豆瓣累计 ' + DOUBAN_STATS.movie + '</div>' : '')
+    + '</div>'
+    + '<div class="stat-card"><div class="stat-num tv">' + counts.tv + '</div><div class="stat-label">📺 剧集 · 今年</div></div>'
+    + '<div class="stat-card"><div class="stat-num book">' + counts.book + '</div><div class="stat-label">📚 图书 · 今年</div>'
+    + (typeof DOUBAN_STATS !== 'undefined' ? '<div style="font-size:11px;color:#ccc;margin-top:4px;">豆瓣累计 ' + DOUBAN_STATS.book + '</div>' : '')
+    + '</div>';
 
   // 过滤
   var filtered = filter === 'all' ? data : data.filter(function(d) { return d.type === filter; });
