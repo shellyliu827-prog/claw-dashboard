@@ -680,6 +680,21 @@
       hint.insertAdjacentHTML('beforebegin', eventHtml);
     });
   }
+
+  // ── 第五遍：DIARY 每日高光 ──
+  if (typeof DIARY !== 'undefined') {
+    DIARY.forEach(function(d) {
+      var parts = d.date.split('-');
+      if (parseInt(parts[1]) !== targetMonth) return;
+      var dayStr = parts[2]; // 已是两位补零格式
+      var dayEl = document.getElementById('apr-' + dayStr);
+      if (!dayEl) return;
+      var hint = dayEl.querySelector('.photo-hint');
+      if (!hint) return;
+      var diaryHtml = '<div style="font-size:10px;color:#888;line-height:1.4;margin-top:4px;font-style:italic;word-break:break-all;">' + d.content + '</div>';
+      hint.insertAdjacentHTML('afterend', diaryHtml);
+    });
+  }
 })();
 </script>
 
