@@ -410,4 +410,34 @@ const TIMELINE_EVENTS = [
     memo: '人生第一次参加朋友婚礼 🎊',
     deco: '💜'
   },
+  // ── 四月 · 北影节 ──
+  {
+    date: '2026-04-18',
+    month: 4,
+    emoji: '🎬',
+    title: '北影节：穿普拉达的女王',
+    detail: '🎬 北影节 · 穿普拉达的女王｜18:00 英皇IMAX激光厅（建国门）',
+    type: 'note',
+    calendar: '',
+    memo: '致命赶场第一场，看完直奔学院南路'
+  },
+  {
+    date: '2026-04-18',
+    month: 4,
+    emoji: '🔥',
+    title: '北影节：心火（二刷）',
+    detail: '🔥 北影节 · 心火｜21:00 CGS中国巨幕（学院南路）',
+    type: 'note',
+    calendar: '',
+    memo: '二刷！之前看过特别想再看一遍'
+  },
+  {
+    date: '2026-04-19',
+    month: 4,
+    emoji: '🚀',
+    title: '北影节：太空见习生',
+    detail: '🚀 北影节 · 太空见习生｜15:00 CINITY巨幕（双井）×2张',
+    type: 'note',
+    calendar: ''
+  },
 ];
