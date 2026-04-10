@@ -518,11 +518,23 @@
         card.style.borderColor = '#d4e8d4';
         card.style.background = '#f5fdf5';
       }
-      var barColor = g.progressColor || 'linear-gradient(90deg, #d4a017, #e87a7a)';
-      var progress = g.progress || 0;
-      var statusBadge = g.status === 'done'
-        ? '<span style="font-size:11px;color:#4a9e4a;font-weight:500;">✅ 已完成</span>'
-        : '<div class="progress-bar"><div class="progress-fill" style="width:' + progress + '%;background:' + barColor + '"></div></div>';
+
+      var statusBadge;
+      if (g.status === 'done') {
+        statusBadge = '<span style="font-size:11px;color:#4a9e4a;font-weight:500;">✅ 已完成</span>';
+      } else if (g.type === 'media_count' && typeof MEDIA_LOG !== 'undefined') {
+        // 输入&写作：从 MEDIA_LOG 统计当月数量
+        var monthCount = 0;
+        MEDIA_LOG.forEach(function(m) { if (m.month === targetMonth) monthCount++; });
+        statusBadge = monthCount > 0
+          ? '<span style="font-size:12px;color:#e87a5a;font-weight:600;">本月输入 ' + monthCount + ' 部 / 本</span>'
+          : '<span style="font-size:11px;color:#ccc;">本月暂无记录</span>';
+      } else {
+        var barColor = g.progressColor || 'linear-gradient(90deg, #d4a017, #e87a7a)';
+        var progress = g.progress || 0;
+        statusBadge = '<div class="progress-bar"><div class="progress-fill" style="width:' + progress + '%;background:' + barColor + '"></div></div>';
+      }
+
       card.innerHTML = '<div class="icon">' + g.icon + '</div>'
         + '<div class="title">' + (g.nameRaw || g.name.replace(/&amp;/g, '&')) + '</div>'
         + '<div class="desc">' + (g.cardDesc || g.hint) + '</div>'

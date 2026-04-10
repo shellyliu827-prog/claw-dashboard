@@ -31,16 +31,20 @@ const Q2_GOALS = [
   {
     id: 'reading',
     icon: '📖',
-    name: '阅读 &amp; 写作',
-    nameRaw: '阅读 & 写作',
-    hint: '找回感觉，不设硬指标',
+    name: '输入 &amp; 写作',
+    nameRaw: '输入 & 写作',
+    hint: '观影 + 阅读 = 输入，写作不量化',
     status: 'active',
-    type: 'progress',
-    progress: 0,
-    checkinEmpty: '暂无记录，快去打卡～',
+    type: 'media_count',   // 特殊类型：页面从 MEDIA_LOG 动态读取当季数量
+    mediaTypes: ['movie', 'tv', 'book'],  // 统计这些类型
+    wishlist: [
+      { title: '🎬 挽救计划', status: 'pending' },
+      { title: '🎬 我许可',   status: 'pending' }
+    ],
+    checkinEmpty: '暂无记录',
     showInMonthBadge: true,
     showInMonthCard: true,
-    cardDesc: '找回感觉 · 不设硬指标<br>重新锻炼起来就好'
+    cardDesc: '观影 + 阅读 = 输入<br>写作：有感觉就写，不强迫'
   },
   {
     id: 'dentist',
@@ -120,20 +124,7 @@ const Q2_GOALS = [
     showInMonthBadge: false,
     showInMonthCard: false
   },
-  {
-    id: 'movie',
-    icon: '🎬',
-    name: '看电影',
-    hint: 'Q2 想看清单',
-    status: 'active',
-    type: 'list',
-    items: [
-      { title: '挽救计划', status: 'pending' },
-      { title: '我许可',   status: 'pending' }
-    ],
-    showInMonthBadge: true,
-    showInMonthCard: true
-  }
+  // ⚠️ 「看电影」已合并入「输入 & 写作」，数据来源统一走 MEDIA_LOG
 ];
 
 // ── 月度页 goal-card 附加条目（月度专属，不在 Q2_GOALS 里） ───────────────

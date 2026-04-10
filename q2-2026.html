@@ -491,6 +491,52 @@
         + (displaySub ? '<span style="font-size:0.85rem;color:#aaa;margin-left:8px;">' + displaySub + '</span>' : '')
         + '</div>';
 
+    } else if (g.type === 'media_count') {
+      // 输入 & 写作：从 MEDIA_LOG 统计当季（Q2: 4-6月）书影音数量
+      var q2MediaCount = 0;
+      var mediaMovieCount = 0, mediaTvCount = 0, mediaBookCount = 0;
+      var recentTitles = [];
+      if (typeof MEDIA_LOG !== 'undefined') {
+        MEDIA_LOG.forEach(function(m) {
+          if (m.month >= 4 && m.month <= 6) {
+            q2MediaCount++;
+            if (m.type === 'movie') mediaMovieCount++;
+            else if (m.type === 'tv') mediaTvCount++;
+            else if (m.type === 'book') mediaBookCount++;
+            if (recentTitles.length < 3) recentTitles.push(m.title);
+          }
+        });
+      }
+      var countText = q2MediaCount > 0
+        ? '本季输入 ' + q2MediaCount + ' 部 / 本'
+        : (g.checkinEmpty || '暂无记录');
+      var subParts = [];
+      if (mediaMovieCount > 0) subParts.push('电影 ' + mediaMovieCount);
+      if (mediaTvCount > 0) subParts.push('剧集 ' + mediaTvCount);
+      if (mediaBookCount > 0) subParts.push('书 ' + mediaBookCount);
+      var subText = subParts.length > 0 ? subParts.join(' · ') : '';
+
+      // 想看/想读清单
+      var wishlistHtml = '';
+      if (g.wishlist && g.wishlist.length > 0) {
+        wishlistHtml = '<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;">';
+        g.wishlist.forEach(function(w) {
+          var isDone = w.status === 'done';
+          wishlistHtml += '<span style="font-size:11px;padding:2px 8px;border-radius:4px;background:'
+            + (isDone ? 'rgba(74,158,74,0.12)' : '#f0ece6')
+            + ';color:' + (isDone ? '#4a9e4a' : 'var(--text-muted)') + ';'
+            + (isDone ? 'text-decoration:line-through;' : '') + '">'
+            + w.title + '</span>';
+        });
+        wishlistHtml += '</div>';
+      }
+
+      bodyHtml += '<div class="checkin-area" style="padding-top:6px;flex-direction:column;gap:4px;">'
+        + '<span style="font-size:1.05rem;color:#e87a5a;font-weight:600;">' + countText + '</span>'
+        + (subText ? '<span style="font-size:0.85rem;color:#aaa;">' + subText + '</span>' : '')
+        + wishlistHtml
+        + '</div>';
+
     } else if (g.type === 'list') {
       var itemStatusMap = { 'pending': '待看', 'watched': '已看', 'skip': '跳过' };
       var itemColorMap  = { 'pending': '#f0ece6', 'watched': 'rgba(74,158,74,0.12)', 'skip': '#f0f0f0' };
