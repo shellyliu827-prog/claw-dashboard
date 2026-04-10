@@ -310,6 +310,12 @@
     color: #9a7010;
   }
 
+  .tl-event.holiday-group {
+    background: rgba(100,160,100,0.06);
+    border-color: rgba(150,180,150,0.25);
+    color: #6a9a5a;
+  }
+
   /* ── Footer ── */
   .footer-note {
     text-align: center;
@@ -580,20 +586,72 @@
     }
   });
 
+  // 合并连续同类型的节假日（如春节连休）
+  function mergeConsecutive(events) {
+    var merged = [];
+    var i = 0;
+    while (i < events.length) {
+      var ev = events[i];
+      // 只有 holiday 类型且标题含相同关键词才尝试合并
+      if (ev.type === 'holiday' && i + 1 < events.length && events[i + 1].type === 'holiday') {
+        var startEv = ev;
+        var endEv = ev;
+        var j = i;
+        // 向后找连续的 holiday
+        while (j + 1 < events.length && events[j + 1].type === 'holiday') { j++; endEv = events[j]; }
+        // 如果跨度 >= 2 天就合并
+        var startDay = parseInt(startEv.date.split('-')[2]);
+        var endDay = parseInt(endEv.date.split('-')[2]);
+        if (j > i) {
+          merged.push({
+            emoji: startEv.emoji,
+            month: startEv.month,
+            dateStart: startEv.date,
+            dateEnd: endEv.date,
+            title: startEv.title + '–' + endEv.title,
+            type: 'holiday-group',
+            _mergedCount: j - i + 1
+          });
+          i = j + 1;
+          continue;
+        }
+      }
+      merged.push(ev);
+      i++;
+    }
+    return merged;
+  }
+
   // 渲染每个月份的事件卡片
   for (var m = 1; m <= 12; m++) {
     var container = document.getElementById('tl-events-' + m);
     if (!container) continue;
-    var events = byMonth[m];
+    var rawEvents = byMonth[m];
+    var events = mergeConsecutive(rawEvents);
     events.forEach(function(ev) {
       var el = document.createElement('div');
       el.className = 'tl-event';
       // 添加类型样式类
-      if (['wedding', 'birthday'].indexOf(ev.type) !== -1) {
+      if (['wedding', 'birthday'].indexOf(ev.type) !== -1 || ev.type === 'holiday-group') {
         el.className += ' ' + ev.type;
       }
-      el.textContent = ev.emoji + ' ' + ev.month + '/' +
-        ev.date.split('-')[2].replace(/^0/, '') + ' ' + ev.title;
+      if (ev.type === 'holiday-group') {
+        // 合并显示：1/26–2/4 🧧 除夕–初九（跨月时显示完整日期）
+        var sDay = ev.dateStart.split('-')[2].replace(/^0/, '');
+        var eDay = ev.dateEnd.split('-')[2].replace(/^0/, '');
+        var sMon = parseInt(ev.dateStart.split('-')[1]);
+        var eMon = parseInt(ev.dateEnd.split('-')[1]);
+        var dateLabel;
+        if (sMon === eMon) {
+          dateLabel = sMon + '/' + sDay + '–' + eDay;
+        } else {
+          dateLabel = sMon + '/' + sDay + '–' + eMon + '/' + eDay;
+        }
+        el.textContent = ev.emoji + ' ' + dateLabel + ' ' + ev.title;
+      } else {
+        el.textContent = ev.emoji + ' ' + ev.month + '/' +
+          ev.date.split('-')[2].replace(/^0/, '') + ' ' + ev.title;
+      }
       container.appendChild(el);
     });
 
