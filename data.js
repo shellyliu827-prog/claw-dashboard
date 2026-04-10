@@ -394,10 +394,11 @@ const TIMELINE_EVENTS = [
     date: '2026-04-24',
     month: 4,
     emoji: '🚄',
-    title: '出发→安徽',
-    detail: '🚄 出发→安徽',
+    title: '出发→砀山南',
+    detail: '🚄 G1567 北京南 16:22 → 砀山南 20:45｜检票口 10A/10B',
     type: 'trip',
-    calendar: '飞行计划'
+    calendar: '飞行计划',
+    memo: 'G1567 · 北京南16:22发 · 砀山南20:45到 · 历时4h23min'
   },
   {
     date: '2026-04-26',
