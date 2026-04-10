@@ -217,6 +217,9 @@ const IDEAS = [
   { icon: '\uD83D\uDC80', title: '跳死亡搁浅2的彩蛋舞蹈', desc: '游戏跨界舞蹈 · DS联动', date: '2026-04-02', status: 'todo' },
   { icon: '\uD83C\uDFAE', title: '地球online-上班路', desc: '生活随手拍+游戏联想文案', date: '2026-04-09', status: 'done' },
   { icon: '\uD83C\uDFAE', title: '地球online-底特律变人', desc: '游戏×生活感知', date: '2026-04-09', status: 'todo' },
+  { icon: '\uD83C\uDFAE', title: '地球online-底特律变人（鱼）', desc: '等合适镜头', date: '2026-04-09', status: 'todo' },
+  { icon: '\uD83C\uDFAE', title: '地球online-燕云（国博大历元宝→麻布袋）', desc: '等去国博拍', date: '2026-04-09', status: 'todo' },
+  { icon: '\uD83C\uDFAE', title: '地球online-燕云十六声（待挖）', desc: '剧情点待定', date: '2026-04-09', status: 'todo' },
   { icon: '\u2705',  title: 'Delulu 课堂视频', desc: '已发布', date: '2026-04-04', status: 'done' }
 ];
 
