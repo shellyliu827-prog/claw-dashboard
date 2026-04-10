@@ -398,7 +398,9 @@ const TIMELINE_EVENTS = [
     detail: '🚄 G1567 北京南 16:22 → 砀山南 20:45｜检票口 10A/10B',
     type: 'trip',
     calendar: '飞行计划',
-    memo: 'G1567 · 北京南16:22发 · 砀山南20:45到 · 历时4h23min'
+    memo: 'G1567 · 北京南16:22发 · 砀山南20:45到 · 历时4h23min',
+    // 月小结邮件规则：trip 附属于同行程的 big event，不单独展示
+    relatedBigEvent: '朋友婚礼'
   },
   {
     date: '2026-04-26',
@@ -409,38 +411,94 @@ const TIMELINE_EVENTS = [
     type: 'wedding',
     calendar: '朋友啊朋友',
     memo: '人生第一次参加朋友婚礼 🎊',
-    deco: '💜'
+    deco: '💜',
+    // 月小结邮件：以此事件为主，出发那条作为附注
+    travelNote: '4/24 G1567 北京南→砀山南 16:22 出发'
   },
-  // ── 四月 · 北影节 ──
+  // ── 四月 · 北影节（活动框架，具体影片见 MEDIA_LOG） ──
+  // ⚠️ 不再在这里列片名，片名统一走 MEDIA_LOG + context:'北影节'
   {
     date: '2026-04-18',
     month: 4,
     emoji: '🎬',
-    title: '北影节：穿普拉达的女王',
-    detail: '🎬 北影节 · 穿普拉达的女王｜18:00 英皇IMAX激光厅（建国门）',
+    title: '北影节 2026',
+    detail: '🎬 北影节 2026｜4/18-4/19 赶场3部',
     type: 'note',
     calendar: '',
-    memo: '致命赶场第一场，看完直奔学院南路'
+    group: '北影节2026',
+    groupTitle: '北影节 2026',
+    groupEmoji: '🎬',
+    dateEnd: '2026-04-19'  // 活动跨越的结束日期，日历格子用
+  },
+];
+
+// ── 书影音记录（豆瓣定时同步 + 手动补录） ────────────────────────────────
+// 数据层级：MEDIA_LOG 是主体（跟 DANCE_LOG 平级），可计数、可展示
+// 字段说明：
+//   date: 'YYYY-MM-DD'  豆瓣标记日期（或手动录入日期）
+//   month: 月份数字
+//   type: 'movie' | 'tv' | 'book' | 'music'
+//   title: 作品名
+//   rating: 1-5（豆瓣几颗星）
+//   douban_url: 豆瓣链接（可选）
+//   poster: 封面图 URL（可选，豆瓣 CDN）
+//   context: 附加背景标签，如 '北影节' / '电影节' / '二刷'（可选）
+//   note: 个人备注（可选）
+// 更新方式：豆瓣同步脚本每周自动抓取，手动补录走 context/note 字段
+const MEDIA_LOG = [
+  // ── 2026年四月 · 北影节（context 标注观看背景） ──
+  {
+    date: '2026-04-18', month: 4,
+    type: 'movie',
+    title: '穿普拉达的女王',
+    rating: 0,  // 待豆瓣标记后自动同步
+    context: '北影节',
+    note: '英皇IMAX激光厅（建国门）18:00 · 致命赶场第一场',
+    douban_url: 'https://movie.douban.com/subject/1482022/'
   },
   {
-    date: '2026-04-18',
-    month: 4,
-    emoji: '🔥',
-    title: '北影节：心火（二刷）',
-    detail: '🔥 北影节 · 心火｜21:00 CGS中国巨幕（学院南路）',
-    type: 'note',
-    calendar: '',
-    memo: '二刷！之前看过特别想再看一遍'
+    date: '2026-04-18', month: 4,
+    type: 'movie',
+    title: '心火',
+    rating: 0,
+    context: '北影节',
+    note: 'CGS中国巨幕（学院南路）21:00 · 二刷！',
+    douban_url: 'https://movie.douban.com/subject/1292427/'
   },
   {
-    date: '2026-04-19',
-    month: 4,
-    emoji: '🚀',
-    title: '北影节：太空见习生',
-    detail: '🚀 北影节 · 太空见习生｜15:00 CINITY巨幕（双井）×2张',
-    type: 'note',
-    calendar: ''
+    date: '2026-04-19', month: 4,
+    type: 'movie',
+    title: '太空见习生',
+    rating: 0,
+    context: '北影节',
+    note: 'CINITY巨幕（双井）15:00 · ×2张',
+    douban_url: ''
   },
+
+  // ── 2026年二月（豆瓣同步） ──
+  {
+    date: '2026-02-20', month: 2,
+    type: 'movie',
+    title: '镖人：风起大漠',
+    rating: 4,
+    douban_url: 'https://movie.douban.com/subject/36474027/'
+  },
+
+  // ── 2026年一月（豆瓣同步） ──
+  {
+    date: '2026-01-12', month: 1,
+    type: 'tv',
+    title: 'Arcane 第二季',
+    rating: 4,
+    douban_url: 'https://movie.douban.com/subject/35669844/'
+  },
+  {
+    date: '2026-01-12', month: 1,
+    type: 'tv',
+    title: 'Arcane 第一季',
+    rating: 5,
+    douban_url: 'https://movie.douban.com/subject/34867871/'
+  }
 ];
 
 // ── 财务数据（每月5号更新，来源：老金记账体系） ──────────────────────────

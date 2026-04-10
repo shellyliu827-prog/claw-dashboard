@@ -75,7 +75,7 @@
   /* ── Stats Bar ── */
   .stats-bar {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 12px;
     margin-bottom: 36px;
   }
@@ -355,6 +355,12 @@
     <div class="stat-card" style="cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(74,158,74,0.18)'" onmouseout="this.style.boxShadow=''">
       <div class="stat-num green" id="financeTotal">🔐</div>
       <div class="stat-label">💰 财务看板 →</div>
+    </div>
+    </a>
+    <a href="media.html" style="text-decoration:none;">
+    <div class="stat-card" style="cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(232,122,90,0.18)'" onmouseout="this.style.boxShadow=''">
+      <div class="stat-num" style="color:#e87a5a;" id="mediaCount">—</div>
+      <div class="stat-label">📚 书影音 →</div>
     </div>
     </a>
     <div class="stat-card">
@@ -763,6 +769,19 @@
     IDEAS.forEach(function(item) { if (item.status === 'done') doneCount++; });
     postEl.textContent = doneCount > 0 ? doneCount : POST_COUNT || '—';
   }
+})();
+</script>
+
+<script>
+// ── 书影音计数（从 MEDIA_LOG 读取） ──
+(function() {
+  var el = document.getElementById('mediaCount');
+  if (!el || typeof MEDIA_LOG === 'undefined') return;
+  var year = new Date().getFullYear().toString();
+  var count = MEDIA_LOG.filter(function(m) {
+    return m.date && m.date.startsWith(year);
+  }).length;
+  el.textContent = count;
 })();
 </script>
 </body>
