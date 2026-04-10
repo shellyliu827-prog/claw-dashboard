@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 · 年度看板</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f5f3ef;
+    --card: #ffffff;
+    --border: #e8e4de;
+    --border-light: #f0ece6;
+    --text: #1a1a1a;
+    --text-sub: #666;
+    --text-muted: #aaa;
+    --gold: #d4a017;
+    --purple: #c97af4;
+    --green: #4a9e4a;
+    --blue: #5a9fd4;
+    --red: #e87a7a;
+  }
+
+  body {
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 40px 28px 56px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    color: var(--text);
+  }
+
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-left {}
+
+  .year-num {
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+    letter-spacing: -3px;
+  }
+
+  .year-num span { color: var(--gold); }
+
+  .year-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 4px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ── Stats Bar ── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+
+  .stat-num {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-num.gold { color: var(--gold); }
+  .stat-num.blue { color: var(--blue); }
+  .stat-num.green { color: var(--green); }
+  .stat-num.purple { color: var(--purple); }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  /* ── Section Title ── */
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  /* ── Quarters ── */
+  .quarters { margin-bottom: 40px; }
+
+  .quarter-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border-left: 3px solid var(--border);
+    transition: box-shadow 0.15s;
+  }
+
+  .quarter-row:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+
+  .quarter-row.q1 { border-left-color: var(--green); }
+  .quarter-row.q2 { border-left-color: var(--gold); cursor: pointer; }
+  .quarter-row.q3 { border-left-color: var(--blue); }
+  .quarter-row.q4 { border-left-color: var(--purple); }
+
+  .quarter-row.q2:hover { box-shadow: 0 3px 14px rgba(212,160,23,0.15); }
+
+  .q-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    min-width: 36px;
+    padding-top: 2px;
+  }
+
+  .q-months {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  .q-goals {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-top: 2px;
+  }
+
+  .q-tag {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: var(--text-sub);
+  }
+
+  .q-tag.tbd {
+    color: var(--text-muted);
+    border-style: dashed;
+  }
+
+  .q-status {
+    min-width: 80px;
+    text-align: right;
+    padding-top: 2px;
+  }
+
+  .q-pct {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .q-pct-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .q-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  .q-badge.current { background: rgba(212,160,23,0.12); color: #b89010; }
+  .q-badge.done { background: rgba(74,158,74,0.1); color: var(--green); }
+  .q-badge.plan { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .q-arrow {
+    font-size: 14px;
+    color: var(--text-muted);
+    padding-top: 2px;
+    transition: transform 0.15s;
+  }
+  .quarter-row.q2:hover .q-arrow { transform: translateX(3px); color: var(--gold); }
+
+  /* ── Timeline ── */
+  .timeline-section { margin-bottom: 40px; }
+
+  .timeline {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px 20px;
+    overflow-x: auto;
+  }
+
+  .tl-track {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    min-width: 800px;
+  }
+
+  .tl-month {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .tl-month::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border);
+    z-index: 0;
+  }
+
+  .tl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 8px;
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--border);
+  }
+
+  .tl-dot.has-event { background: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+  .tl-dot.current { background: var(--text); box-shadow: 0 0 0 2px var(--text); }
+
+  .tl-month-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  .tl-month-label.current { color: var(--text); font-weight: 600; }
+
+  .tl-events {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    min-height: 50px;
+  }
+
+  .tl-event {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: var(--text-sub);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .tl-event.wedding {
+    background: rgba(201,122,244,0.1);
+    border-color: rgba(201,122,244,0.3);
+    color: #9a3fd4;
+  }
+
+  .tl-event.birthday {
+    background: rgba(212,160,23,0.1);
+    border-color: rgba(212,160,23,0.3);
+    color: #9a7010;
+  }
+
+  /* ── Footer ── */
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  a { text-decoration: none; color: inherit; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="year-num"><span>2</span>026</div>
+      <div class="year-sub">年度生活看板</div>
+    </div>
+    <div class="header-right">
+      北京<br>
+      现在是 Q2 · 四月
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <a href="dance.html" style="text-decoration:none;">
+    <div class="stat-card" style="cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(212,160,23,0.18)'" onmouseout="this.style.boxShadow=''">
+      <div class="stat-num gold" id="danceCount">—</div>
+      <div class="stat-label">💃 今年跳舞次数 →</div>
+    </div>
+    </a>
+    <div class="stat-card">
+      <div class="stat-num blue">17</div>
+      <div class="stat-label">📱 自媒体发帖数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num green">0</div>
+      <div class="stat-label">✅ 已完成主线目标</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num purple" id="q2GoalCount">—</div>
+      <div class="stat-label">🎯 Q2 进行中目标</div>
+    </div>
+  </div>
+
+  <!-- Quarters -->
+  <div class="quarters">
+    <div class="section-title">季度目标</div>
+
+    <!-- Q1 -->
+    <a href="q1-2026.html">
+      <div class="quarter-row q1" style="cursor:pointer;">
+        <div>
+          <div class="q-label">Q1</div>
+          <div class="q-months">Jan – Mar</div>
+        </div>
+        <div class="q-goals">
+          <span class="q-tag tbd">已结束 · 查看记录</span>
+        </div>
+        <div class="q-status">
+          <span class="q-badge done">已过去</span>
+          <div class="q-pct-label" style="margin-top:6px;">查看详情 →</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Q2 — 可点击 (tags 由 data.js 渲染) -->
+    <a href="q2-2026.html">
+      <div class="quarter-row q2">
+        <div>
+          <div class="q-label">Q2</div>
+          <div class="q-months">Apr – Jun</div>
+        </div>
+        <div class="q-goals" id="q2-tags"></div>
+        <div class="q-status">
+          <span class="q-badge current">进行中</span>
+          <div class="q-pct-label" style="margin-top:6px;">查看详情 →</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Q3 -->
+    <div class="quarter-row q3">
+      <div>
+        <div class="q-label">Q3</div>
+        <div class="q-months">Jul – Sep</div>
+      </div>
+      <div class="q-goals">
+        <span class="q-tag tbd">规划中……</span>
+      </div>
+      <div class="q-status">
+        <span class="q-badge plan">待规划</span>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quarter-row q4">
+      <div>
+        <div class="q-label">Q4</div>
+        <div class="q-months">Oct – Dec</div>
+      </div>
+      <div class="q-goals">
+        <span class="q-tag tbd">规划中……</span>
+      </div>
+      <div class="q-status">
+        <span class="q-badge plan">待规划</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ideas Library (由 data.js IDEAS 动态渲染) -->
+  <div class="ideas-section" style="margin-bottom:40px;">
+    <div class="section-title">自媒体灵感库</div>
+    <div class="ideas-card" id="ideas-container" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;"></div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline-section">
+    <div class="section-title">全年时间轴</div>
+    <div class="timeline">
+      <div class="tl-track">
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Jan</div>
+          <div class="tl-events" id="tl-events-1"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Feb</div>
+          <div class="tl-events" id="tl-events-2"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Mar</div>
+          <div class="tl-events" id="tl-events-3"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot current"></div>
+          <div class="tl-month-label current">Apr</div>
+          <div class="tl-events" id="tl-events-4"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">May</div>
+          <div class="tl-events" id="tl-events-5"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Jun</div>
+          <div class="tl-events" id="tl-events-6"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Jul</div>
+          <div class="tl-events" id="tl-events-7"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Aug</div>
+          <div class="tl-events" id="tl-events-8"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Sep</div>
+          <div class="tl-events" id="tl-events-9"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Oct</div>
+          <div class="tl-events" id="tl-events-10"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Nov</div>
+          <div class="tl-events" id="tl-events-11"></div>
+        </div>
+
+        <div class="tl-month">
+          <div class="tl-dot"></div>
+          <div class="tl-month-label">Dec</div>
+          <div class="tl-events" id="tl-events-12"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">随时更新，不用完美 · 2026</div>
+
+</div>
+
+<script src="data.js"></script>
+<script>
+// 渲染 Q2 tag 列表
+(function() {
+  var container = document.getElementById('q2-tags');
+  if (!container || typeof Q2_GOALS === 'undefined') return;
+  var activeCount = 0;
+  var doneCount = 0;
+  Q2_GOALS.forEach(function(g) {
+    var tag = document.createElement('span');
+    if (g.status === 'done') {
+      tag.className = 'q-tag';
+      tag.style.textDecoration = 'line-through';
+      tag.style.opacity = '0.5';
+      doneCount++;
+    } else {
+      tag.className = 'q-tag';
+      activeCount++;
+    }
+    tag.textContent = g.icon + ' ' + (g.nameRaw || g.name.replace(/&amp;/g, '&'));
+    container.appendChild(tag);
+  });
+  // 更新统计卡片
+  var q2El = document.getElementById('q2GoalCount');
+  if (q2El) q2El.textContent = activeCount;
+  // 更新已完成目标数
+  var doneEl = document.querySelector('.stat-num.green');
+  if (doneEl) doneEl.textContent = doneCount;
+})();
+</script>
+
+<script>
+// 动态读取 dance-log.csv，计算今年跳舞次数
+(async function() {
+  try {
+    const res  = await fetch('dance-log.csv?v=' + Date.now());
+    const text = await res.text();
+    const year = new Date().getFullYear().toString();
+    const lines = text.trim().split('\n').slice(1); // 去掉表头
+    const count = lines.filter(line => line.startsWith(year)).length;
+    document.getElementById('danceCount').textContent = count;
+  } catch(e) {
+    document.getElementById('danceCount').textContent = '—';
+  }
+})();
+</script>
+
+<script>
+// ── 时间轴动态渲染（从 TIMELINE_EVENTS 读取） ──
+(function() {
+  if (typeof TIMELINE_EVENTS === 'undefined') return;
+
+  var monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  // 按月份分组
+  var byMonth = {};
+  for (var m = 1; m <= 12; m++) byMonth[m] = [];
+  TIMELINE_EVENTS.forEach(function(ev) {
+    if (ev.month && byMonth[ev.month]) {
+      byMonth[ev.month].push(ev);
+    }
+  });
+
+  // 渲染每个月份的事件卡片
+  for (var m = 1; m <= 12; m++) {
+    var container = document.getElementById('tl-events-' + m);
+    if (!container) continue;
+    var events = byMonth[m];
+    events.forEach(function(ev) {
+      var el = document.createElement('div');
+      el.className = 'tl-event';
+      // 添加类型样式类
+      if (['wedding', 'birthday'].indexOf(ev.type) !== -1) {
+        el.className += ' ' + ev.type;
+      }
+      el.textContent = ev.emoji + ' ' + ev.month + '/' +
+        ev.date.split('-')[2].replace(/^0/, '') + ' ' + ev.title;
+      container.appendChild(el);
+    });
+
+    // 有事件的月份点亮圆点
+    if (events.length > 0) {
+      var dot = container.parentElement.querySelector('.tl-dot');
+      if (dot) dot.classList.add('has-event');
+    }
+  }
+})();
+</script>
+
+<script>
+// ── 灵感库动态渲染（从 IDEAS 读取） ──
+(function() {
+  if (typeof IDEAS === 'undefined') return;
+
+  var container = document.getElementById('ideas-container');
+  if (!container) return;
+
+  // 统计各状态数量
+  var todoCount = 0, doneCount = 0, pausedCount = 0;
+  IDEAS.forEach(function(item) {
+    if (item.status === 'todo') todoCount++;
+    else if (item.status === 'done') doneCount++;
+    else if (item.status === 'paused') pausedCount++;
+  });
+
+  // 构建头部
+  var headerHtml = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">'
+    + '<span style="font-size:13px;color:var(--text-sub);">共 <span style="color:var(--gold);font-weight:600;">' + (todoCount + pausedCount) + '</span> 条待选题</span>'
+    + '<span style="font-size:11px;color:var(--text-muted);">已发 ' + doneCount + ' · 待做 ' + todoCount + '</span>'
+    + '</div>';
+
+  var cardsHtml = '';
+  IDEAS.forEach(function(item) {
+    // 状态样式
+    var cardStyle = '';
+    var titleStyle = '';
+    var badgeBg, badgeColor, badgeText;
+
+    if (item.status === 'done') {
+      cardStyle = 'opacity:0.6;';
+      titleStyle = 'text-decoration:line-through;';
+      badgeBg = 'rgba(74,158,74,0.1)';
+      badgeColor = 'var(--green)';
+      badgeText = '已发';
+    } else if (item.status === 'paused') {
+      badgeBg = 'rgba(170,170,170,0.1)';
+      badgeColor = '#888';
+      badgeText = '搁置';
+    } else {
+      badgeBg = 'rgba(255,200,50,0.12)';
+      badgeColor = '#b89010';
+      badgeText = '待做';
+    }
+
+    cardsHtml += '<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border-light);' + cardStyle + '">'
+      + '<span style="font-size:16px;line-height:1.4;">' + item.icon + '</span>'
+      + '<div style="flex:1;">'
+        + '<div style="font-size:13px;font-weight:500;color:var(--text);' + titleStyle + '">' + item.title + '</div>'
+        + '<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">' + item.desc + ' · ' + item.date + '</div>'
+      + '</div>'
+      + '<span style="font-size:11px;padding:2px 8px;border-radius:8px;background:' + badgeBg + ';color:' + badgeColor + ';font-weight:500;white-space:nowrap;">' + badgeText + '</span>'
+    + '</div>';
+  });
+
+  container.innerHTML = headerHtml + '<div style="display:flex;flex-direction:column;gap:10px;">' + cardsHtml + '</div>';
+})();
+</script>
+
+<script>
+// ── 发帖数动态化（从 POST_COUNT 或 IDEAS 读取） ──
+(function() {
+  var postEl;
+  var postEls = document.querySelectorAll('.stat-num.blue');
+  for (var i = 0; i < postEls.length; i++) {
+    if (!postEls[i].id) { postEl = postEls[i]; break; }
+  }
+  if (!postEl) postEl = document.querySelector('.stat-num.blue');
+  if (postEl && typeof POST_COUNT !== 'undefined') {
+    postEl.textContent = POST_COUNT;
+  } else if (postEl && typeof IDEAS !== 'undefined') {
+    // 备选：从 IDEAS 自动计算已发数量
+    var doneCount = 0;
+    IDEAS.forEach(function(item) { if (item.status === 'done') doneCount++; });
+    postEl.textContent = doneCount > 0 ? doneCount : POST_COUNT || '—';
+  }
+})();
+</script>
+</body>
+</html>

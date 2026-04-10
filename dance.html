@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💃 跳舞记录</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f5f3ef;
+    --card: #ffffff;
+    --border: #e8e4de;
+    --border-light: #f0ece6;
+    --text: #1a1a1a;
+    --text-sub: #666;
+    --text-muted: #aaa;
+    --gold: #d4a017;
+    --purple: #c97af4;
+    --green: #4a9e4a;
+    --blue: #5a9fd4;
+    --red: #e87a7a;
+    --orange: #e8924a;
+    --mv: #d4a017;
+    --hiphop: #5a9fd4;
+    --jazz: #4a9e4a;
+    --house: #e87a7a;
+    --choreo: #aaa;
+    --urban: #c97af4;
+  }
+
+  body {
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 40px 28px 56px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    color: var(--text);
+  }
+
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-title { font-size: 56px; font-weight: 700; line-height: 1; letter-spacing: -2px; }
+  .page-title span { color: var(--gold); }
+  .page-sub { font-size: 13px; font-weight: 300; color: var(--text-muted); letter-spacing: 4px; margin-top: 6px; text-transform: uppercase; }
+  .header-right { font-size: 12px; color: var(--text-muted); text-align: right; line-height: 2; }
+  .back-link { font-size: 12px; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: color 0.15s; }
+  .back-link:hover { color: var(--text); }
+
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }
+  .stat-num { font-size: 36px; font-weight: 700; color: var(--text); line-height: 1; }
+  .stat-num.gold { color: var(--gold); }
+  .stat-num.blue { color: var(--blue); }
+  .stat-num.green { color: var(--green); }
+  .stat-num.red { color: var(--red); }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+  .section-title { font-size: 11px; font-weight: 600; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 14px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+
+  .genre-section { margin-bottom: 32px; }
+  .genre-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; display: flex; align-items: center; gap: 40px; }
+  .donut-wrap { position: relative; flex-shrink: 0; }
+  .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+  .donut-num { font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
+  .donut-label { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .genre-list { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .genre-item { display: flex; align-items: center; gap: 10px; }
+  .genre-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .genre-name { font-size: 13px; color: var(--text-sub); flex: 1; }
+  .genre-bar-wrap { flex: 2; background: var(--bg); border-radius: 4px; height: 6px; overflow: hidden; }
+  .genre-bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+  .genre-count { font-size: 13px; font-weight: 500; color: var(--text); min-width: 28px; text-align: right; }
+  .genre-pct { font-size: 11px; color: var(--text-muted); min-width: 42px; text-align: right; }
+
+  .year-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; }
+  .year-bars { display: flex; align-items: flex-end; gap: 16px; height: 100px; margin-top: 16px; }
+  .year-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .year-bar-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+  .year-bar { width: 100%; border-radius: 4px 4px 0 0; background: var(--gold); opacity: 0.7; transition: height 0.5s ease; min-height: 4px; }
+  .year-bar.current { opacity: 1; }
+  .year-num-label { font-size: 13px; font-weight: 600; color: var(--text); }
+  .year-label { font-size: 11px; color: var(--text-muted); }
+
+  .monthly-section { margin-bottom: 32px; }
+  .monthly-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; overflow-x: auto; }
+  .monthly-grid { display: grid; grid-template-columns: 36px repeat(12, 1fr); gap: 4px; min-width: 600px; margin-top: 16px; }
+  .mg-year-label { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; font-weight: 500; }
+  .mg-cell { aspect-ratio: 1; border-radius: 4px; background: var(--bg); border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted); position: relative; cursor: default; transition: transform 0.15s; }
+  .mg-cell:hover { transform: scale(1.1); z-index: 1; }
+  .mg-cell.empty { background: var(--bg); color: transparent; }
+  .mg-month-header { font-size: 10px; color: var(--text-muted); text-align: center; letter-spacing: 0.5px; padding-bottom: 4px; }
+
+  .teachers-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; }
+  .teacher-item { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border-light); }
+  .teacher-item:last-child { border-bottom: none; }
+  .teacher-rank { font-size: 12px; color: var(--text-muted); min-width: 18px; font-weight: 500; }
+  .teacher-rank.top { color: var(--gold); font-weight: 700; }
+  .teacher-name { font-size: 13px; color: var(--text); flex: 1; }
+  .teacher-bar-wrap { flex: 2; background: var(--bg); border-radius: 3px; height: 5px; overflow: hidden; }
+  .teacher-bar { height: 100%; border-radius: 3px; background: var(--gold); opacity: 0.6; }
+  .teacher-count { font-size: 12px; font-weight: 500; color: var(--text-sub); min-width: 24px; text-align: right; }
+
+  .city-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; }
+  .city-items { margin-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .city-item { display: flex; flex-direction: column; gap: 6px; }
+  .city-header { display: flex; justify-content: space-between; font-size: 13px; }
+  .city-name { color: var(--text); font-weight: 500; }
+  .city-count { color: var(--text-muted); }
+  .city-bar-wrap { background: var(--bg); border-radius: 4px; height: 8px; overflow: hidden; }
+  .city-bar { height: 100%; border-radius: 4px; }
+  .city-note { font-size: 11px; color: var(--text-muted); margin-top: 16px; line-height: 1.6; }
+
+  .recent-section { margin-bottom: 32px; }
+  .recent-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; }
+  .record-list { display: flex; flex-direction: column; gap: 0; }
+  .record-item { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+  .record-item:last-child { border-bottom: none; }
+  .record-date { font-size: 12px; color: var(--text-muted); min-width: 56px; font-variant-numeric: tabular-nums; }
+  .record-genre-tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 8px; min-width: 52px; text-align: center; letter-spacing: 0.3px; }
+  .record-teacher { font-size: 13px; color: var(--text); min-width: 60px; }
+  .record-song { font-size: 12px; color: var(--text-muted); flex: 1; font-style: italic; }
+
+  .footer-note { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 12px; font-style: italic; }
+
+  a { text-decoration: none; color: inherit; }
+
+  .mg-cell[data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26,26,26,0.85);
+    color: white;
+    font-size: 10px;
+    padding: 3px 7px;
+    border-radius: 5px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .loading { text-align: center; padding: 80px 0; color: var(--text-muted); font-size: 14px; }
+
+  @media (max-width: 680px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .genre-card { flex-direction: column; gap: 20px; }
+    body { padding: 24px 16px 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="page-title">💃 <span>跳舞</span></div>
+      <div class="page-sub">Dance Record · 2023 – 2026</div>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="back-link">← 返回主页</a>
+      <div style="margin-top:8px;">舞龄从 2023/2 开始</div>
+      <div id="updateNote">数据加载中…</div>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-num gold" id="statTotal">—</div>
+      <div class="stat-label">💃 累计上课节数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num blue" id="statGenres">—</div>
+      <div class="stat-label">🎵 学过的舞种</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num green" id="statTeachers">—</div>
+      <div class="stat-label">👩‍🏫 上过的老师</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num red" id="statCities">—</div>
+      <div class="stat-label">🏙️ 跳舞的城市</div>
+    </div>
+  </div>
+
+  <!-- 舞种分布 -->
+  <div class="genre-section">
+    <div class="section-title">舞种分布</div>
+    <div class="genre-card">
+      <div class="donut-wrap">
+        <svg width="140" height="140" viewBox="0 0 140 140" id="donutChart"></svg>
+        <div class="donut-center">
+          <div class="donut-num" id="donutTotal">—</div>
+          <div class="donut-label">Total</div>
+        </div>
+      </div>
+      <div class="genre-list" id="genreList"></div>
+    </div>
+  </div>
+
+  <!-- 年度 + 城市 两列 -->
+  <div class="two-col">
+    <div class="year-card">
+      <div class="section-title">年度节数</div>
+      <div class="year-bars" id="yearBars"></div>
+    </div>
+    <div class="city-card">
+      <div class="section-title">城市分布</div>
+      <div class="city-items" id="cityItems"></div>
+      <div class="city-note">2023–2025.6 在上海跳，<br>2025.7 搬来北京后转战 Gsteps ☞</div>
+    </div>
+  </div>
+
+  <!-- 月度热力图 -->
+  <div class="monthly-section">
+    <div class="section-title">月度分布</div>
+    <div class="monthly-card">
+      <div class="monthly-grid" id="monthlyGrid"></div>
+    </div>
+  </div>
+
+  <!-- 老师排行 + 近期记录 两列 -->
+  <div class="two-col">
+    <div class="teachers-card">
+      <div class="section-title">老师排行</div>
+      <div id="teacherList" style="margin-top:12px;"></div>
+    </div>
+    <div class="recent-card">
+      <div class="section-title" id="recentTitle">近期记录</div>
+      <div class="record-list" id="recentList"></div>
+    </div>
+  </div>
+
+  <div class="footer-note">跳了就是赚到 · 上海→北京 · 2023–</div>
+
+</div>
+
+<script>
+// ── 舞种颜色配置 ──
+const GENRE_COLORS = {
+  'KPOP/MV': '#d4a017',
+  'HIPHOP':  '#5a9fd4',
+  'JAZZ':    '#4a9e4a',
+  'HOUSE':   '#e87a7a',
+  'CHOREO':  '#aaaaaa',
+  'URBAN':   '#c97af4',
+};
+const GENRE_TAG_STYLE = {
+  'KPOP/MV': 'background:rgba(212,160,23,0.12);color:#b89010;',
+  'CHOREO':  'background:rgba(170,170,170,0.15);color:#888;',
+  'HIPHOP':  'background:rgba(90,159,212,0.12);color:#3a7fb0;',
+  'JAZZ':    'background:rgba(74,158,74,0.12);color:#3a8a3a;',
+  'HOUSE':   'background:rgba(232,122,122,0.12);color:#c05050;',
+  'URBAN':   'background:rgba(201,122,244,0.12);color:#9a3fd4;',
+};
+const CITY_COLORS = { '上海': '#4a9e4a', '北京': '#5a9fd4' };
+const CITY_ICONS  = { '上海': '🟢', '北京': '🔵' };
+
+// ── 解析 CSV ──
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim());
+  return lines.slice(1).map(line => {
+    // 简单 CSV 解析（字段不含逗号）
+    const vals = line.split(',');
+    const obj = {};
+    headers.forEach((h, i) => { obj[h] = (vals[i] || '').trim(); });
+    return obj;
+  }).filter(r => r.date);
+}
+
+// ── 主逻辑 ──
+async function init() {
+  let records;
+  try {
+    const res = await fetch('dance-log.csv?v=' + Date.now());
+    const text = await res.text();
+    records = parseCSV(text);
+  } catch(e) {
+    document.querySelector('.container').innerHTML = '<div class="loading">⚠️ 无法加载 dance-log.csv，请确认文件存在。</div>';
+    return;
+  }
+
+  const total = records.length;
+
+  // ── 统计 ──
+  const genreCounts  = {};
+  const yearCounts   = {};
+  const monthCounts  = {};
+  const teacherCounts = {};
+  const cityCounts   = {};
+  let maxDate = '';
+  const currentYear = new Date().getFullYear().toString();
+
+  records.forEach(r => {
+    // 舞种
+    const g = r.genre || 'OTHER';
+    genreCounts[g] = (genreCounts[g] || 0) + 1;
+    // 年度
+    const year = r.date.slice(0, 4);
+    yearCounts[year] = (yearCounts[year] || 0) + 1;
+    // 月度
+    const month = r.date.slice(0, 7);
+    monthCounts[month] = (monthCounts[month] || 0) + 1;
+    // 老师
+    if (r.teacher) {
+      teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
+    }
+    // 城市
+    if (r.city) {
+      cityCounts[r.city] = (cityCounts[r.city] || 0) + 1;
+    }
+    // 最新日期
+    if (r.date > maxDate) maxDate = r.date;
+  });
+
+  // ── Stats Bar ──
+  const uniqueGenres   = Object.keys(genreCounts).length;
+  const uniqueTeachers = Object.keys(teacherCounts).length;
+  const uniqueCities   = Object.keys(cityCounts).length;
+  document.getElementById('statTotal').textContent    = total;
+  document.getElementById('statGenres').textContent   = uniqueGenres;
+  document.getElementById('statTeachers').textContent = uniqueTeachers + '+';
+  document.getElementById('statCities').textContent   = uniqueCities;
+  document.getElementById('donutTotal').textContent   = total;
+  // 更新时间
+  if (maxDate) {
+    const [y, m] = maxDate.split('-');
+    document.getElementById('updateNote').textContent = `数据更新至 ${y}/${parseInt(m)}`;
+  }
+
+  // ── 舞种环形图 + 列表 ──
+  const genreEntries = Object.entries(genreCounts).sort((a,b) => b[1]-a[1]);
+  const maxGenre = genreEntries[0]?.[1] || 1;
+  const svg = document.getElementById('donutChart');
+  const cx = 70, cy = 70, r = 52, stroke = 18;
+  const circumference = 2 * Math.PI * r;
+  let offset = 0;
+  genreEntries.forEach(([genre, count]) => {
+    const color = GENRE_COLORS[genre] || '#ccc';
+    const pct = count / total;
+    const dash = pct * circumference;
+    const gap  = circumference - dash;
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', cx);
+    circle.setAttribute('cy', cy);
+    circle.setAttribute('r', r);
+    circle.setAttribute('fill', 'none');
+    circle.setAttribute('stroke', color);
+    circle.setAttribute('stroke-width', stroke);
+    circle.setAttribute('stroke-dasharray', `${dash} ${gap}`);
+    circle.setAttribute('stroke-dashoffset', -offset * circumference + circumference / 4);
+    svg.appendChild(circle);
+    offset += pct;
+  });
+  const genreListEl = document.getElementById('genreList');
+  genreEntries.forEach(([genre, count]) => {
+    const color = GENRE_COLORS[genre] || '#ccc';
+    const pct   = (count / total * 100).toFixed(1);
+    const barW  = (count / maxGenre * 100).toFixed(1);
+    genreListEl.innerHTML += `
+      <div class="genre-item">
+        <div class="genre-dot" style="background:${color}"></div>
+        <span class="genre-name">${genre}</span>
+        <div class="genre-bar-wrap">
+          <div class="genre-bar" style="width:${barW}%;background:${color};"></div>
+        </div>
+        <span class="genre-count">${count}</span>
+        <span class="genre-pct">${pct}%</span>
+      </div>`;
+  });
+
+  // ── 年度柱状图 ──
+  const yearEntries = Object.entries(yearCounts).sort((a,b) => a[0].localeCompare(b[0]));
+  const maxYear = Math.max(...yearEntries.map(e => e[1]));
+  const yearBarsEl = document.getElementById('yearBars');
+  yearEntries.forEach(([year, count]) => {
+    const h = Math.max(8, (count / maxYear * 80));
+    const isCurrent = year === currentYear;
+    yearBarsEl.innerHTML += `
+      <div class="year-col">
+        <div class="year-num-label">${count}</div>
+        <div class="year-bar-wrap">
+          <div class="year-bar${isCurrent?' current':''}" style="height:${h}px;"></div>
+        </div>
+        <div class="year-label">${year}</div>
+      </div>`;
+  });
+
+  // ── 城市分布 ──
+  const cityEntries = Object.entries(cityCounts).sort((a,b) => b[1]-a[1]);
+  const maxCity = cityEntries[0]?.[1] || 1;
+  const cityItemsEl = document.getElementById('cityItems');
+  cityEntries.forEach(([city, count]) => {
+    const pct  = (count / total * 100).toFixed(1);
+    const barW = (count / maxCity * 100).toFixed(1);
+    const color = CITY_COLORS[city] || '#aaa';
+    const icon  = CITY_ICONS[city]  || '⚪';
+    cityItemsEl.innerHTML += `
+      <div class="city-item">
+        <div class="city-header">
+          <span class="city-name">${icon} ${city}</span>
+          <span class="city-count">${count} 节</span>
+        </div>
+        <div class="city-bar-wrap">
+          <div class="city-bar" style="width:${barW}%;background:${color};opacity:0.7;"></div>
+        </div>
+      </div>`;
+  });
+
+  // ── 月度热力图 ──
+  const allYears = [...new Set(Object.keys(monthCounts).map(k => k.slice(0,4)))].sort();
+  const maxMonth = Math.max(...Object.values(monthCounts));
+  const months   = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  const gridEl   = document.getElementById('monthlyGrid');
+  // 表头
+  gridEl.innerHTML += `<div></div>`;
+  months.forEach(m => { gridEl.innerHTML += `<div class="mg-month-header">${m}</div>`; });
+  allYears.forEach(year => {
+    gridEl.innerHTML += `<div class="mg-year-label">${year}</div>`;
+    for (let m = 1; m <= 12; m++) {
+      const key   = `${year}-${String(m).padStart(2,'0')}`;
+      const count = monthCounts[key] || 0;
+      if (count === 0) {
+        gridEl.innerHTML += `<div class="mg-cell empty"></div>`;
+      } else {
+        const opacity   = 0.15 + (count / maxMonth) * 0.85;
+        const textColor = count > maxMonth * 0.5 ? '#fff' : '#666';
+        gridEl.innerHTML += `<div class="mg-cell"
+          style="background:rgba(212,160,23,${opacity.toFixed(2)});color:${textColor};border-color:transparent;"
+          data-tip="${key}: ${count}节">${count}</div>`;
+      }
+    }
+  });
+
+  // ── 老师排行 Top 15 ──
+  const teacherEntries = Object.entries(teacherCounts)
+    .filter(([name]) => name !== '')
+    .sort((a,b) => b[1]-a[1])
+    .slice(0, 15);
+  const maxTeacher = teacherEntries[0]?.[1] || 1;
+  const teacherListEl = document.getElementById('teacherList');
+  teacherEntries.forEach(([name, count], i) => {
+    const barW  = (count / maxTeacher * 100).toFixed(1);
+    const isTop = i < 3;
+    teacherListEl.innerHTML += `
+      <div class="teacher-item">
+        <span class="teacher-rank${isTop?' top':''}">${i+1}</span>
+        <span class="teacher-name">${name}</span>
+        <div class="teacher-bar-wrap">
+          <div class="teacher-bar" style="width:${barW}%;${isTop?'opacity:0.9;':''}"></div>
+        </div>
+        <span class="teacher-count">${count}</span>
+      </div>`;
+  });
+
+  // ── 近期记录（当前年度，倒序最近20条） ──
+  const recentRecords = records
+    .filter(r => r.date.startsWith(currentYear))
+    .sort((a,b) => b.date.localeCompare(a.date))
+    .slice(0, 20);
+  document.getElementById('recentTitle').textContent = `${currentYear} 年记录`;
+  const recentListEl = document.getElementById('recentList');
+  if (recentRecords.length === 0) {
+    recentListEl.innerHTML = `<div style="font-size:13px;color:var(--text-muted);padding:12px 0;">今年暂无记录</div>`;
+  } else {
+    recentRecords.forEach(r => {
+      const dateStr = r.date.slice(5).replace('-', '/');
+      const style   = GENRE_TAG_STYLE[r.genre] || '';
+      recentListEl.innerHTML += `
+        <div class="record-item">
+          <span class="record-date">${dateStr}</span>
+          <span class="record-genre-tag" style="${style}">${r.genre || '—'}</span>
+          <span class="record-teacher">${r.teacher || '—'}</span>
+          <span class="record-song">${r.song || ''}</span>
+        </div>`;
+    });
+  }
+}
+
+init();
+</script>
+</body>
+</html>

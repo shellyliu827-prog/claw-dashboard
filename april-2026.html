@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>April 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f5f3ef;
+    min-height: 100vh;
+    padding: 36px 24px 48px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* 标题区 */
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .month-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 88px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .month-title span {
+    color: #d4a017;
+  }
+
+  .year-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #aaa;
+    margin-top: 6px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+  }
+
+  /* Q2 主线徽章 */
+  .goals-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  .goal-badge {
+    background: #ffffff;
+    border: 1px solid #e0dbd4;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #555;
+    letter-spacing: 0.3px;
+  }
+
+  /* 日历网格 */
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .weekday {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: #aaa;
+    letter-spacing: 2px;
+    padding: 6px 0;
+    text-transform: uppercase;
+  }
+
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+
+  .day {
+    background: #ffffff;
+    border-radius: 10px;
+    min-height: 110px;
+    padding: 10px;
+    position: relative;
+    transition: background 0.15s, box-shadow 0.15s;
+    border: 1px solid #e8e4de;
+    cursor: default;
+    overflow: hidden;
+  }
+
+  .day:hover {
+    background: #faf8f5;
+    border-color: #d4cfc8;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .day.empty {
+    background: #ede9e3;
+    border: 1px solid #e4e0d8;
+  }
+
+  .day.today {
+    background: #fffbf0;
+    border: 1.5px solid #e8c840;
+  }
+
+  /* 特殊日子 */
+  .day.wedding {
+    background: #f8f0ff;
+    border: 1.5px solid #c97af4;
+  }
+
+  .day.holiday {
+    background: #f0f7f0;
+    border: 1px solid #9dd49d;
+  }
+
+  .date-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    color: #1a1a1a;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .day.empty .date-num {
+    color: #bbb;
+  }
+
+  .day.today .date-num {
+    color: #b89010;
+  }
+
+  .day.wedding .date-num {
+    color: #9a3fd4;
+  }
+
+  .day.holiday .date-num {
+    color: #4a9e4a;
+  }
+
+  /* 事件标签 */
+  .event {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.6;
+    max-width: 100%;
+    word-break: break-all;
+  }
+
+  .event.special {
+    background: rgba(201,122,244,0.15);
+    color: #7a20b4;
+    font-size: 12px;
+  }
+
+  .event.note {
+    background: rgba(212,160,23,0.12);
+    color: #9a7010;
+    font-size: 12px;
+  }
+
+  .event.holiday-tag {
+    background: rgba(100,180,100,0.15);
+    color: #3a8a3a;
+    font-size: 11px;
+  }
+
+  .event.labor {
+    background: rgba(220,80,80,0.12);
+    color: #cc4444;
+    font-size: 11px;
+  }
+
+  /* 备注 */
+  .memo {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #999;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* 月底照片区提示 - 已隐藏 */
+  .photo-hint {
+    display: none !important;
+    width: 100%;
+    height: 38px;
+    border: 1.5px dashed #d0ccc6;
+    border-radius: 6px;
+    margin-top: 8px;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #c0bbb4;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
+  /* 底部主线卡片 */
+  .footer {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .goal-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1px solid #e8e4de;
+    transition: box-shadow 0.15s;
+  }
+
+  .goal-card:hover {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+
+  .goal-card .icon {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  .goal-card .title {
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .goal-card .desc {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: #e8e5e0;
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #d4a017, #e87a7a);
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+
+  /* 装饰元素 */
+  .deco {
+    position: absolute;
+    opacity: 0.12;
+    font-size: 38px;
+    right: 6px;
+    bottom: 4px;
+    user-select: none;
+  }
+
+  /* 背景装饰气泡 */
+  .dot-deco {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* ── 手机端弹出详情 Modal ── */
+  .day-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 100;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .day-modal-overlay.open { display: flex; }
+
+  .day-modal {
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 22px 36px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+  }
+
+  .day-modal-handle {
+    width: 36px; height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+    margin: 0 auto 16px;
+  }
+
+  .day-modal-date {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+  }
+
+  .day-modal-content {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+  }
+
+  /* ── 手机端响应式 ── */
+  @media (max-width: 600px) {
+    body { padding: 16px 10px 40px; }
+
+    .month-title { font-size: 56px; }
+
+    .calendar { gap: 4px; }
+    .weekdays { gap: 4px; }
+    .weekday { font-size: 9px; letter-spacing: 0; }
+
+    /* 格子缩小，只显示日期 + 事件 emoji 小圆点 */
+    .day {
+      min-height: 52px;
+      padding: 7px 5px 5px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .date-num { font-size: 14px; }
+
+    /* 手机端隐藏所有事件标签文字、备注、照片提示 */
+    .event, .memo, .photo-hint, .deco { display: none; }
+
+    /* 但保留有事件的格子上的 emoji 小点提示 */
+    .day[data-has-event="1"]::after {
+      content: attr(data-dot);
+      display: block;
+      font-size: 13px;
+      margin-top: 3px;
+      line-height: 1;
+    }
+
+    /* 底部卡片单列 */
+    .footer { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .goal-card { padding: 10px 12px; }
+    .goal-card .title { font-size: 13px; }
+    .goal-card .desc { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 面包屑导航 -->
+<div style="background:#eee9e2;padding:10px 28px;font-size:12px;display:flex;align-items:center;gap:6px;font-family:'Inter','Noto Sans SC',sans-serif;">
+  <a href="index.html" style="color:#aaa;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='#1a1a1a'" onmouseout="this.style.color='#aaa'">2026 全年</a>
+  <span style="color:#ccc;">›</span>
+  <a href="q2-2026.html" style="color:#aaa;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='#1a1a1a'" onmouseout="this.style.color='#aaa'">Q2</a>
+  <span style="color:#ccc;">›</span>
+  <span style="color:#1a1a1a;font-weight:500;">四月</span>
+</div>
+
+<!-- 背景装饰泡泡 -->
+<div class="dot-deco" style="width:320px;height:320px;background:#f4e4b0;opacity:0.18;top:-100px;right:-80px;"></div>
+<div class="dot-deco" style="width:220px;height:220px;background:#e4c0f8;opacity:0.14;bottom:80px;left:-80px;"></div>
+
+<div class="container">
+
+  <!-- 标题 -->
+  <div class="header">
+    <div class="month-title"><span>A</span>pril</div>
+    <div class="year-tag">2 0 2 6</div>
+  </div>
+
+  <!-- Q2 主线 (由 data.js 渲染，显示全部 Q2_GOALS) -->
+  <div class="goals-bar" id="goals-bar"></div>
+
+  <!-- 星期行 -->
+  <div class="weekdays">
+    <div class="weekday">Mon</div>
+    <div class="weekday">Tue</div>
+    <div class="weekday">Wed</div>
+    <div class="weekday">Thu</div>
+    <div class="weekday">Fri</div>
+    <div class="weekday">Sat</div>
+    <div class="weekday">Sun</div>
+  </div>
+
+  <!-- 日历主体 (4月1日=周三) — 事件由 TIMELINE_EVENTS 动态注入 -->
+  <div class="calendar" id="april-calendar">
+
+    <!-- 第1周：1号是周三，前面补空 -->
+    <div class="day empty"><div class="date-num">29</div></div>
+    <div class="day empty"><div class="date-num">30</div></div>
+    <div class="day empty"><div class="date-num">31</div></div>
+
+    <!-- 1 周三 -->
+    <div class="day" id="apr-01"><div class="date-num">1</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <!-- 2 周四 -->
+    <div class="day" id="apr-02"><div class="date-num">2</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <!-- 3 周五 -->
+    <div class="day" id="apr-03"><div class="date-num">3</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <!-- 4 周六 -->
+    <div class="day" id="apr-04"><div class="date-num">4</div><div class="photo-hint">+ 照片 / 心情</div></div>
+
+    <!-- 第2周 -->
+    <div class="day" id="apr-05"><div class="date-num">5</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-06"><div class="date-num">6</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-07"><div class="date-num">7</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-08"><div class="date-num">8</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-09"><div class="date-num">9</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-10"><div class="date-num">10</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-11"><div class="date-num">11</div><div class="photo-hint">+ 照片 / 心情</div></div>
+
+    <!-- 第3周 -->
+    <div class="day" id="apr-12"><div class="date-num">12</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-13"><div class="date-num">13</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-14"><div class="date-num">14</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-15"><div class="date-num">15</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-16"><div class="date-num">16</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-17"><div class="date-num">17</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-18"><div class="date-num">18</div><div class="photo-hint">+ 照片 / 心情</div></div>
+
+    <!-- 第4周 -->
+    <div class="day" id="apr-19"><div class="date-num">19</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-20"><div class="date-num">20</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-21"><div class="date-num">21</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-22"><div class="date-num">22</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-23"><div class="date-num">23</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-24"><div class="date-num">24</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-25"><div class="date-num">25</div><div class="photo-hint">+ 照片 / 心情</div></div>
+
+    <!-- 第5周 -->
+    <div class="day" id="apr-26"><div class="date-num">26</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-27"><div class="date-num">27</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-28"><div class="date-num">28</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-29"><div class="date-num">29</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <div class="day" id="apr-30"><div class="date-num">30</div><div class="photo-hint">+ 照片 / 心情</div></div>
+    <!-- 补空 -->
+    <div class="day empty"><div class="date-num">1"></div></div>
+    <div class="day empty"><div class="date-num">2"></div></div>
+
+  </div>
+
+  <!-- Q2 主线卡片 (由 data.js 渲染，显示全部 Q2_GOALS + APRIL_EXTRA_CARDS) -->
+  <div class="footer" id="goal-cards"></div>
+
+</div>
+
+<!-- 手机端日期详情 Modal -->
+<div class="day-modal-overlay" id="dayModal" onclick="closeDayModal(event)">
+  <div class="day-modal">
+    <div class="day-modal-handle"></div>
+    <div class="day-modal-date" id="modalDate"></div>
+    <div class="day-modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+// 渲染顶部 goals-bar 和底部 goal-card
+(function() {
+  // ── 顶部徽章 ──
+  var bar = document.getElementById('goals-bar');
+  if (bar && typeof Q2_GOALS !== 'undefined') {
+    Q2_GOALS.forEach(function(g) {
+      if (!g.showInMonthBadge) return;
+      var badge = document.createElement('div');
+      badge.className = 'goal-badge';
+      if (g.status === 'done') {
+        badge.style.textDecoration = 'line-through';
+        badge.style.opacity = '0.5';
+      }
+      badge.textContent = g.icon + ' ' + (g.nameRaw || g.name.replace(/&amp;/g, '&'));
+      bar.appendChild(badge);
+    });
+  }
+
+  // ── 底部卡片 ──
+  var footer = document.getElementById('goal-cards');
+  if (!footer) return;
+
+  // Q2 通用目标卡片
+  if (typeof Q2_GOALS !== 'undefined') {
+    Q2_GOALS.forEach(function(g) {
+      if (!g.showInMonthCard) return;
+      var card = document.createElement('div');
+      card.className = 'goal-card';
+      if (g.status === 'done') {
+        card.style.opacity = '0.6';
+        card.style.borderColor = '#d4e8d4';
+        card.style.background = '#f5fdf5';
+      }
+      var barColor = g.progressColor || 'linear-gradient(90deg, #d4a017, #e87a7a)';
+      var progress = g.progress || 0;
+      var statusBadge = g.status === 'done'
+        ? '<span style="font-size:11px;color:#4a9e4a;font-weight:500;">✅ 已完成</span>'
+        : '<div class="progress-bar"><div class="progress-fill" style="width:' + progress + '%;background:' + barColor + '"></div></div>';
+      card.innerHTML = '<div class="icon">' + g.icon + '</div>'
+        + '<div class="title">' + (g.nameRaw || g.name.replace(/&amp;/g, '&')) + '</div>'
+        + '<div class="desc">' + (g.cardDesc || g.hint) + '</div>'
+        + statusBadge;
+      footer.appendChild(card);
+    });
+  }
+
+  // 月度专属卡片（游戏等）
+  if (typeof APRIL_EXTRA_CARDS !== 'undefined') {
+    APRIL_EXTRA_CARDS.forEach(function(c) {
+      var card = document.createElement('div');
+      card.className = 'goal-card';
+      if (c.cardStyle) card.setAttribute('style', c.cardStyle);
+      card.innerHTML = '<div class="icon">' + c.icon + '</div>'
+        + '<div class="title">' + c.title + '</div>'
+        + '<div class="desc">' + c.desc + '</div>'
+        + '<div class="progress-bar"><div class="progress-fill" style="width:0%;background:' + (c.progressColor || '#d4a017') + '"></div></div>';
+      footer.appendChild(card);
+    });
+  }
+})();
+</script>
+
+<script>
+// ── 日历事件动态渲染（从 DANCE_LOG + TIMELINE_EVENTS 读取） ──
+(function() {
+  var targetMonth = 4; // 四月
+
+  // ── 第一遍：DANCE_LOG 舞蹈记录 ──
+  if (typeof DANCE_LOG !== 'undefined') {
+    DANCE_LOG.forEach(function(d) {
+      if (d.month !== targetMonth) return;
+      var dayEl = document.getElementById('apr-' + d.date.split('-')[2]);
+      if (!dayEl) return;
+
+      dayEl.setAttribute('data-has-event', '1');
+      dayEl.setAttribute('data-dot', '💃');
+      dayEl.setAttribute('data-detail', '💃 [' + d.genre + '] ' + d.song + '｜' + d.teacher + ' · ×' + d.count + '节');
+
+      // 舞蹈专属样式：金色系
+      dayEl.setAttribute('style', 'background:#fffbf0;border-color:#e8c840;');
+
+      var numEl = dayEl.querySelector('.date-num');
+      if (numEl) numEl.style.color = '#b89010';
+
+      var hint = dayEl.querySelector('.photo-hint');
+      if (!hint) return;
+
+      var eventHtml = '<div class="event" style="background:rgba(212,160,23,0.12);color:#9a7010;font-size:11px;font-weight:500;">💃 [MV] ' + d.song + '</div>';
+      eventHtml += '<div style="font-size:10px;color:#aaa;margin-top:3px;">' + d.teacher + ' · ×' + d.count + '节</div>';
+
+      hint.insertAdjacentHTML('beforebegin', eventHtml);
+    });
+  }
+
+  // ── 第二遍：TIMELINE_EVENTS 非舞蹈事件（节假日/生日/日记等） ──
+  if (typeof TIMELINE_EVENTS === 'undefined') return;
+
+  var typeClassMap = { wedding: 'wedding', holiday: 'holiday' };
+
+  TIMELINE_EVENTS.forEach(function(ev) {
+    if (ev.month !== targetMonth) return;
+
+    var dayEl = document.getElementById('apr-' + ev.date.split('-')[2]);
+    if (!dayEl) return;
+
+    // 如果已有舞蹈记录，追加事件；否则设置基础属性
+    if (!dayEl.hasAttribute('data-has-event')) {
+      dayEl.setAttribute('data-has-event', '1');
+      dayEl.setAttribute('data-dot', ev.emoji);
+    } else {
+      // 已有舞蹈，合并 dot emoji
+      var existingDot = dayEl.getAttribute('data-dot') || '';
+      dayEl.setAttribute('data-dot', existingDot + ev.emoji);
+    }
+    var existingDetail = dayEl.getAttribute('data-detail') || '';
+    dayEl.setAttribute('data-detail', existingDetail + (existingDetail ? '｜' : '') + (ev.detail || (ev.emoji + ' ' + ev.title)));
+
+    // 样式处理（不覆盖舞蹈的背景色，只叠加 CSS 类）
+    if (typeClassMap[ev.type]) dayEl.classList.add(typeClassMap[ev.type]);
+
+    // 日期数字颜色（仅当尚未被舞蹈染色时）
+    var numEl = dayEl.querySelector('.date-num');
+    if (numEl && ev.style && ev.style.numColor && numEl.style.color === '') {
+      numEl.style.color = ev.style.numColor;
+    }
+
+    var hint = dayEl.querySelector('.photo-hint');
+    if (!hint) return;
+
+    // 构建事件 HTML（非舞蹈类型）
+    var eventHtml = '';
+
+    if (ev.type === 'holiday') {
+      eventHtml += '<div class="event holiday-tag">' + ev.emoji + ' ' + ev.title + '</div>';
+    } else if (ev.type === 'wedding') {
+      eventHtml += '<div class="event special">' + ev.emoji + ' ' + ev.title + '</div>';
+    } else if (ev.type === 'birthday') {
+      var bStyle = ev.style ? ('style="background:' + (ev.style.eventBg || '') + ';color:' + (ev.style.eventColor || '') + ';font-size:12px;font-weight:500;"') : '';
+      eventHtml += '<div class="event" ' + bStyle + '>' + ev.emoji + ' ' + ev.title + '</div>';
+    } else if (ev.type === 'trip') {
+      eventHtml += '<div class="event special">' + ev.emoji + ' ' + ev.title + '</div>';
+    } else {
+      // note / milestone
+      eventHtml += '<div class="event note">' + ev.emoji + ' ' + ev.title + '</div>';
+    }
+
+    // memo 备注
+    if (ev.memo) eventHtml += '<div class="memo">' + ev.memo + '</div>';
+
+    // 装饰字符
+    if (ev.deco) eventHtml += '<div class="deco">' + ev.deco + '</div>';
+
+    hint.insertAdjacentHTML('beforebegin', eventHtml);
+
+    // photo-hint 文字可能需要调整
+    var hintText = '+ 照片 / 心情';
+    if (ev.date === '2026-04-30') hintText = '+ 贴上本月最爱照片';
+    hint.textContent = hintText;
+  });
+
+  // ── 第三遍：BIRTHDAY_LIST 生日（从通讯录导入） ──
+  if (typeof BIRTHDAY_LIST !== 'undefined') {
+    BIRTHDAY_LIST.forEach(function(b) {
+      if (b.month !== targetMonth) return;
+      var dayStr = b.day < 10 ? ('0' + b.day) : ('' + b.day);
+      var dayEl = document.getElementById('apr-' + dayStr);
+      if (!dayEl) return;
+      var hint = dayEl.querySelector('.photo-hint');
+      if (!hint) return;
+      var eventHtml = '<div class="event" style="font-size:12px;font-weight:500;color:#c0506a;">🎂 ' + b.name + '</div>';
+      hint.insertAdjacentHTML('beforebegin', eventHtml);
+    });
+  }
+})();
+</script>
+
+<!-- 手机端日期详情 Modal -->
+<div class="day-modal-overlay" id="dayModal" onclick="closeDayModal(event)">
+  <div class="day-modal">
+    <div class="day-modal-handle"></div>
+    <div class="day-modal-date" id="modalDate"></div>
+    <div class="day-modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+  var weekNames = ['周日','周一','周二','周三','周四','周五','周六'];
+  function isMobile() { return window.innerWidth <= 600; }
+
+  document.querySelectorAll('.calendar .day:not(.empty)').forEach(function(day) {
+    day.addEventListener('click', function() {
+      if (!isMobile()) return;
+      var numEl = day.querySelector('.date-num');
+      var num = numEl ? numEl.textContent.trim() : '';
+      var d = new Date(2026, 3, parseInt(num));
+      var wk = weekNames[d.getDay()];
+      var detail = day.getAttribute('data-detail') || '暂无记录';
+      var lines = detail.split('｜').map(function(s){ return '<p style="margin:4px 0;">'+s.trim()+'</p>'; }).join('');
+      document.getElementById('modalDate').textContent = '4月' + num + '日 ' + wk;
+      document.getElementById('modalContent').innerHTML = lines;
+      document.getElementById('dayModal').classList.add('open');
+    });
+  });
+
+  function closeDayModal(e) {
+    if (e.target === document.getElementById('dayModal')) {
+      document.getElementById('dayModal').classList.remove('open');
+    }
+  }
+</script>
+
+</body>
+</html>

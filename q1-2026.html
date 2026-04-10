@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q1 2026 · 季度视图</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f5f3ef; min-height: 100vh; padding: 0 0 56px; font-family: 'Inter', 'Noto Sans SC', sans-serif; color: #1a1a1a; }
+  .breadcrumb { background: #eee9e2; padding: 10px 28px; font-size: 12px; color: #aaa; display: flex; align-items: center; gap: 6px; }
+  .breadcrumb a { color: #aaa; text-decoration: none; } .breadcrumb a:hover { color: #1a1a1a; } .breadcrumb .current { color: #1a1a1a; font-weight: 500; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 36px 28px; }
+  .header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid #e8e4de; }
+  .q-title { font-size: 56px; font-weight: 700; color: #1a1a1a; letter-spacing: -2px; line-height: 1; }
+  .q-title span { color: #4a9e4a; }
+  .q-sub { font-size: 13px; font-weight: 300; color: #aaa; letter-spacing: 4px; margin-top: 6px; text-transform: uppercase; }
+  .section-title { font-size: 11px; font-weight: 600; letter-spacing: 3px; color: #aaa; text-transform: uppercase; margin-bottom: 14px; }
+  .note-card { background: #fff; border: 1px solid #e8e4de; border-radius: 10px; padding: 20px 24px; margin-bottom: 28px; color: #888; font-size: 13px; line-height: 1.8; }
+  .months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .month-card { background: #fff; border: 1px solid #e8e4de; border-radius: 12px; padding: 20px; transition: box-shadow 0.15s; cursor: pointer; }
+  .month-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: #4a9e4a; }
+  .month-name { font-size: 28px; font-weight: 700; color: #1a1a1a; letter-spacing: -1px; line-height: 1; }
+  .month-en { font-size: 11px; color: #aaa; margin-top: 3px; font-weight: 300; letter-spacing: 2px; }
+  .month-status { font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 500; background: #f0f7f0; color: #4a9e4a; }
+  .month-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+  .mini-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 14px; }
+  .mini-day { aspect-ratio: 1; border-radius: 3px; background: #ede9e3; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #aaa; }
+  .mini-day.dance { background: rgba(212,160,23,0.2); color: #9a7010; font-weight: 600; }
+  .mini-day.holiday { background: rgba(74,158,74,0.15); color: #4a9e4a; }
+  .mini-day.empty { background: transparent; }
+  .month-link { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #4a9e4a; font-weight: 500; text-decoration: none; }
+  a { text-decoration: none; color: inherit; }
+</style>
+</head>
+<body>
+<div class="breadcrumb">
+  <a href="index.html">← 2026 全年</a>
+  <span style="color:#ccc;">›</span>
+  <span class="current">Q1 · Jan – Mar</span>
+</div>
+<div class="container">
+  <div class="header">
+    <div>
+      <div class="q-title"><span>Q</span>1</div>
+      <div class="q-sub">Jan · Feb · Mar · 2026</div>
+    </div>
+    <div style="font-size:12px;color:#aaa;text-align:right;">已结束<br>回顾记录中</div>
+  </div>
+
+  <div style="margin-bottom:28px;">
+    <div class="section-title">说明</div>
+    <div class="note-card">
+      Q1 已结束。这里主要用来回填舞蹈打卡记录——发截图过来，我帮你填进对应月份的日历格子里。
+    </div>
+  </div>
+
+  <div style="margin-bottom:20px;">
+    <div class="section-title">月份日历</div>
+    <div class="months-grid">
+      <a href="january-2026.html">
+        <div class="month-card">
+          <div class="month-card-header">
+            <div><div class="month-name">一月</div><div class="month-en">January</div></div>
+            <span class="month-status">查看</span>
+          </div>
+          <div style="height:60px;display:flex;align-items:center;justify-content:center;color:#ddd;font-size:22px;">🧧</div>
+          <span class="month-link">查看日历 →</span>
+        </div>
+      </a>
+      <a href="february-2026.html">
+        <div class="month-card">
+          <div class="month-card-header">
+            <div><div class="month-name">二月</div><div class="month-en">February</div></div>
+            <span class="month-status">查看</span>
+          </div>
+          <div style="height:60px;display:flex;align-items:center;justify-content:center;color:#ddd;font-size:22px;">❄️</div>
+          <span class="month-link">查看日历 →</span>
+        </div>
+      </a>
+      <a href="march-2026.html">
+        <div class="month-card">
+          <div class="month-card-header">
+            <div><div class="month-name">三月</div><div class="month-en">March</div></div>
+            <span class="month-status">查看</span>
+          </div>
+          <div style="height:60px;display:flex;align-items:center;justify-content:center;color:#ddd;font-size:22px;">🌸</div>
+          <span class="month-link">查看日历 →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q2 2026 · 季度视图</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f5f3ef;
+    --card: #ffffff;
+    --border: #e8e4de;
+    --text: #1a1a1a;
+    --text-sub: #666;
+    --text-muted: #aaa;
+    --gold: #d4a017;
+    --purple: #c97af4;
+    --green: #4a9e4a;
+    --blue: #5a9fd4;
+  }
+
+  body {
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 0 0 56px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    color: var(--text);
+  }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    background: #eee9e2;
+    padding: 10px 28px;
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .breadcrumb a:hover { color: var(--text); }
+  .breadcrumb .sep { color: #ccc; }
+  .breadcrumb .current { color: var(--text); font-weight: 500; }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 36px 28px;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .q-title {
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .q-title span { color: var(--gold); }
+
+  .q-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 4px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  /* ── Section Title ── */
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  /* ── Goals / Progress ── */
+  .goals-section { margin-bottom: 40px; }
+
+  .goal-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+    transition: box-shadow 0.15s;
+  }
+
+  .goal-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+  .goal-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .goal-icon { font-size: 18px; }
+
+  .goal-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .goal-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: #e8e5e0;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--gold), #e8aa30);
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+
+  .progress-pct {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-sub);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  .checkin-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    min-height: 24px;
+  }
+
+  .checkin-tag {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--text-sub);
+  }
+
+  .checkin-empty {
+    font-size: 11px;
+    color: #ccc;
+    font-style: italic;
+  }
+
+  /* ── Month Cards ── */
+  .months-section { margin-bottom: 20px; }
+
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .month-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: box-shadow 0.15s, border-color 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .month-card.active {
+    border-color: var(--gold);
+    cursor: pointer;
+  }
+
+  .month-card.active:hover {
+    box-shadow: 0 4px 16px rgba(212,160,23,0.15);
+  }
+
+  .month-card.inactive {
+    opacity: 0.55;
+  }
+
+  .month-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .month-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  .month-en {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  .month-status {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  .month-status.now { background: rgba(212,160,23,0.12); color: #b89010; }
+  .month-status.tbd { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+
+  /* 迷你日历网格 */
+  .mini-cal {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 14px;
+  }
+
+  .mini-day {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--text-muted);
+  }
+
+  .mini-day.filled { background: #ede9e3; }
+  .mini-day.today { background: var(--gold); color: white; font-weight: 600; }
+  .mini-day.event-day { background: rgba(201,122,244,0.2); color: #9a3fd4; }
+  .mini-day.holiday { background: rgba(74,158,74,0.15); color: var(--green); }
+
+  .month-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .month-link-tbd {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  a { text-decoration: none; color: inherit; }
+</style>
+</head>
+<body>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">← 2026 全年</a>
+  <span class="sep">›</span>
+  <span class="current">Q2 · Apr – Jun</span>
+</div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <div class="q-title"><span>Q</span>2</div>
+      <div class="q-sub">Apr · May · Jun · 2026</div>
+    </div>
+    <div class="header-right">
+      9 条主线目标<br>
+      进行中
+    </div>
+  </div>
+
+  <!-- 主线进度 (由 data.js + JS 动态渲染)
+       设计意图：Q2 季度详情页显示全部 9 个 Q2_GOALS，
+       与月度页的 showInMonthCard 过滤机制不同。 -->
+  <div class="goals-section">
+    <div class="section-title">主线进度</div>
+    <div id="goals-container"></div>
+  </div>
+
+  <!-- 月份入口 -->
+  <div class="months-section">
+    <div class="section-title">本季月份</div>
+    <div class="months-grid">
+
+      <!-- 四月 -->
+      <a href="april-2026.html">
+        <div class="month-card active">
+          <div class="month-card-header">
+            <div>
+              <div class="month-name">四月</div>
+              <div class="month-en">April</div>
+            </div>
+            <span class="month-status now">进行中</span>
+          </div>
+          <!-- 迷你日历 4月，1号=周三 — 事件由 DANCE_LOG + TIMELINE_EVENTS 动态注入 -->
+          <div class="mini-cal" id="q2-mini-cal">
+            <!-- 空格 -->
+            <div class="mini-day" id="mc-empty-1"></div><div class="mini-day" id="mc-empty-2"></div>
+            <!-- 1-7 -->
+            <div class="mini-day" id="mc-apr-01">1</div>
+            <div class="mini-day" id="mc-apr-02">2</div>
+            <div class="mini-day" id="mc-apr-03">3</div>
+            <div class="mini-day" id="mc-apr-04">4</div>
+            <div class="mini-day" id="mc-apr-05">5</div>
+            <!-- 6-12 -->
+            <div class="mini-day" id="mc-apr-06">6</div>
+            <div class="mini-day" id="mc-apr-07">7</div>
+            <div class="mini-day" id="mc-apr-08">8</div>
+            <div class="mini-day" id="mc-apr-09">9</div>
+            <div class="mini-day" id="mc-apr-10">10</div>
+            <div class="mini-day" id="mc-apr-11">11</div>
+            <div class="mini-day" id="mc-apr-12">12</div>
+            <!-- 13-19 -->
+            <div class="mini-day" id="mc-apr-13">13</div>
+            <div class="mini-day" id="mc-apr-14">14</div>
+            <div class="mini-day" id="mc-apr-15">15</div>
+            <div class="mini-day" id="mc-apr-16">16</div>
+            <div class="mini-day" id="mc-apr-17">17</div>
+            <div class="mini-day" id="mc-apr-18">18</div>
+            <div class="mini-day" id="mc-apr-19">19</div>
+            <!-- 20-26 -->
+            <div class="mini-day" id="mc-apr-20">20</div>
+            <div class="mini-day" id="mc-apr-21">21</div>
+            <div class="mini-day" id="mc-apr-22">22</div>
+            <div class="mini-day" id="mc-apr-23">23</div>
+            <div class="mini-day" id="mc-apr-24">24</div>
+            <div class="mini-day" id="mc-apr-25">25</div>
+            <div class="mini-day" id="mc-apr-26">26</div>
+            <!-- 27-30 -->
+            <div class="mini-day" id="mc-apr-27">27</div>
+            <div class="mini-day" id="mc-apr-28">28</div>
+            <div class="mini-day" id="mc-apr-29">29</div>
+            <div class="mini-day" id="mc-apr-30">30</div>
+            <div class="mini-day" id="mc-empty-3"></div>
+            <div class="mini-day" id="mc-empty-4"></div>
+          </div>
+          <span class="month-link">查看完整日历 →</span>
+        </div>
+      </a>
+
+      <!-- 五月 -->
+      <div class="month-card inactive">
+        <div class="month-card-header">
+          <div>
+            <div class="month-name">五月</div>
+            <div class="month-en">May</div>
+          </div>
+          <span class="month-status tbd">待建</span>
+        </div>
+        <div style="height:80px;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:24px;opacity:0.3;">📅</span>
+        </div>
+        <span class="month-link-tbd">日历页待建……</span>
+      </div>
+
+      <!-- 六月 -->
+      <div class="month-card inactive">
+        <div class="month-card-header">
+          <div>
+            <div class="month-name">六月</div>
+            <div class="month-en">June</div>
+          </div>
+          <span class="month-status tbd">待建</span>
+        </div>
+        <div style="height:80px;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:24px;opacity:0.3;">📅</span>
+        </div>
+        <span class="month-link-tbd">日历页待建……</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="data.js"></script>
+<script>
+(function() {
+  var container = document.getElementById('goals-container');
+  var doneCount = 0;
+
+  Q2_GOALS.forEach(function(g) {
+    var row = document.createElement('div');
+    row.className = 'goal-row';
+    if (g.status === 'done') {
+      row.style.opacity = '0.75';
+      doneCount++;
+    }
+
+    // ── top ──
+    var topHtml = '<div class="goal-top">'
+      + '<span class="goal-icon">' + g.icon + '</span>'
+      + '<span class="goal-name">' + g.name + '</span>'
+      + '<span class="goal-hint">' + g.hint + '</span>'
+      + '</div>';
+
+    // ── body ──
+    var bodyHtml = '';
+    if (g.type === 'progress') {
+      var pct = (g.progress || 0);
+      var barColor = g.progressColor || 'linear-gradient(90deg, var(--gold), #e8aa30)';
+      bodyHtml += '<div class="progress-wrap">'
+        + '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%;background:' + barColor + '"></div></div>'
+        + '<span class="progress-pct">' + pct + '%</span>'
+        + '</div>';
+      bodyHtml += '<div class="checkin-area">'
+        + (pct > 0
+            ? '<span class="checkin-tag">' + pct + '% 完成</span>'
+            : '<span class="checkin-empty">' + (g.checkinEmpty || '暂无记录') + '</span>')
+        + '</div>';
+
+    } else if (g.type === 'checkin') {
+      bodyHtml += '<div class="checkin-area" style="padding-top:6px;">'
+        + '<span style="' + (g.checkinStyle || '') + '">' + g.checkinText + '</span>'
+        + (g.checkinSub ? '<span style="font-size:0.85rem;color:#aaa;margin-left:8px;">' + g.checkinSub + '</span>' : '')
+        + '</div>';
+
+    } else if (g.type === 'list') {
+      var itemStatusMap = { 'pending': '待看', 'watched': '已看', 'skip': '跳过' };
+      var itemColorMap  = { 'pending': '#f0ece6', 'watched': 'rgba(74,158,74,0.12)', 'skip': '#f0f0f0' };
+      var itemTextMap   = { 'pending': 'var(--text-muted)', 'watched': '#4a9e4a', 'skip': '#bbb' };
+      var itemsHtml = (g.items || []).map(function(item) {
+        var st = item.status || 'pending';
+        return '<div style="display:flex;align-items:center;gap:10px;">'
+          + '<span style="font-size:0.95rem;color:var(--text);">' + '《' + item.title + '》' + '</span>'
+          + '<span style="font-size:11px;color:' + itemTextMap[st] + ';background:' + itemColorMap[st] + ';border-radius:4px;padding:2px 8px;">'
+          + itemStatusMap[st] + '</span>'
+          + '</div>';
+      }).join('');
+      bodyHtml += '<div class="checkin-area" style="padding-top:6px;flex-direction:column;gap:8px;">' + itemsHtml + '</div>';
+    }
+
+    row.innerHTML = topHtml + bodyHtml;
+    container.appendChild(row);
+  });
+
+  // 更新 header 计数
+  var headerRight = document.querySelector('.header-right');
+  if (headerRight) {
+    headerRight.innerHTML = Q2_GOALS.length + ' 条主线目标<br>'
+      + (doneCount > 0 ? doneCount + ' 条已完成' : '进行中');
+  }
+})();
+</script>
+
+<script>
+// ── 四月迷你日历事件动态注入（从 DANCE_LOG + TIMELINE_EVENTS 读取） ──
+(function() {
+  var targetMonth = 4; // 四月迷你日历
+
+  var cal = document.getElementById('q2-mini-cal');
+  if (!cal) return;
+
+  // 标记今天（硬编码为 9 号，后续可改为动态计算）
+  var todayEl = document.getElementById('mc-apr-' + '09');
+  if (todayEl) {
+    todayEl.classList.add('today');
+  }
+
+  // 所有非空格子先标记为 filled
+  for (var d = 1; d <= 30; d++) {
+    var dayStr = d < 10 ? '0' + d : '' + d;
+    var el = document.getElementById('mc-apr-' + dayStr);
+    if (el && !el.classList.contains('today')) {
+      el.classList.add('filled');
+    }
+  }
+
+  // ── 第一遍：DANCE_LOG 舞蹈记录 → 金色标记 ──
+  if (typeof DANCE_LOG !== 'undefined') {
+    DANCE_LOG.forEach(function(d) {
+      if (d.month !== targetMonth) return;
+      var dayStr = d.date.split('-')[2];
+      var el = document.getElementById('mc-apr-' + dayStr);
+      if (!el) return;
+      el.classList.remove('filled');
+      el.style.background = '#fffbf0';
+      el.style.color = '#b89010';
+      el.style.fontWeight = '600';
+    });
+  }
+
+  // ── 第二遍：TIMELINE_EVENTS → holiday/event-day 标记 ──
+  if (typeof TIMELINE_EVENTS === 'undefined') return;
+
+  TIMELINE_EVENTS.forEach(function(ev) {
+    if (ev.month !== targetMonth) return;
+    var dayStr = ev.date.split('-')[2];
+    var el = document.getElementById('mc-apr-' + dayStr);
+    if (!el) return;
+
+    if (ev.type === 'holiday') {
+      el.classList.remove('filled');
+      el.classList.add('holiday');
+    } else if (['wedding', 'trip', 'birthday'].indexOf(ev.type) !== -1) {
+      el.classList.remove('filled');
+      el.classList.add('event-day');
+    }
+    // note/milestone 不单独标记，保持 filled 即可
+  });
+})();
+</script>
+</body>
+</html>
