@@ -166,8 +166,7 @@
       var hint = dayEl.querySelector('.photo-hint');
       if (!hint) return;
 
-      var eventHtml = '<div class="event dance">💃 [' + d.genre + '] ' + d.song + '</div>';
-      eventHtml += '<div style="font-size:10px;color:#aaa;margin-top:3px;">' + d.teacher + ' · ×' + d.count + '节</div>';
+      var eventHtml = '<div class="event dance">💃 [' + d.genre + '] ' + d.song + '<br><span style="font-size:10px;color:#b8a078;font-weight:400;">' + d.teacher + ' · ×' + d.count + '节</span></div>';
 
       hint.insertAdjacentHTML('beforebegin', eventHtml);
     });

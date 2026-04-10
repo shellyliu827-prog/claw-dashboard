@@ -572,8 +572,7 @@
       var hint = dayEl.querySelector('.photo-hint');
       if (!hint) return;
 
-      var eventHtml = '<div class="event" style="background:rgba(212,160,23,0.12);color:#9a7010;font-size:11px;font-weight:500;">💃 [MV] ' + d.song + '</div>';
-      eventHtml += '<div style="font-size:10px;color:#aaa;margin-top:3px;">' + d.teacher + ' · ×' + d.count + '节</div>';
+      var eventHtml = '<div class="event" style="background:rgba(212,160,23,0.12);color:#9a7010;font-size:11px;font-weight:500;">💃 [' + d.genre + '] ' + d.song + '<br><span style="font-size:10px;color:#b8a078;font-weight:400;">' + d.teacher + ' · ×' + d.count + '节</span></div>';
 
       hint.insertAdjacentHTML('beforebegin', eventHtml);
     });
