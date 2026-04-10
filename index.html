@@ -696,12 +696,15 @@
     + '</div>';
 
   var cardsHtml = '';
-  // 按状态分组排序：待做 → 搁置 → 已发
-  var statusOrder = { todo: 0, paused: 1, done: 2 };
-  var sortedIdeas = IDEAS.slice().sort(function(a, b) {
-    return (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99);
+  // 手动分组拼接，确保顺序：待做 → 搁置 → 已发（v2 强制刷新）
+  var todoList = [], pausedList = [], doneList = [];
+  IDEAS.forEach(function(item) {
+    if (item.status === 'todo') todoList.push(item);
+    else if (item.status === 'paused') pausedList.push(item);
+    else if (item.status === 'done') doneList.push(item);
   });
-  sortedIdeas.forEach(function(item) {
+  var orderedIdeas = todoList.concat(pausedList).concat(doneList);
+  orderedIdeas.forEach(function(item) {
     // 状态样式
     var cardStyle = '';
     var titleStyle = '';
