@@ -463,9 +463,19 @@
         + '</div>';
 
     } else if (g.type === 'checkin') {
+      // 自媒体卡片：从 POST_LOG 动态计算本季发帖数
+      var displayText = g.checkinText;
+      var displaySub = g.checkinSub || '';
+      if (g.id === 'social' && typeof POST_LOG !== 'undefined') {
+        var q2Posts = POST_LOG.filter(function(p) { return p.month >= 4 && p.month <= 6; });
+        displayText = '本季已发 ' + q2Posts.length + ' 条';
+        if (q2Posts.length > 0) {
+          displaySub = q2Posts.map(function(p) { return p.title; }).join('、');
+        }
+      }
       bodyHtml += '<div class="checkin-area" style="padding-top:6px;">'
-        + '<span style="' + (g.checkinStyle || '') + '">' + g.checkinText + '</span>'
-        + (g.checkinSub ? '<span style="font-size:0.85rem;color:#aaa;margin-left:8px;">' + g.checkinSub + '</span>' : '')
+        + '<span style="' + (g.checkinStyle || '') + '">' + displayText + '</span>'
+        + (displaySub ? '<span style="font-size:0.85rem;color:#aaa;margin-left:8px;">' + displaySub + '</span>' : '')
         + '</div>';
 
     } else if (g.type === 'list') {
