@@ -75,7 +75,7 @@
   /* ── Stats Bar ── */
   .stats-bar {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 12px;
     margin-bottom: 36px;
   }
@@ -349,6 +349,12 @@
     <div class="stat-card" style="cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(212,160,23,0.18)'" onmouseout="this.style.boxShadow=''">
       <div class="stat-num gold" id="danceCount">—</div>
       <div class="stat-label">💃 今年跳舞次数 →</div>
+    </div>
+    </a>
+    <a href="finance.html" style="text-decoration:none;">
+    <div class="stat-card" style="cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(74,158,74,0.18)'" onmouseout="this.style.boxShadow=''">
+      <div class="stat-num green" id="financeTotal">🔐</div>
+      <div class="stat-label">💰 财务看板 →</div>
     </div>
     </a>
     <div class="stat-card">

@@ -441,3 +441,174 @@ const TIMELINE_EVENTS = [
     calendar: ''
   },
 ];
+
+// ── 财务数据（每月5号更新，来源：老金记账体系） ──────────────────────────
+// 字段说明：
+//   month: 'YYYY-MM' 对应月份
+//   total: 总资产
+//   savings: 储蓄（中行活期+余额宝+招行朝朝宝）
+//   funds: 基金（纳指a+黄金a+沪深a+鹏华债基）
+//   wealth: 理财（招商理财）
+//   income: 当月总收入
+//   expense: 当月总支出
+//   net: 当月净增（income - expense）
+//   income_items: 收入明细 [{name, amount}]
+//   expense_items: 支出明细 [{name, amount}]
+
+const FINANCE_DATA = [
+  {
+    month: '2025-09',
+    total: 108558,
+    savings: 67500,
+    funds: 7058,
+    wealth: 34000,
+    income: 15410,
+    expense: 6065,
+    net: 9345,
+    income_items: [
+      { name: '工资', amount: 14000 },
+      { name: '差补', amount: 410 },
+      { name: '公积金', amount: 1000 }
+    ],
+    expense_items: [
+      { name: '花呗', amount: 1765 },
+      { name: '中信信用卡', amount: 1000 },
+      { name: '房租', amount: 3300 }
+    ]
+  },
+  {
+    month: '2025-10',
+    total: 124125,
+    savings: 72500,
+    funds: 17625,
+    wealth: 34000,
+    income: 15722,
+    expense: 7575,
+    net: 8148,
+    income_items: [
+      { name: '工资', amount: 14000 },
+      { name: '差补', amount: 722 },
+      { name: '公积金', amount: 1000 }
+    ],
+    expense_items: [
+      { name: '花呗', amount: 2275 },
+      { name: '中信信用卡', amount: 2000 },
+      { name: '房租', amount: 3300 }
+    ]
+  },
+  {
+    month: '2025-11',
+    total: 158824,
+    savings: 77500,
+    funds: 27324,
+    wealth: 54000,
+    income: 18472,
+    expense: 6337,
+    net: 12135,
+    income_items: [
+      { name: '工资', amount: 14000 },
+      { name: '差补', amount: 1472 },
+      { name: '公积金', amount: 2000 },
+      { name: '人才补贴', amount: 1000 }
+    ],
+    expense_items: [
+      { name: '花呗', amount: 1100 },
+      { name: '中信信用卡', amount: 1937 },
+      { name: '房租', amount: 3300 }
+    ]
+  },
+  {
+    month: '2025-12',
+    total: 160926,
+    savings: 74500,
+    funds: 32426,
+    wealth: 54000,
+    income: 14897,
+    expense: 10586,
+    net: 4311,
+    income_items: [
+      { name: '工资', amount: 14000 },
+      { name: '差补', amount: 897 }
+    ],
+    expense_items: [
+      { name: '花呗', amount: 3540 },
+      { name: '中信信用卡', amount: 1858 },
+      { name: '房租', amount: 3300 },
+      { name: '人情', amount: 1888 }
+    ]
+  },
+  {
+    month: '2026-01',
+    total: 183880,
+    savings: 76500,
+    funds: 33380,
+    wealth: 74000,
+    income: 17471,
+    expense: 7709,
+    net: 9762,
+    income_items: [
+      { name: '工资', amount: 14000 },
+      { name: '差补', amount: 1471 },
+      { name: '公积金', amount: 2000 }
+    ],
+    expense_items: [
+      { name: '花呗', amount: 1209 },
+      { name: '中信信用卡', amount: 3200 },
+      { name: '房租', amount: 3300 }
+    ]
+  },
+  {
+    month: '2026-02',
+    total: 320703,
+    savings: 104000,
+    funds: 42703,
+    wealth: 174000,
+    income: 150598,
+    expense: 10703,
+    net: 139896,
+    note: '含妈妈赠予¥100,000 + 年终奖¥34,213，非常规月份',
+    income_items: [
+      { name: '工资', amount: 14000 },
+      { name: '年终奖', amount: 34213, oneoff: true },
+      { name: '妈妈赠予', amount: 100000, oneoff: true },
+      { name: '差补', amount: 385 },
+      { name: '公积金', amount: 2000 }
+    ],
+    expense_items: [
+      { name: '花呗', amount: 3403 },
+      { name: '中信信用卡', amount: 4000 },
+      { name: '房租', amount: 3300 }
+    ]
+  },
+  {
+    month: '2026-03',
+    total: 339354,
+    savings: 79425,
+    funds: 55523,
+    wealth: 204407,
+    income: 20868,
+    expense: 6781,
+    net: 14087,
+    income_items: [
+      { name: '工资', amount: 14000 },
+      { name: '退税', amount: 1313 },
+      { name: '差补', amount: 1555 },
+      { name: '公积金', amount: 2000 },
+      { name: '人才补贴', amount: 2000 }
+    ],
+    expense_items: [
+      { name: '花呗', amount: 1181 },
+      { name: '中信信用卡', amount: 2300 },
+      { name: '房租', amount: 3300 }
+    ]
+  }
+];
+
+// ── 定投配置（2026年4月起） ─────────────────────────────────────────────
+const INVESTMENT_CONFIG = [
+  { name: '纳指a', freq: '日投', amount: 10, monthly: 300 },
+  { name: '沪深a', freq: '周投', amount: 200, monthly: 800 },
+  { name: '黄金a', freq: '周投', amount: 100, monthly: 400 },
+  { name: '鹏华债基', freq: '周投', amount: 93, monthly: 372 },
+  { name: '金信债券', freq: '周投', amount: 200, monthly: 800 }
+];

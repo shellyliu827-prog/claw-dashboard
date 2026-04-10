@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💰 财务看板</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f5f3ef;
+    --card: #ffffff;
+    --border: #e8e4de;
+    --border-light: #f0ece6;
+    --text: #1a1a1a;
+    --text-sub: #666;
+    --text-muted: #aaa;
+    --gold: #d4a017;
+    --green: #4a9e4a;
+    --blue: #5a9fd4;
+    --red: #e87a7a;
+    --purple: #c97af4;
+  }
+
+  body {
+    background: var(--bg);
+    min-height: 100vh;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    color: var(--text);
+  }
+
+  /* ── 密码锁屏 ── */
+  #lock-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .lock-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+    width: 320px;
+  }
+
+  .lock-icon { font-size: 48px; margin-bottom: 16px; }
+
+  .lock-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .lock-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+
+  .pin-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 20px;
+    letter-spacing: 6px;
+    text-align: center;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+
+  .pin-input:focus { border-color: var(--gold); }
+  .pin-input.error { border-color: var(--red); animation: shake 0.3s; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .lock-hint {
+    font-size: 12px;
+    color: var(--red);
+    margin-top: 10px;
+    height: 16px;
+  }
+
+  /* ── 主内容 ── */
+  #main-content { display: none; padding: 40px 28px 56px; }
+
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* 面包屑 */
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover { color: var(--text); }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .page-title span { color: var(--gold); }
+
+  .page-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* 隐藏按钮 */
+  .hide-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--text-sub);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+
+  .hide-toggle:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* KPI 卡片 */
+  .kpi-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .kpi-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .kpi-value.gold { color: var(--gold); }
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.blue { color: var(--blue); }
+  .kpi-value.purple { color: var(--purple); }
+
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* 图表区 */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .chart-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+  }
+
+  .chart-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-sub);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .chart-wrap { position: relative; height: 220px; }
+
+  /* 资产结构 */
+  .asset-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .asset-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .asset-name {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .asset-amount {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .asset-pct {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* 最新月收支明细 */
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .detail-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+  }
+
+  .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .detail-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-sub);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .detail-total {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 13px;
+  }
+
+  .detail-item:last-child { border-bottom: none; }
+
+  .detail-item-name { color: var(--text-sub); }
+
+  .detail-item-amount { font-weight: 500; }
+
+  .oneoff-badge {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(212,160,23,0.12);
+    color: var(--gold);
+    margin-left: 4px;
+  }
+
+  /* 定投配置 */
+  .invest-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .invest-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-sub);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .invest-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .invest-item {
+    background: var(--bg);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 12px 16px;
+    min-width: 140px;
+  }
+
+  .invest-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .invest-freq { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
+  .invest-monthly { font-size: 12px; color: var(--gold); font-weight: 500; }
+
+  /* 大额说明 */
+  .notice-card {
+    background: rgba(212,160,23,0.06);
+    border: 1px solid rgba(212,160,23,0.3);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-bottom: 24px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  /* 金额遮罩 */
+  .amount { transition: opacity 0.15s; }
+  body.hidden-amounts .amount { opacity: 0; }
+  body.hidden-amounts .amount::after {
+    content: '***';
+    opacity: 1;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .kpi-bar { grid-template-columns: repeat(2, 1fr); }
+    .charts-grid { grid-template-columns: 1fr; }
+    .asset-row { grid-template-columns: 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .page-title { font-size: 36px; }
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body class="hidden-amounts">
+
+<!-- 密码锁屏 -->
+<div id="lock-screen">
+  <div class="lock-box">
+    <div class="lock-icon">🔐</div>
+    <div class="lock-title">财务看板</div>
+    <div class="lock-sub">请输入 PIN 码</div>
+    <input type="password" class="pin-input" id="pin-input" maxlength="6" placeholder="••••••" autofocus inputmode="numeric">
+    <div class="lock-hint" id="lock-hint"></div>
+  </div>
+</div>
+
+<!-- 主内容 -->
+<div id="main-content">
+  <div class="container">
+
+    <!-- 面包屑 -->
+    <div class="breadcrumb">
+      <a href="index.html">🏠 首页</a>
+      <span>›</span>
+      <span>💰 财务看板</span>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <div>
+        <div class="page-title">💰 <span>财</span>务</div>
+        <div class="page-sub">Financial Overview · 2025–2026</div>
+      </div>
+      <div class="header-right">
+        <button class="hide-toggle" id="hide-toggle" onclick="toggleAmounts()">
+          <span id="eye-icon">👁</span>
+          <span id="eye-text">显示金额</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI 卡片 -->
+    <div class="kpi-bar" id="kpi-bar"></div>
+
+    <!-- 资产结构 -->
+    <div class="asset-row" id="asset-row"></div>
+
+    <!-- 图表 -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">总资产趋势</div>
+        <div class="chart-wrap"><canvas id="chart-total"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">月度收支</div>
+        <div class="chart-wrap"><canvas id="chart-income"></canvas></div>
+      </div>
+    </div>
+
+    <!-- 2月大额说明 -->
+    <div class="notice-card">
+      ⚠️ 2026年2月为非常规月份，含妈妈赠予 ¥100,000 + 年终奖 ¥34,213，趋势分析已标注。
+    </div>
+
+    <!-- 最新月收支明细 -->
+    <div class="detail-grid" id="detail-grid"></div>
+
+    <!-- 定投配置 -->
+    <div class="invest-card" id="invest-card"></div>
+
+    <div class="footer">随时更新，不用完美 · 2026</div>
+
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+// ── 密码验证 ──
+var PIN = '082700';
+var amountsVisible = false;
+
+document.getElementById('pin-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPin();
+});
+
+document.getElementById('pin-input').addEventListener('input', function() {
+  if (this.value.length === 6) checkPin();
+});
+
+function checkPin() {
+  var input = document.getElementById('pin-input');
+  var hint = document.getElementById('lock-hint');
+  if (input.value === PIN) {
+    document.getElementById('lock-screen').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+    renderAll();
+  } else {
+    input.classList.add('error');
+    hint.textContent = 'PIN 码错误，请重试';
+    input.value = '';
+    setTimeout(function() { input.classList.remove('error'); }, 400);
+  }
+}
+
+// ── 金额显示/隐藏 ──
+function toggleAmounts() {
+  amountsVisible = !amountsVisible;
+  if (amountsVisible) {
+    document.body.classList.remove('hidden-amounts');
+    document.getElementById('eye-icon').textContent = '🙈';
+    document.getElementById('eye-text').textContent = '隐藏金额';
+  } else {
+    document.body.classList.add('hidden-amounts');
+    document.getElementById('eye-icon').textContent = '👁';
+    document.getElementById('eye-text').textContent = '显示金额';
+  }
+}
+
+// ── 金额格式化 ──
+function fmt(n) {
+  return '<span class="amount">¥' + n.toLocaleString() + '</span>';
+}
+
+function fmtPlain(n) {
+  return '¥' + n.toLocaleString();
+}
+
+// ── 渲染主逻辑 ──
+function renderAll() {
+  if (typeof FINANCE_DATA === 'undefined') return;
+
+  var data = FINANCE_DATA;
+  var latest = data[data.length - 1];
+
+  // 常规月（剔除2月）
+  var normalMonths = data.filter(function(d) { return d.month !== '2026-02'; });
+  var avgIncome = Math.round(normalMonths.reduce(function(s,d){return s+d.income;},0) / normalMonths.length);
+  var avgExpense = Math.round(normalMonths.reduce(function(s,d){return s+d.expense;},0) / normalMonths.length);
+  var avgSavingRate = Math.round(normalMonths.reduce(function(s,d){return s+(d.net/d.income)*100;},0) / normalMonths.length);
+
+  // KPI
+  var kpi = document.getElementById('kpi-bar');
+  kpi.innerHTML = [
+    { label: '总资产', value: fmtPlain(latest.total), cls: 'gold', sub: latest.month + ' 最新' },
+    { label: '月均净增', value: fmtPlain(Math.round(normalMonths.reduce(function(s,d){return s+d.net;},0)/normalMonths.length)), cls: 'green', sub: '剔除2月异常' },
+    { label: '月均收入', value: fmtPlain(avgIncome), cls: 'blue', sub: '剔除2月异常' },
+    { label: '平均储蓄率', value: avgSavingRate + '%', cls: 'purple', sub: '剔除2月异常', noAmount: true }
+  ].map(function(k) {
+    var val = k.noAmount ? '<span>' + k.value + '</span>' : '<span class="amount">' + k.value + '</span>';
+    return '<div class="kpi-card"><div class="kpi-label">' + k.label + '</div>'
+      + '<div class="kpi-value ' + k.cls + '">' + val + '</div>'
+      + '<div class="kpi-sub">' + k.sub + '</div></div>';
+  }).join('');
+
+  // 资产结构
+  var assetRow = document.getElementById('asset-row');
+  assetRow.innerHTML = [
+    { name: '💵 储蓄', amount: latest.savings, color: 'var(--blue)' },
+    { name: '📈 基金', amount: latest.funds, color: 'var(--green)' },
+    { name: '🏦 理财', amount: latest.wealth, color: 'var(--gold)' }
+  ].map(function(a) {
+    var pct = Math.round(a.amount / latest.total * 100);
+    return '<div class="asset-card">'
+      + '<div class="asset-name">' + a.name + '</div>'
+      + '<div class="asset-amount amount" style="color:' + a.color + '">¥' + a.amount.toLocaleString() + '</div>'
+      + '<div class="asset-pct">' + pct + '% · ' + latest.month + '</div>'
+      + '</div>';
+  }).join('');
+
+  // 图表颜色
+  var chartColors = {
+    gold: 'rgba(212,160,23,0.8)',
+    goldFill: 'rgba(212,160,23,0.12)',
+    green: 'rgba(74,158,74,0.8)',
+    greenFill: 'rgba(74,158,74,0.1)',
+    red: 'rgba(232,122,122,0.8)',
+    redFill: 'rgba(232,122,122,0.1)',
+    blue: 'rgba(90,159,212,0.8)'
+  };
+
+  var labels = data.map(function(d) { return d.month.replace('20', '').replace('-0','/').replace('-','/' ); });
+
+  // 总资产趋势图
+  new Chart(document.getElementById('chart-total'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '总资产',
+        data: data.map(function(d){ return d.total; }),
+        borderColor: chartColors.gold,
+        backgroundColor: chartColors.goldFill,
+        borderWidth: 2,
+        pointRadius: 4,
+        pointBackgroundColor: chartColors.gold,
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: {
+          ticks: {
+            callback: function(v) { return '¥' + (v/10000).toFixed(0) + 'w'; },
+            font: { size: 11 }, color: '#aaa'
+          },
+          grid: { color: 'rgba(0,0,0,0.05)' }
+        },
+        x: { ticks: { font: { size: 11 }, color: '#aaa' }, grid: { display: false } }
+      }
+    }
+  });
+
+  // 月度收支图
+  new Chart(document.getElementById('chart-income'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: '收入',
+          data: data.map(function(d){ return d.income; }),
+          backgroundColor: data.map(function(d){ return d.month === '2026-02' ? 'rgba(212,160,23,0.4)' : chartColors.green; }),
+          borderRadius: 4
+        },
+        {
+          label: '支出',
+          data: data.map(function(d){ return d.expense; }),
+          backgroundColor: chartColors.red,
+          borderRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { font: { size: 11 }, color: '#666' } }
+      },
+      scales: {
+        y: {
+          ticks: {
+            callback: function(v) { return '¥' + (v/1000).toFixed(0) + 'k'; },
+            font: { size: 11 }, color: '#aaa'
+          },
+          grid: { color: 'rgba(0,0,0,0.05)' }
+        },
+        x: { ticks: { font: { size: 11 }, color: '#aaa' }, grid: { display: false } }
+      }
+    }
+  });
+
+  // 最新月收支明细
+  var detail = document.getElementById('detail-grid');
+  detail.innerHTML = [
+    {
+      title: '💰 ' + latest.month + ' 收入明细',
+      total: latest.income,
+      items: latest.income_items,
+      color: 'var(--green)'
+    },
+    {
+      title: '💸 ' + latest.month + ' 支出明细',
+      total: latest.expense,
+      items: latest.expense_items,
+      color: 'var(--red)'
+    }
+  ].map(function(section) {
+    var rows = section.items.map(function(item) {
+      var badge = item.oneoff ? '<span class="oneoff-badge">一次性</span>' : '';
+      return '<div class="detail-item">'
+        + '<span class="detail-item-name">' + item.name + badge + '</span>'
+        + '<span class="detail-item-amount amount" style="color:' + section.color + '">¥' + item.amount.toLocaleString() + '</span>'
+        + '</div>';
+    }).join('');
+    return '<div class="detail-card">'
+      + '<div class="detail-header">'
+      + '<span class="detail-title">' + section.title + '</span>'
+      + '<span class="detail-total amount" style="color:' + section.color + '">¥' + section.total.toLocaleString() + '</span>'
+      + '</div>'
+      + rows + '</div>';
+  }).join('');
+
+  // 定投配置
+  if (typeof INVESTMENT_CONFIG !== 'undefined') {
+    var totalMonthly = INVESTMENT_CONFIG.reduce(function(s,i){ return s+i.monthly; }, 0);
+    var investCard = document.getElementById('invest-card');
+    investCard.innerHTML = '<div class="invest-title">📊 定投配置（2026年4月起）· 月合计 <span class="amount">¥' + totalMonthly.toLocaleString() + '</span></div>'
+      + '<div class="invest-row">'
+      + INVESTMENT_CONFIG.map(function(inv) {
+        return '<div class="invest-item">'
+          + '<div class="invest-name">' + inv.name + '</div>'
+          + '<div class="invest-freq">' + inv.freq + ' ¥' + inv.amount + '</div>'
+          + '<div class="invest-monthly amount">月约 ¥' + inv.monthly.toLocaleString() + '</div>'
+          + '</div>';
+      }).join('')
+      + '</div>';
+  }
+}
+</script>
+</body>
+</html>
