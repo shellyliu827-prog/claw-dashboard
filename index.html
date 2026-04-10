@@ -696,7 +696,12 @@
     + '</div>';
 
   var cardsHtml = '';
-  IDEAS.forEach(function(item) {
+  // 按状态分组排序：待做 → 搁置 → 已发
+  var statusOrder = { todo: 0, paused: 1, done: 2 };
+  var sortedIdeas = IDEAS.slice().sort(function(a, b) {
+    return (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99);
+  });
+  sortedIdeas.forEach(function(item) {
     // 状态样式
     var cardStyle = '';
     var titleStyle = '';
