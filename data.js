@@ -36,7 +36,7 @@ const Q2_GOALS = [
     hint: '观影 + 阅读 = 输入，写作不量化',
     status: 'active',
     type: 'media_count',   // 特殊类型：页面从 MEDIA_LOG 动态读取当季数量
-    mediaTypes: ['movie', 'tv', 'book'],  // 统计这些类型
+    mediaTypes: ['movie', 'tv', 'book'],  // 统计这三类，不含音乐
     wishlist: [
       { title: '🎬 挽救计划', status: 'pending' },
       { title: '🎬 我许可',   status: 'pending' }

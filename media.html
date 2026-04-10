@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📚 书影音记录</title>
+<title>📚 书影记录</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
 
@@ -51,7 +51,7 @@
   .douban-link:hover { color: var(--text); }
 
   /* ── Stats ── */
-  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px; }
+  .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
   .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }
   .stat-num { font-size: 36px; font-weight: 700; line-height: 1; }
   .stat-num.movie { color: var(--movie); }
@@ -183,7 +183,7 @@
   <!-- ── Header ── -->
   <div class="header">
     <div>
-      <div class="page-title">书<span>影</span>音</div>
+      <div class="page-title">书<span>影</span></div>
       <div class="page-sub">MEDIA LOG · 2026</div>
     </div>
     <div class="header-right">
@@ -204,7 +204,6 @@
     <button class="tab-btn tv" data-type="tv" onclick="filterMedia('tv',this)">📺 剧集</button>
     <button class="tab-btn book" data-type="book" onclick="filterMedia('book',this)">📚 图书</button>
   </div>
-
   <!-- ── Media List（按月分组）── -->
   <div id="mediaList"></div>
 
@@ -290,8 +289,7 @@ function renderAll(filter) {
   document.getElementById('statsBar').innerHTML =
     '<div class="stat-card"><div class="stat-num movie">' + counts.movie + '</div><div class="stat-label">🎬 电影</div></div>'
     + '<div class="stat-card"><div class="stat-num tv">' + counts.tv + '</div><div class="stat-label">📺 剧集</div></div>'
-    + '<div class="stat-card"><div class="stat-num book">' + counts.book + '</div><div class="stat-label">📚 图书</div></div>'
-    + '<div class="stat-card"><div class="stat-num music">' + counts.music + '</div><div class="stat-label">🎵 音乐</div></div>';
+    + '<div class="stat-card"><div class="stat-num book">' + counts.book + '</div><div class="stat-label">📚 图书</div></div>';
 
   // 过滤
   var filtered = filter === 'all' ? data : data.filter(function(d) { return d.type === filter; });
