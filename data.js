@@ -497,98 +497,98 @@ const MEDIA_LOG = [
     title: '开端',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/35332289/'
-  }
+  },
   {
     date: '2025-02-03', month: 2,
     type: 'movie',
     title: '哪吒之魔童闹海',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/34780991/'
-  }
+  },
   {
     date: '2025-06-13', month: 6,
     type: 'movie',
     title: 'Diamanti',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/36968995/'
-  }
+  },
   {
     date: '2025-06-13', month: 6,
     type: 'movie',
     title: 'Sunset Blvd.',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/1298733/'
-  }
+  },
   {
     date: '2025-06-13', month: 6,
     type: 'movie',
     title: 'Young Woman and the Sea',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/26656728/'
-  }
+  },
   {
     date: '2025-06-16', month: 6,
     type: 'movie',
     title: 'リンダ リンダ リンダ',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/1432699/'
-  }
+  },
   {
     date: '2025-06-22', month: 6,
     type: 'movie',
     title: 'ファーストキス',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/36894170/'
-  }
+  },
   {
     date: '2025-06-22', month: 6,
     type: 'movie',
     title: 'Visages villages',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/26764928/'
-  }
+  },
   {
     date: '2025-06-22', month: 6,
     type: 'movie',
     title: 'Les Misérables the Dream Cast in Concert',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/35048691/'
-  }
+  },
   {
     date: '2025-06-22', month: 6,
     type: 'movie',
     title: 'ヱヴァンゲリヲン新劇場版：序',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/1968790/'
-  }
+  },
   {
     date: '2025-08-09', month: 8,
     type: 'movie',
     title: '罗小黑战记2',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/36448279/'
-  }
+  },
   {
     date: '2025-09-21', month: 9,
     type: 'movie',
     title: 'F1: The Movie',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/35689244/'
-  }
+  },
   {
     date: '2025-11-23', month: 11,
     type: 'movie',
     title: '劇場版ハイキュー!! ゴミ捨て場の決戦',
     rating: 0,
     douban_url: 'https://movie.douban.com/subject/36060209/'
-  }
+  },
   {
     date: '2025-11-23', month: 11,
     type: 'movie',
     title: '西遊記第壹佰零壹回之月光寶盒',
     rating: 0,
     douban_url: 'https://movie.douban.com/subject/1299398/'
-  }
+  },
   {
     date: '2025-11-27', month: 11,
     type: 'movie',
