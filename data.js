@@ -410,13 +410,4 @@ const TIMELINE_EVENTS = [
     memo: '人生第一次参加朋友婚礼 🎊',
     deco: '💜'
   },
-  {
-    date: '2026-04-30',
-    month: 4,
-    emoji: '✦',
-    title: '月末 · 回顾',
-    detail: '✦ 月末 · 回顾｜贴上本月最爱照片',
-    type: 'note',
-    calendar: ''
-  }
 ];
