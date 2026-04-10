@@ -658,6 +658,29 @@
       hint.insertAdjacentHTML('beforebegin', eventHtml);
     });
   }
+
+  // ── 第四遍：POST_LOG 自媒体发帖记录 ──
+  if (typeof POST_LOG !== 'undefined') {
+    POST_LOG.forEach(function(p) {
+      if (p.month !== targetMonth) return;
+      var dayEl = document.getElementById('apr-' + p.date.split('-')[2]);
+      if (!dayEl) return;
+
+      // 标记有事件 + 合并 detail
+      dayEl.setAttribute('data-has-event', '1');
+      var existingDot = dayEl.getAttribute('data-dot') || '';
+      dayEl.setAttribute('data-dot', existingDot + p.icon);
+      var existingDetail = dayEl.getAttribute('data-detail') || '';
+      dayEl.setAttribute('data-detail', existingDetail + (existingDetail ? '｜' : '') + p.icon + ' ' + p.platform + ' · ' + p.title);
+
+      var hint = dayEl.querySelector('.photo-hint');
+      if (!hint) return;
+
+      // 发帖标记：紫色系，区别于舞蹈(金)、节日(绿)
+      var eventHtml = '<div class="event" style="background:rgba(180,80,160,0.10);color:#a05090;font-size:11px;font-weight:500;">' + p.icon + ' ' + p.platform + ' · ' + p.title + '</div>';
+      hint.insertAdjacentHTML('beforebegin', eventHtml);
+    });
+  }
 })();
 </script>
 

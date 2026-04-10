@@ -223,8 +223,20 @@ const IDEAS = [
   { icon: '\u2705',  title: 'Delulu 课堂视频', desc: '已发布', date: '2026-04-04', status: 'done' }
 ];
 
-// ── 发帖数（后续只改这里或从 IDEAS 自动计算） ─────────────────────────
+// ── 发帖记录（自媒体更新日志） ──────────────────────────────────────
+// 日历页面第三遍遍历读取此数组，显示发帖标记
+// 字段：date(YYYY-MM-DD), month(月份数字), platform(平台), title(标题/选题), icon(emoji)
+// 来源：实际发布记录，与 IDEAS 中 status='done' 的条目对应
+//
+// ⚠️ 注意：POST_COUNT 是累计总数（给 index.html 用），POST_LOG 是逐条明细（给日历用）
+
 var POST_COUNT = 17;
+
+const POST_LOG = [
+  // ── 四月 ──
+  { date: '2026-04-09', month: 4, platform: '小红书', title: '地球online-上班路', icon: '📱' },
+  { date: '2026-04-04', month: 4, platform: '小红书+视频号', title: 'Delulu 课堂视频', icon: '📱' }
+];
 
 const TIMELINE_EVENTS = [
   // ── 一月 ──
