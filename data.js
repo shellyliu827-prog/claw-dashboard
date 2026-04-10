@@ -391,7 +391,7 @@ const TIMELINE_EVENTS = [
     style: { bg: 'background:#fffbf0;border-color:#e8c840;' }
   },
   {
-    date: '2026-04-25',
+    date: '2026-04-24',
     month: 4,
     emoji: '🚄',
     title: '出发→安徽',
