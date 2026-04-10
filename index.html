@@ -603,12 +603,21 @@
         var startDay = parseInt(startEv.date.split('-')[2]);
         var endDay = parseInt(endEv.date.split('-')[2]);
         if (j > i) {
+          // 合并标题：取第一个有代表性的名称（跳过"初X""假"等后缀名）
+          var groupName = startEv.title;
+          for (var k = i; k <= j; k++) {
+            var t = events[k].title;
+            // 跳过 "初X" "假" "第X周" 等非主名
+            if (!/^(初|第|假|周|周末)/.test(t) && t.length <= 4) { groupName = t; break; }
+            // 兜底用第一个
+            if (k === i) groupName = t;
+          }
           merged.push({
             emoji: startEv.emoji,
             month: startEv.month,
             dateStart: startEv.date,
             dateEnd: endEv.date,
-            title: startEv.title + '–' + endEv.title,
+            title: groupName,
             type: 'holiday-group',
             _mergedCount: j - i + 1
           });
