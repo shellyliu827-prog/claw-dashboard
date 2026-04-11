@@ -573,10 +573,16 @@
   var cal = document.getElementById('q2-mini-cal');
   if (!cal) return;
 
-  // 标记今天（硬编码为 9 号，后续可改为动态计算）
-  var todayEl = document.getElementById('mc-apr-' + '09');
-  if (todayEl) {
-    todayEl.classList.add('today');
+  // 标记今天（自动获取当前日期）
+  var today = new Date();
+  var todayStr = (today.getMonth() + 1) === 4
+    ? String(today.getDate()).padStart(2, '0')
+    : '';
+  if (todayStr) {
+    var todayEl = document.getElementById('mc-apr-' + todayStr);
+    if (todayEl) {
+      todayEl.classList.add('today');
+    }
   }
 
   // 所有非空格子先标记为 filled

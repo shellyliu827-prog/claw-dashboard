@@ -113,6 +113,20 @@ const Q2_GOALS = [
     showInMonthCard: true
   },
   {
+    id: 'film-fest',
+    icon: '🎞️',
+    name: '电影节记录补录',
+    hint: '把参加过的电影节观影记录补进 MEDIA_LOG（上影节等）',
+    status: 'active',
+    type: 'progress',
+    progress: 1,   // 已补录上影节2025（8条）
+    progressColor: 'linear-gradient(90deg,#e87a5a,#f4b47a)',
+    checkinEmpty: '还没有电影节记录',
+    showInMonthBadge: true,
+    showInMonthCard: true,
+    cardDesc: '补录历年电影节观影记录<br>书影音页未来可开电影节专区'
+  },
+  {
     id: 'dance-history',
     icon: '📋',
     name: '补录历史舞蹈记录',
@@ -202,7 +216,8 @@ const BIRTHDAY_LIST = [
 // 字段：date(YYYY-MM-DD), content(当天高光一句话)
 // 录入方式：每晚 10 点提醒 → 在备注里写 → 自动同步
 const DIARY = [
-  { date: '2026-04-09', content: '沉迷搞各种自动化，以前用notion吃的苦还是太多了' }
+  { date: '2026-04-09', content: '沉迷搞各种自动化，以前用notion吃的苦还是太多了' },
+  { date: '2026-04-10', content: '游戏号的第一篇帖子数据很好！今天又是倒赚公司token的一天！' }
 ];
 
 // ── 自媒体灵感库 ────────────────────────────────────────────────────────
@@ -479,21 +494,21 @@ const MEDIA_LOG = [
   {
     date: '2026-01-12', month: 1,
     type: 'tv',
-    title: 'Arcane 第二季',
+    title: '英雄联盟：双城之战 第二季（Arcane Season 2）',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/35669844/'
   },
   {
     date: '2026-01-12', month: 1,
     type: 'tv',
-    title: 'Arcane 第一季',
+    title: '英雄联盟：双城之战 第一季（Arcane Season 1）',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/34867871/'
   }
 ,
   {
     date: '2025-01-29', month: 1,
-    type: 'movie',
+    type: 'tv',
     title: '开端',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/35332289/'
@@ -503,62 +518,75 @@ const MEDIA_LOG = [
     type: 'movie',
     title: '哪吒之魔童闹海',
     rating: 4,
+    note: '白磷体质......不知道在燃什么但是反正一直在燃......除了俩主角，塑造都还算饱满的🤔？',
     douban_url: 'https://movie.douban.com/subject/34780991/'
   },
   {
     date: '2025-06-13', month: 6,
     type: 'movie',
-    title: 'Diamanti',
+    title: '钻石般的她（Diamanti）',
     rating: 5,
+    context: '上影节',
+    note: '很subtle的女性力量呈现。如果你知道我看过这场之前看的是《日落大道》你也会觉得我是排片天才😏',
     douban_url: 'https://movie.douban.com/subject/36968995/'
   },
   {
     date: '2025-06-13', month: 6,
     type: 'movie',
-    title: 'Sunset Blvd.',
+    title: '日落大道（Sunset Blvd.）',
     rating: 4,
+    context: '上影节',
+    note: 'siff第一场',
     douban_url: 'https://movie.douban.com/subject/1298733/'
   },
   {
     date: '2025-06-13', month: 6,
     type: 'movie',
-    title: 'Young Woman and the Sea',
+    title: '泳者之心（Young Woman and the Sea）',
     rating: 4,
+    context: '上影节',
+    note: '4.22补标',
     douban_url: 'https://movie.douban.com/subject/26656728/'
   },
   {
     date: '2025-06-16', month: 6,
     type: 'movie',
-    title: 'リンダ リンダ リンダ',
+    title: '琳达！琳达！琳达！（リンダ リンダ リンダ）',
     rating: 5,
+    context: '上影节',
+    note: '青春片就像纪录片，一定要允许【发呆】的时刻。',
     douban_url: 'https://movie.douban.com/subject/1432699/'
   },
   {
     date: '2025-06-22', month: 6,
     type: 'movie',
-    title: 'ファーストキス',
+    title: '初吻（ファーストキス）',
     rating: 4,
+    context: '上影节',
     douban_url: 'https://movie.douban.com/subject/36894170/'
   },
   {
     date: '2025-06-22', month: 6,
     type: 'movie',
-    title: 'Visages villages',
+    title: '脸庞，村庄（Visages villages）',
     rating: 4,
+    context: '上影节',
     douban_url: 'https://movie.douban.com/subject/26764928/'
   },
   {
     date: '2025-06-22', month: 6,
     type: 'movie',
-    title: 'Les Misérables the Dream Cast in Concert',
+    title: '悲惨世界：梦之队演唱会（Les Misérables the Dream Cast in Concert）',
     rating: 5,
+    context: '上影节',
     douban_url: 'https://movie.douban.com/subject/35048691/'
   },
   {
     date: '2025-06-22', month: 6,
     type: 'movie',
-    title: 'ヱヴァンゲリヲン新劇場版：序',
+    title: '新世纪福音战士新剧场版：序（ヱヴァンゲリヲン新劇場版：序）',
     rating: 4,
+    context: '上影节',
     douban_url: 'https://movie.douban.com/subject/1968790/'
   },
   {
@@ -571,28 +599,29 @@ const MEDIA_LOG = [
   {
     date: '2025-09-21', month: 9,
     type: 'movie',
-    title: 'F1: The Movie',
+    title: 'F1：狂飙飞车（F1: The Movie）',
     rating: 4,
+    note: '没注意买到4d了😂',
     douban_url: 'https://movie.douban.com/subject/35689244/'
   },
   {
     date: '2025-11-23', month: 11,
     type: 'movie',
-    title: '劇場版ハイキュー!! ゴミ捨て場の決戦',
+    title: '排球少年！！剧场版：垃圾场的决战（劇場版ハイキュー!! ゴミ捨て場の決戦）',
     rating: 0,
     douban_url: 'https://movie.douban.com/subject/36060209/'
   },
   {
     date: '2025-11-23', month: 11,
     type: 'movie',
-    title: '西遊記第壹佰零壹回之月光寶盒',
+    title: '大话西游之月光宝盒（西遊記第壹佰零壹回之月光寶盒）',
     rating: 0,
     douban_url: 'https://movie.douban.com/subject/1299398/'
   },
   {
     date: '2025-11-27', month: 11,
     type: 'movie',
-    title: 'Zootopia 2',
+    title: '疯狂动物城2（Zootopia 2）',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/26817136/'
   }
