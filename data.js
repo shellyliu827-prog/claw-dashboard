@@ -243,7 +243,7 @@ const IDEAS = [
 //
 // ⚠️ 注意：POST_COUNT 是累计总数（给 index.html 用），POST_LOG 是逐条明细（给日历用）
 
-var POST_COUNT = 17;
+var POST_COUNT = 18;
 
 const POST_LOG = [
   // ── 四月 ──
