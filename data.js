@@ -183,7 +183,9 @@ const DANCE_LOG = [
 
   // ── 四月 ──
   { date: '2026-04-02', month: 4, teacher: '四火', genre: 'KPOP/MV', song: 'TWS - Over Drive', count: 2 },
-  { date: '2026-04-04', month: 4, teacher: '兔兔子', genre: 'KPOP/MV', song: 'Delulu', count: 2 }
+  { date: '2026-04-04', month: 4, teacher: '兔兔子', genre: 'KPOP/MV', song: 'Delulu', count: 2 },
+  // ── 4/11 周六 MV DANCE 国贸店 连堂 ──
+  { date: '2026-04-11', month: 4, teacher: '四火', genre: 'KPOP/MV', song: 'Like A Flower（裴珠泫）', count: 2 }
 ];
 
 // ── 时间轴事件 ──────────────────────────────────────────────────────────────
@@ -217,7 +219,8 @@ const BIRTHDAY_LIST = [
 // 录入方式：每晚 10 点提醒 → 在备注里写 → 自动同步
 const DIARY = [
   { date: '2026-04-09', content: '沉迷搞各种自动化，以前用notion吃的苦还是太多了' },
-  { date: '2026-04-10', content: '游戏号的第一篇帖子数据很好！今天又是倒赚公司token的一天！' }
+  { date: '2026-04-10', content: '游戏号的第一篇帖子数据很好！今天又是倒赚公司token的一天！' },
+  { date: '2026-04-11', content: '去舞室学舞遇到了各路的好朋友，有好朋友，有几面之缘的舞友，有同事，来来回回打招呼感觉很奇妙！去吃了之前发现的菲律宾菜小店。好羡慕准备离职的💊老师！希望大家都能去往想过的人生！' }
 ];
 
 // ── 自媒体灵感库 ────────────────────────────────────────────────────────
@@ -243,12 +246,13 @@ const IDEAS = [
 //
 // ⚠️ 注意：POST_COUNT 是累计总数（给 index.html 用），POST_LOG 是逐条明细（给日历用）
 
-var POST_COUNT = 18;
+var POST_COUNT = 19;
 
 const POST_LOG = [
   // ── 四月 ──
   { date: '2026-04-04', month: 4, platform: '小红书+视频号', title: 'Delulu 课堂视频', icon: '📱' },
-  { date: '2026-04-09', month: 4, platform: '小红书', title: '地球online-上班路', icon: '📱' }
+  { date: '2026-04-09', month: 4, platform: '小红书', title: '地球online-上班路', icon: '📱' },
+  { date: '2026-04-11', month: 4, platform: '小红书', title: 'Like A Flower 课堂直拍', icon: '📱' }
 ];
 
 const TIMELINE_EVENTS = [
