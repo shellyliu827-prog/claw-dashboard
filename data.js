@@ -247,8 +247,8 @@ var POST_COUNT = 17;
 
 const POST_LOG = [
   // ── 四月 ──
-  { date: '2026-04-09', month: 4, platform: '小红书', title: '地球online-上班路', icon: '📱' },
-  { date: '2026-04-04', month: 4, platform: '小红书+视频号', title: 'Delulu 课堂视频', icon: '📱' }
+  { date: '2026-04-04', month: 4, platform: '小红书+视频号', title: 'Delulu 课堂视频', icon: '📱' },
+  { date: '2026-04-09', month: 4, platform: '小红书', title: '地球online-上班路', icon: '📱' }
 ];
 
 const TIMELINE_EVENTS = [
