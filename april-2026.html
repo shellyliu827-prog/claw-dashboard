@@ -413,61 +413,8 @@
     <div class="weekday">Sun</div>
   </div>
 
-  <!-- 日历主体 (4月1日=周三) — 事件由 TIMELINE_EVENTS 动态注入 -->
-  <div class="calendar" id="april-calendar">
-
-    <!-- 第1周：1号是周三，前面补空 -->
-    <div class="day empty"><div class="date-num">29</div></div>
-    <div class="day empty"><div class="date-num">30</div></div>
-    <div class="day empty"><div class="date-num">31</div></div>
-
-    <!-- 1 周三 -->
-    <div class="day" id="apr-01"><div class="date-num">1</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <!-- 2 周四 -->
-    <div class="day" id="apr-02"><div class="date-num">2</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <!-- 3 周五 -->
-    <div class="day" id="apr-03"><div class="date-num">3</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <!-- 4 周六 -->
-    <div class="day" id="apr-04"><div class="date-num">4</div><div class="photo-hint">+ 照片 / 心情</div></div>
-
-    <!-- 第2周 -->
-    <div class="day" id="apr-05"><div class="date-num">5</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-06"><div class="date-num">6</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-07"><div class="date-num">7</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-08"><div class="date-num">8</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-09"><div class="date-num">9</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-10"><div class="date-num">10</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-11"><div class="date-num">11</div><div class="photo-hint">+ 照片 / 心情</div></div>
-
-    <!-- 第3周 -->
-    <div class="day" id="apr-12"><div class="date-num">12</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-13"><div class="date-num">13</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-14"><div class="date-num">14</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-15"><div class="date-num">15</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-16"><div class="date-num">16</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-17"><div class="date-num">17</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-18"><div class="date-num">18</div><div class="photo-hint">+ 照片 / 心情</div></div>
-
-    <!-- 第4周 -->
-    <div class="day" id="apr-19"><div class="date-num">19</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-20"><div class="date-num">20</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-21"><div class="date-num">21</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-22"><div class="date-num">22</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-23"><div class="date-num">23</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-24"><div class="date-num">24</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-25"><div class="date-num">25</div><div class="photo-hint">+ 照片 / 心情</div></div>
-
-    <!-- 第5周 -->
-    <div class="day" id="apr-26"><div class="date-num">26</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-27"><div class="date-num">27</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-28"><div class="date-num">28</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-29"><div class="date-num">29</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <div class="day" id="apr-30"><div class="date-num">30</div><div class="photo-hint">+ 照片 / 心情</div></div>
-    <!-- 补空 -->
-    <div class="day empty"><div class="date-num">1"></div></div>
-    <div class="day empty"><div class="date-num">2"></div></div>
-
-  </div>
+  <!-- 日历主体（由 JS 动态生成格子 + 注入事件） -->
+  <div class="calendar" id="april-calendar"></div>
 
   <!-- Q2 主线卡片 (由 data.js 渲染，显示全部 Q2_GOALS + APRIL_EXTRA_CARDS) -->
   <div class="footer" id="goal-cards"></div>
@@ -487,6 +434,8 @@
 <script>
 // 渲染顶部 goals-bar 和底部 goal-card
 (function() {
+  var targetMonth = 4; // 四月
+
   // ── 顶部徽章 ──
   var bar = document.getElementById('goals-bar');
   if (bar && typeof Q2_GOALS !== 'undefined') {
@@ -560,24 +509,62 @@
 </script>
 
 <script>
-// ── 日历事件动态渲染（从 DANCE_LOG + TIMELINE_EVENTS 读取） ──
+// ── 日历：动态生成格子 + 注入事件（统一入口） ──
 (function() {
-  var targetMonth = 4; // 四月
+  var CAL = {
+    year: 2026,
+    month: 4,          // 四月
+    prefix: 'apr',     // ID 前缀
+    monthName: '四月'
+  };
 
-  // ── 第一遍：DANCE_LOG 舞蹈记录 ──
+  // ── 第一步：根据真实日历生成格子 ──
+  var firstDay = new Date(CAL.year, CAL.month - 1, 1);   // 本月1号
+  var startWeekday = firstDay.getDay();                  // 0=Sun .. 6=Sat，转为 0=Mon .. 6=Sun
+  if (startWeekday === 0) startWeekday = 7;             //周日→7
+  startWeekday -= 1;                                    // 转为周一起始(0=Mon)
+  var daysInMonth = new Date(CAL.year, CAL.month, 0).getDate(); // 本月总天数
+
+  var container = document.getElementById('april-calendar');
+  var totalCells = Math.ceil((startWeekday + daysInMonth) / 7) * 7;
+
+  for (var i = 0; i < totalCells; i++) {
+    var dayNum = i - startWeekday + 1;
+    var el;
+    if (dayNum < 1 || dayNum > daysInMonth) {
+      el = document.createElement('div');
+      el.className = 'day empty';
+      el.innerHTML = '<div class="date-num"></div>';
+    } else {
+      var idStr = CAL.prefix + '-' + String(dayNum).padStart(2, '0');
+      el = document.createElement('div');
+      el.className = 'day';
+      el.id = idStr;
+      el.innerHTML = '<div class="date-num">' + dayNum + '</div>'
+        + '<div class="photo-hint">+ 照片 / 心情</div>';
+      // 月末最后一天特殊提示
+      if (dayNum === daysInMonth) {
+        el.querySelector('.photo-hint').textContent = '+ 贴上本月最爱照片';
+      }
+    }
+    container.appendChild(el);
+  }
+
+  // ── 第二步：注入事件 ──
+  var targetMonth = CAL.month;
+
+  // DANCE_LOG
   if (typeof DANCE_LOG !== 'undefined') {
     DANCE_LOG.forEach(function(d) {
       if (d.month !== targetMonth) return;
-      var dayEl = document.getElementById('apr-' + d.date.split('-')[2]);
+      var dayEl = document.getElementById(CAL.prefix + '-' + d.date.split('-')[2]);
       if (!dayEl) return;
 
       dayEl.setAttribute('data-has-event', '1');
       dayEl.setAttribute('data-dot', '💃');
       dayEl.setAttribute('data-detail', '💃 [' + d.genre + '] ' + d.song + '｜' + d.teacher + ' · ×' + d.count + '节');
 
-      // 舞蹈专属样式：金色系
       dayEl.setAttribute('style', 'background:#fffbf0;border-color:#e8c840;');
-
       var numEl = dayEl.querySelector('.date-num');
       if (numEl) numEl.style.color = '#b89010';
 
@@ -585,84 +572,78 @@
       if (!hint) return;
 
       var eventHtml = '<div class="event" style="background:rgba(212,160,23,0.12);color:#9a7010;font-size:11px;font-weight:500;">💃 [' + d.genre + '] ' + d.song + '<br><span style="font-size:10px;color:#b8a078;font-weight:400;">' + d.teacher + ' · ×' + d.count + '节</span></div>';
-
       hint.insertAdjacentHTML('beforebegin', eventHtml);
     });
   }
 
-  // ── 第二遍：TIMELINE_EVENTS 非舞蹈事件（节假日/生日/日记等） ──
-  if (typeof TIMELINE_EVENTS === 'undefined') return;
+  // TIMELINE_EVENTS
+  if (typeof TIMELINE_EVENTS !== 'undefined') {
+    var typeClassMap = { wedding: 'wedding', holiday: 'holiday' };
 
-  var typeClassMap = { wedding: 'wedding', holiday: 'holiday' };
+    TIMELINE_EVENTS.forEach(function(ev) {
+      if (ev.month !== targetMonth) return;
+      var dayEl = document.getElementById(CAL.prefix + '-' + ev.date.split('-')[2]);
+      if (!dayEl) return;
 
-  TIMELINE_EVENTS.forEach(function(ev) {
-    if (ev.month !== targetMonth) return;
+      if (!dayEl.hasAttribute('data-has-event')) {
+        dayEl.setAttribute('data-has-event', '1');
+        dayEl.setAttribute('data-dot', ev.emoji);
+      } else {
+        var existingDot = dayEl.getAttribute('data-dot') || '';
+        dayEl.setAttribute('data-dot', existingDot + ev.emoji);
+      }
+      var existingDetail = dayEl.getAttribute('data-detail') || '';
+      dayEl.setAttribute('data-detail', existingDetail + (existingDetail ? '｜' : '') + (ev.detail || (ev.emoji + ' ' + ev.title)));
 
-    var dayEl = document.getElementById('apr-' + ev.date.split('-')[2]);
-    if (!dayEl) return;
+      if (typeClassMap[ev.type]) dayEl.classList.add(typeClassMap[ev.type]);
 
-    // 如果已有舞蹈记录，追加事件；否则设置基础属性
-    if (!dayEl.hasAttribute('data-has-event')) {
-      dayEl.setAttribute('data-has-event', '1');
-      dayEl.setAttribute('data-dot', ev.emoji);
-    } else {
-      // 已有舞蹈，合并 dot emoji
-      var existingDot = dayEl.getAttribute('data-dot') || '';
-      dayEl.setAttribute('data-dot', existingDot + ev.emoji);
-    }
-    var existingDetail = dayEl.getAttribute('data-detail') || '';
-    dayEl.setAttribute('data-detail', existingDetail + (existingDetail ? '｜' : '') + (ev.detail || (ev.emoji + ' ' + ev.title)));
+      var numEl = dayEl.querySelector('.date-num');
+      if (numEl && ev.style && ev.style.numColor && numEl.style.color === '') {
+        numEl.style.color = ev.style.numColor;
+      }
 
-    // 样式处理（不覆盖舞蹈的背景色，只叠加 CSS 类）
-    if (typeClassMap[ev.type]) dayEl.classList.add(typeClassMap[ev.type]);
+      var hint = dayEl.querySelector('.photo-hint');
+      if (!hint) return;
 
-    // 日期数字颜色（仅当尚未被舞蹈染色时）
-    var numEl = dayEl.querySelector('.date-num');
-    if (numEl && ev.style && ev.style.numColor && numEl.style.color === '') {
-      numEl.style.color = ev.style.numColor;
-    }
+      var eventHtml = '';
+      if (ev.type === 'holiday') {
+        eventHtml += '<div class="event holiday-tag">' + ev.emoji + ' ' + ev.title + '</div>';
+      } else if (ev.type === 'wedding') {
+        eventHtml += '<div class="event special">' + ev.emoji + ' ' + ev.title + '</div>';
+      } else if (ev.type === 'birthday') {
+        var bStyle = ev.style ? ('style="background:' + (ev.style.eventBg || '') + ';color:' + (ev.style.eventColor || '') + ';font-size:12px;font-weight:500;"') : '';
+        eventHtml += '<div class="event" ' + bStyle + '>' + ev.emoji + ' ' + ev.title + '</div>';
+      } else if (ev.type === 'trip') {
+        eventHtml += '<div class="event special">' + ev.emoji + ' ' + ev.title + '</div>';
+      } else {
+        eventHtml += '<div class="event note">' + ev.emoji + ' ' + ev.title + '</div>';
+      }
 
-    var hint = dayEl.querySelector('.photo-hint');
-    if (!hint) return;
+      if (ev.memo) eventHtml += '<div class="memo">' + ev.memo + '</div>';
+      if (ev.deco) eventHtml += '<div class="deco">' + ev.deco + '</div>';
 
-    // 构建事件 HTML（非舞蹈类型）
-    var eventHtml = '';
+      hint.insertAdjacentHTML('beforebegin', eventHtml);
 
-    if (ev.type === 'holiday') {
-      eventHtml += '<div class="event holiday-tag">' + ev.emoji + ' ' + ev.title + '</div>';
-    } else if (ev.type === 'wedding') {
-      eventHtml += '<div class="event special">' + ev.emoji + ' ' + ev.title + '</div>';
-    } else if (ev.type === 'birthday') {
-      var bStyle = ev.style ? ('style="background:' + (ev.style.eventBg || '') + ';color:' + (ev.style.eventColor || '') + ';font-size:12px;font-weight:500;"') : '';
-      eventHtml += '<div class="event" ' + bStyle + '>' + ev.emoji + ' ' + ev.title + '</div>';
-    } else if (ev.type === 'trip') {
-      eventHtml += '<div class="event special">' + ev.emoji + ' ' + ev.title + '</div>';
-    } else {
-      // note / milestone
-      eventHtml += '<div class="event note">' + ev.emoji + ' ' + ev.title + '</div>';
-    }
+      var hintText = '+ 照片 / 心情';
+      if (ev.date === ('2026-' + String(targetMonth).padStart(2,'0') + '-30')) hintText = '+ 贴上本月最爱照片';
+      hint.textContent = hintText;
+    });
+  }
 
-    // memo 备注
-    if (ev.memo) eventHtml += '<div class="memo">' + ev.memo + '</div>';
-
-    // 装饰字符
-    if (ev.deco) eventHtml += '<div class="deco">' + ev.deco + '</div>';
-
-    hint.insertAdjacentHTML('beforebegin', eventHtml);
-
-    // photo-hint 文字可能需要调整
-    var hintText = '+ 照片 / 心情';
-    if (ev.date === '2026-04-30') hintText = '+ 贴上本月最爱照片';
-    hint.textContent = hintText;
-  });
-
-  // ── 第三遍：BIRTHDAY_LIST 生日（从通讯录导入） ──
+  // BIRTHDAY_LIST
   if (typeof BIRTHDAY_LIST !== 'undefined') {
     BIRTHDAY_LIST.forEach(function(b) {
       if (b.month !== targetMonth) return;
       var dayStr = b.day < 10 ? ('0' + b.day) : ('' + b.day);
-      var dayEl = document.getElementById('apr-' + dayStr);
+      var dayEl = document.getElementById(CAL.prefix + '-' + dayStr);
       if (!dayEl) return;
+
+      var existingDetail = dayEl.getAttribute('data-detail') || '';
+      dayEl.setAttribute('data-detail', existingDetail + (existingDetail ? '｜' : '') + '🎂 ' + b.name + ' 生日');
+      dayEl.setAttribute('data-has-event', '1');
+      var existingDot = dayEl.getAttribute('data-dot') || '';
+      dayEl.setAttribute('data-dot', existingDot + '🎂');
+
       var hint = dayEl.querySelector('.photo-hint');
       if (!hint) return;
       var eventHtml = '<div class="event" style="font-size:12px;font-weight:500;color:#c0506a;">🎂 ' + b.name + '</div>';
@@ -670,14 +651,13 @@
     });
   }
 
-  // ── 第四遍：POST_LOG 自媒体发帖记录 ──
+  // POST_LOG
   if (typeof POST_LOG !== 'undefined') {
     POST_LOG.forEach(function(p) {
       if (p.month !== targetMonth) return;
-      var dayEl = document.getElementById('apr-' + p.date.split('-')[2]);
+      var dayEl = document.getElementById(CAL.prefix + '-' + p.date.split('-')[2]);
       if (!dayEl) return;
 
-      // 标记有事件 + 合并 detail
       dayEl.setAttribute('data-has-event', '1');
       var existingDot = dayEl.getAttribute('data-dot') || '';
       dayEl.setAttribute('data-dot', existingDot + p.icon);
@@ -687,23 +667,29 @@
       var hint = dayEl.querySelector('.photo-hint');
       if (!hint) return;
 
-      // 发帖标记：紫色系，区别于舞蹈(金)、节日(绿)
       var eventHtml = '<div class="event" style="background:rgba(180,80,160,0.10);color:#a05090;font-size:11px;font-weight:500;">' + p.icon + ' ' + p.platform + ' · ' + p.title + '</div>';
       hint.insertAdjacentHTML('beforebegin', eventHtml);
     });
   }
 
-  // ── 第五遍：DIARY 每日高光 ──
+  // DIARY
   if (typeof DIARY !== 'undefined') {
     DIARY.forEach(function(d) {
       var parts = d.date.split('-');
       if (parseInt(parts[1]) !== targetMonth) return;
-      var dayStr = parts[2]; // 已是两位补零格式
-      var dayEl = document.getElementById('apr-' + dayStr);
+      var dayStr = parts[2];
+      var dayEl = document.getElementById(CAL.prefix + '-' + dayStr);
       if (!dayEl) return;
+
+      var existingDetail = dayEl.getAttribute('data-detail') || '';
+      dayEl.setAttribute('data-detail', existingDetail + (existingDetail ? '｜' : '') + '📝 ' + d.content);
+      dayEl.setAttribute('data-has-event', '1');
+      var existingDot = dayEl.getAttribute('data-dot') || '';
+      dayEl.setAttribute('data-dot', existingDot + '📝');
+
       var hint = dayEl.querySelector('.photo-hint');
       if (!hint) return;
-      var diaryHtml = '<div style="font-size:10px;color:#888;line-height:1.4;margin-top:4px;font-style:italic;word-break:break-all;">' + d.content + '</div>';
+      var diaryHtml = '<div style="font-size:10px;color:#888;line-height:1.4;margin-top:4px;word-break:break-all;">' + d.content + '</div>';
       hint.insertAdjacentHTML('afterend', diaryHtml);
     });
   }
@@ -721,6 +707,7 @@
 
 <script>
   var weekNames = ['周日','周一','周二','周三','周四','周五','周六'];
+  var CAL_MONTH = 4;
   function isMobile() { return window.innerWidth <= 600; }
 
   document.querySelectorAll('.calendar .day:not(.empty)').forEach(function(day) {
@@ -728,11 +715,11 @@
       if (!isMobile()) return;
       var numEl = day.querySelector('.date-num');
       var num = numEl ? numEl.textContent.trim() : '';
-      var d = new Date(2026, 3, parseInt(num));
+      var d = new Date(2026, CAL_MONTH - 1, parseInt(num));
       var wk = weekNames[d.getDay()];
       var detail = day.getAttribute('data-detail') || '暂无记录';
       var lines = detail.split('｜').map(function(s){ return '<p style="margin:4px 0;">'+s.trim()+'</p>'; }).join('');
-      document.getElementById('modalDate').textContent = '4月' + num + '日 ' + wk;
+      document.getElementById('modalDate').textContent = CAL_MONTH + '月' + num + '日 ' + wk;
       document.getElementById('modalContent').innerHTML = lines;
       document.getElementById('dayModal').classList.add('open');
     });
