@@ -672,6 +672,29 @@
     });
   }
 
+  // MEDIA_LOG（movie/tv 显示在日历，书不显示）
+  if (typeof MEDIA_LOG !== 'undefined') {
+    MEDIA_LOG.forEach(function(m) {
+      if (m.type !== 'movie' && m.type !== 'tv') return;
+      var parts = m.date.split('-');
+      if (parseInt(parts[1]) !== targetMonth) return;
+      var dayEl = document.getElementById(CAL.prefix + '-' + parts[2]);
+      if (!dayEl) return;
+
+      dayEl.setAttribute('data-has-event', '1');
+      var existingDot = dayEl.getAttribute('data-dot') || '';
+      dayEl.setAttribute('data-dot', existingDot + '🎬');
+      var label = (m.context ? '[' + m.context + '] ' : '') + m.title;
+      var existingDetail = dayEl.getAttribute('data-detail') || '';
+      dayEl.setAttribute('data-detail', existingDetail + (existingDetail ? '｜' : '') + '🎬 ' + label);
+
+      var hint = dayEl.querySelector('.photo-hint');
+      if (!hint) return;
+      var eventHtml = '<div class="event" style="background:rgba(40,80,180,0.08);color:#4060b0;font-size:11px;font-weight:500;">🎬 ' + label + '</div>';
+      hint.insertAdjacentHTML('beforebegin', eventHtml);
+    });
+  }
+
   // DIARY
   if (typeof DIARY !== 'undefined') {
     DIARY.forEach(function(d) {
