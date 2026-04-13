@@ -412,17 +412,17 @@ const TIMELINE_EVENTS = [
     calendar: '飞行计划',
     memo: 'G1567 · 北京南16:22发 · 砀山南20:45到 · 历时4h23min',
     // 月小结邮件规则：trip 附属于同行程的 big event，不单独展示
-    relatedBigEvent: '朋友婚礼'
+    relatedBigEvent: '佳佳婚礼'
   },
   {
     date: '2026-04-26',
     month: 4,
     emoji: '💒',
-    title: '朋友婚礼',
-    detail: '💒 朋友婚礼！｜人生第一次参加朋友婚礼 🎊',
+    title: '佳佳婚礼',
+    detail: '💒 佳佳婚礼！｜人生第一次参加朋友婚礼 🎊',
     type: 'wedding',
     calendar: '朋友啊朋友',
-    memo: '人生第一次参加朋友婚礼 🎊',
+    memo: '人生第一次参加朋友婚礼，去安徽砀山 🎊',
     deco: '💜',
     // 月小结邮件：以此事件为主，出发那条作为附注
     travelNote: '4/24 G1567 北京南→砀山南 16:22 出发'
