@@ -229,7 +229,7 @@ const DIARY = [
 // 来源：ideas.md，两边需同步维护
 
 const IDEAS = [
-  { icon: '\uD83C\uDF38', title: '外景 like a flower', desc: '舞蹈外景拍摄 · 花为主题', date: '2026-03-25', status: 'todo' },
+  { icon: '🌸', title: '外景 like a flower', desc: '舞蹈外景拍摄 · 花为主题', date: '2026-03-25', status: 'done' },
   { icon: '\uD83D\uDC57', title: '跳爵士怎么穿显的我很会跳', desc: '爵士穿搭分享 · 参考CBXLAB', date: '2026-03-26', status: 'paused' },
   { icon: '\uD83D\uDC80', title: '跳死亡搁浅2的彩蛋舞蹈', desc: '游戏跨界舞蹈 · DS联动', date: '2026-04-02', status: 'todo' },
   { icon: '\uD83C\uDFAE', title: '地球online-上班路', desc: '生活随手拍+游戏联想文案', date: '2026-04-09', status: 'done' },
@@ -253,7 +253,8 @@ const POST_LOG = [
   // ── 四月 ──
   { date: '2026-04-04', month: 4, platform: '小红书+视频号', title: 'Delulu 课堂视频', icon: '📱' },
   { date: '2026-04-09', month: 4, platform: '小红书', title: '地球online-上班路', icon: '📱' },
-  { date: '2026-04-11', month: 4, platform: '小红书', title: 'Like A Flower 课堂直拍', icon: '📱' }
+  { date: '2026-04-11', month: 4, platform: '小红书', title: 'Like A Flower 课堂直拍', icon: '📱' },
+  { date: '2026-04-12', month: 4, platform: '小红书', title: 'Like A Flower 户外版', icon: '📱' }
 ];
 
 const TIMELINE_EVENTS = [
