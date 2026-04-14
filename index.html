@@ -104,6 +104,43 @@
     color: var(--text-muted);
     margin-top: 6px;
     font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── 手机端响应式 ── */
+  @media (max-width: 640px) {
+    body { padding: 20px 16px 48px; }
+
+    .year-num { font-size: 52px; letter-spacing: -2px; }
+
+    /* 统计卡片：6 列 → 3×2，每格不压缩宽度 */
+    .stats-bar {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .stat-card {
+      padding: 12px 14px;
+    }
+
+    .stat-num {
+      font-size: 26px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      white-space: normal;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    /* 季度目标行：隐藏 tag 列表，只保留 label + 状态 */
+    .q-goals { display: none; }
+
+    /* 时间轴保留横向滚动 */
+    .timeline { overflow-x: auto; }
   }
 
   /* ── Section Title ── */

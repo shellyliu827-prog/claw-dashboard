@@ -356,8 +356,8 @@
 
     .date-num { font-size: 14px; }
 
-    /* 手机端隐藏所有事件标签文字、备注、照片提示 */
-    .event, .memo, .photo-hint, .deco { display: none; }
+    /* 手机端隐藏所有事件标签文字、备注、照片提示、高光 */
+    .event, .memo, .photo-hint, .deco, .diary-content { display: none; }
 
     /* 但保留有事件的格子上的 emoji 小点提示 */
     .day[data-has-event="1"]::after {
@@ -368,10 +368,10 @@
       line-height: 1;
     }
 
-    /* 底部卡片单列 */
-    .footer { grid-template-columns: 1fr 1fr; gap: 8px; }
+    /* 底部卡片：单列，标题正常横排 */
+    .footer { grid-template-columns: 1fr; gap: 8px; }
     .goal-card { padding: 10px 12px; }
-    .goal-card .title { font-size: 13px; }
+    .goal-card .title { font-size: 13px; word-break: keep-all; }
     .goal-card .desc { font-size: 11px; }
   }
 </style>
@@ -712,7 +712,7 @@
 
       var hint = dayEl.querySelector('.photo-hint');
       if (!hint) return;
-      var diaryHtml = '<div style="font-size:10px;color:#888;line-height:1.4;margin-top:4px;word-break:break-all;">' + d.content + '</div>';
+      var diaryHtml = '<div class="diary-content" style="font-size:10px;color:#888;line-height:1.4;margin-top:4px;word-break:break-all;">' + d.content + '</div>';
       hint.insertAdjacentHTML('afterend', diaryHtml);
     });
   }
