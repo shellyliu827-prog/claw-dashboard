@@ -405,7 +405,7 @@
       <div class="stat-label">📱 自媒体发帖数</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num green">0</div>
+      <div class="stat-num green" id="doneGoalCount">0</div>
       <div class="stat-label">✅ 已完成主线目标</div>
     </div>
     <div class="stat-card">
@@ -597,7 +597,7 @@
   var q2El = document.getElementById('q2GoalCount');
   if (q2El) q2El.textContent = activeCount;
   // 更新已完成目标数
-  var doneEl = document.querySelector('.stat-num.green');
+  var doneEl = document.getElementById('doneGoalCount');
   if (doneEl) doneEl.textContent = doneCount;
 })();
 </script>
@@ -790,7 +790,7 @@
 </script>
 
 <script>
-// ── 发帖数动态化（从 POST_COUNT 或 IDEAS 读取） ──
+// ── 发帖数动态化（从 POST_LOG 读取） ──
 (function() {
   var postEl;
   var postEls = document.querySelectorAll('.stat-num.blue');
@@ -798,13 +798,8 @@
     if (!postEls[i].id) { postEl = postEls[i]; break; }
   }
   if (!postEl) postEl = document.querySelector('.stat-num.blue');
-  if (postEl && typeof POST_COUNT !== 'undefined') {
-    postEl.textContent = POST_COUNT;
-  } else if (postEl && typeof IDEAS !== 'undefined') {
-    // 备选：从 IDEAS 自动计算已发数量
-    var doneCount = 0;
-    IDEAS.forEach(function(item) { if (item.status === 'done') doneCount++; });
-    postEl.textContent = doneCount > 0 ? doneCount : POST_COUNT || '—';
+  if (postEl && typeof POST_LOG !== 'undefined') {
+    postEl.textContent = POST_LOG.length;
   }
 })();
 </script>
