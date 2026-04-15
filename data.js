@@ -92,9 +92,9 @@ const Q2_GOALS = [
     hint: '把灵感库里的内容发出来',
     status: 'active',
     type: 'checkin',
-    checkinText: '本季已发 1 条',
+    checkinText: '本季已发 4 条',
     checkinStyle: 'font-size:1.05rem;color:#f0c040;font-weight:600;',
-    checkinSub: 'Delulu 课堂视频',
+    checkinSub: 'Delulu · 地球online · Like A Flower×2',
     showInMonthBadge: true,
     showInMonthCard: true,
     cardDesc: '把灵感库里的内容发出来<br>创造力要有出口'
