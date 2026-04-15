@@ -218,6 +218,14 @@ const BIRTHDAY_LIST = [
 // 字段：date(YYYY-MM-DD), content(当天高光一句话)
 // 录入方式：每晚 10 点提醒 → 在备注里写 → 自动同步
 const DIARY = [
+  { date: '2026-04-01', content: '就这样又去当摄影师，打两份工领一份工资……offline我跟你拼了。' },
+  { date: '2026-04-02', content: '上班时间溜出来，去跳舞的路上开了好多花。课上人少，5个人完全沦为老师的玩具，还排了队型。实在是快乐。' },
+  { date: '2026-04-03', content: '第一次吃洱火，感觉消失半月的食欲重生了……老板到底在火锅里放了什么我好撑……' },
+  { date: '2026-04-04', content: '跳舞+游戏，又是理想中的一个独居的假期。' },
+  { date: '2026-04-05', content: '懿琨来家里吃饭！做了一大桌超级成功的饭菜，尤其是春笋虾汤，完全是应季的神仙美味。' },
+  { date: '2026-04-06', content: '又一个人去了环球！赶上了两次花车跳舞，还去看了没看过的水世界特技表演，排上了一次飞跃侏罗纪，吃了平先生面馆的油泼面。' },
+  { date: '2026-04-07', content: '鼓起勇气和陌生人联机，过完了捕风捉影的剧情，拿到了江叔送的小马😭这真的不是原本应该在春节上线的剧情吗？？？' },
+  { date: '2026-04-08', content: '麦麦终于有了豆浆+油条早餐组合！！！麦麦的一小步人类的一大步！！！' },
   { date: '2026-04-09', content: '沉迷搞各种自动化，以前用notion吃的苦还是太多了' },
   { date: '2026-04-10', content: '游戏号的第一篇帖子数据很好！今天又是倒赚公司token的一天！' },
   { date: '2026-04-11', content: '去舞室学舞遇到了各路的好朋友，有好朋友，有几面之缘的舞友，有同事，来来回回打招呼感觉很奇妙！去吃了之前发现的菲律宾菜小店。好羡慕准备离职的💊老师！希望大家都能去往想过的人生！' },
@@ -242,17 +250,32 @@ const IDEAS = [
 ];
 
 // ── 发帖记录（自媒体更新日志） ──────────────────────────────────────
-// 日历页面第三遍遍历读取此数组，显示发帖标记
+// 日历页面读取此数组，显示发帖标记；index.html 动态数 POST_LOG.length 作为发帖总数
 // 字段：date(YYYY-MM-DD), month(月份数字), platform(平台), title(标题/选题), icon(emoji)
-// 来源：实际发布记录，与 IDEAS 中 status='done' 的条目对应
-//
-// ⚠️ 注意：POST_COUNT 是累计总数（给 index.html 用），POST_LOG 是逐条明细（给日历用）
-
-var POST_COUNT = 19;
+// 新增时按时间顺序插入，POST_COUNT 已废弃，勿再使用
 
 const POST_LOG = [
+  // ── 一月 ──
+  { date: '2026-01-02', month: 1, platform: '小红书', title: '2025年终总结', icon: '📱' },
+  { date: '2026-01-02', month: 1, platform: '小红书', title: 'Dreams Come True 课堂直拍', icon: '📱' },
+  { date: '2026-01-09', month: 1, platform: '小红书', title: 'Hollywood Action', icon: '📱' },
+  { date: '2026-01-22', month: 1, platform: '小红书', title: '双城之战音乐秀返场', icon: '📱' },
+  { date: '2026-01-24', month: 1, platform: '小红书', title: 'Hypnotize', icon: '📱' },
+  { date: '2026-01-28', month: 1, platform: '小红书', title: '杀青梗', icon: '📱' },
+  { date: '2026-01-28', month: 1, platform: '小红书', title: 'Love Me More 课堂直拍', icon: '📱' },
+  { date: '2026-01-31', month: 1, platform: '小红书', title: 'Love Me More 公园外拍', icon: '📱' },
+  // ── 二月 ──
+  { date: '2026-02-07', month: 2, platform: '小红书', title: '弥渡山歌 x Hypnotize 卡点', icon: '📱' },
+  { date: '2026-02-11', month: 2, platform: '小红书', title: 'Trophy', icon: '📱' },
+  { date: '2026-02-13', month: 2, platform: '小红书', title: "I'll See You There Tomorrow", icon: '📱' },
+  // ── 三月 ──
+  { date: '2026-03-07', month: 3, platform: '小红书', title: 'Rude！', icon: '📱' },
+  { date: '2026-03-13', month: 3, platform: '小红书', title: '弥渡山歌', icon: '📱' },
+  { date: '2026-03-19', month: 3, platform: '小红书', title: '史努比卡点', icon: '📱' },
+  { date: '2026-03-21', month: 3, platform: '小红书', title: '花 课堂直拍', icon: '📱' },
+  { date: '2026-03-30', month: 3, platform: '小红书', title: '那时雨', icon: '📱' },
   // ── 四月 ──
-  { date: '2026-04-04', month: 4, platform: '小红书+视频号', title: 'Delulu 课堂视频', icon: '📱' },
+  { date: '2026-04-04', month: 4, platform: '小红书+视频号', title: 'Delulu 课堂直拍', icon: '📱' },
   { date: '2026-04-09', month: 4, platform: '小红书', title: '地球online-上班路', icon: '📱' },
   { date: '2026-04-11', month: 4, platform: '小红书', title: 'Like A Flower 课堂直拍', icon: '📱' },
   { date: '2026-04-12', month: 4, platform: '小红书', title: 'Like A Flower 户外版', icon: '📱' }
