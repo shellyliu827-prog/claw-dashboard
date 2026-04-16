@@ -72,6 +72,19 @@
     line-height: 1.8;
   }
 
+  .header-month-link {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+  }
+  .header-month-link:hover {
+    opacity: 0.75;
+  }
+
   /* ── Stats Bar ── */
   .stats-bar {
     display: grid;
@@ -376,7 +389,8 @@
     </div>
     <div class="header-right">
       北京<br>
-      现在是 Q2 · 四月
+      <span id="header-quarter">Q2</span><br>
+      <a id="header-month-link" class="header-month-link" href="april-2026.html">四月 →</a>
     </div>
   </div>
 
@@ -800,6 +814,34 @@
   if (!postEl) postEl = document.querySelector('.stat-num.blue');
   if (postEl && typeof POST_LOG !== 'undefined') {
     postEl.textContent = POST_LOG.length;
+  }
+})();
+</script>
+
+<script>
+// ── 当月日历链接动态化 ──
+(function() {
+  var now = new Date();
+  var month = now.getMonth() + 1; // 1-12
+  var year = now.getFullYear();
+
+  var zhNames = ['一月','二月','三月','四月','五月','六月',
+                 '七月','八月','九月','十月','十一月','十二月'];
+  var enNames = ['january','february','march','april','may','june',
+                 'july','august','september','october','november','december'];
+  var quarters = ['Q1','Q1','Q1','Q2','Q2','Q2','Q3','Q3','Q3','Q4','Q4','Q4'];
+
+  var zhMonth = zhNames[month - 1];
+  var enMonth = enNames[month - 1];
+  var quarter = quarters[month - 1];
+
+  var qEl = document.getElementById('header-quarter');
+  if (qEl) qEl.textContent = '现在是 ' + quarter;
+
+  var linkEl = document.getElementById('header-month-link');
+  if (linkEl) {
+    linkEl.textContent = zhMonth + ' →';
+    linkEl.href = enMonth + '-' + year + '.html';
   }
 })();
 </script>

@@ -470,7 +470,7 @@
         var q2DanceCount = 0;
         var q2DanceDetails = [];
         DANCE_LOG.forEach(function(d) {
-          if (d.month >= 4 && d.month <= 6) {
+          if (d.date && d.date.startsWith('2026') && d.month >= 4 && d.month <= 6) {
             q2DanceCount += (d.count || 1);
             q2DanceDetails.push((d.genre || '') + '·' + d.song);
           }
@@ -480,7 +480,7 @@
           displaySub = [...new Set(q2DanceDetails)].join('、');
         }
       } else if (g.id === 'social' && typeof POST_LOG !== 'undefined') {
-        var q2Posts = POST_LOG.filter(function(p) { return p.month >= 4 && p.month <= 6; });
+        var q2Posts = POST_LOG.filter(function(p) { return p.date && p.date.startsWith('2026') && p.month >= 4 && p.month <= 6; });
         displayText = '本季已发 ' + q2Posts.length + ' 条';
         if (q2Posts.length > 0) {
           displaySub = q2Posts.map(function(p) { return p.title; }).join('、');
@@ -498,7 +498,7 @@
       var recentTitles = [];
       if (typeof MEDIA_LOG !== 'undefined') {
         MEDIA_LOG.forEach(function(m) {
-          if (m.month >= 4 && m.month <= 6) {
+          if (m.date && m.date.startsWith('2026') && m.month >= 4 && m.month <= 6) {
             q2MediaCount++;
             if (m.type === 'movie') mediaMovieCount++;
             else if (m.type === 'tv') mediaTvCount++;
@@ -531,7 +531,7 @@
         wishlistHtml += '</div>';
       }
 
-      bodyHtml += '<div class="checkin-area" style="padding-top:6px;flex-direction:column;gap:4px;">'
+      bodyHtml += '<div class="checkin-area" style="padding-top:6px;flex-direction:column;gap:4px;align-items:flex-start;">'
         + '<span style="font-size:1.05rem;color:#e87a5a;font-weight:600;">' + countText + '</span>'
         + (subText ? '<span style="font-size:0.85rem;color:#aaa;">' + subText + '</span>' : '')
         + wishlistHtml
