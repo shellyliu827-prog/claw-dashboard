@@ -104,12 +104,12 @@ const Q2_GOALS = [
     id: 'game',
     icon: '🎮',
     name: '游戏',
-    hint: '死亡搁浅一周目 · 燕云剧情 · 世界之外补完',
+    hint: '✅ DS一周目通关 · 燕云剧情 · 世界之外补完',
     status: 'active',
-    type: 'progress',
-    progress: 0,
-    progressColor: 'linear-gradient(90deg,#5a9fd4,#7ab4f4)',
-    checkinEmpty: '暂无记录，快去打卡～',
+    type: 'checkin',
+    checkinText: '✅ DS一周目 4/17通关',
+    checkinStyle: 'font-size:1rem;color:#5a9fd4;font-weight:600;',
+    checkinSub: '燕云剧情 · 世界之外补完 进行中',
     showInMonthBadge: true,
     showInMonthCard: true
   },
@@ -483,6 +483,16 @@ const TIMELINE_EVENTS = [
     groupTitle: '北影节 2026',
     groupEmoji: '🎬',
     dateEnd: '2026-04-19'  // 活动跨越的结束日期，日历格子用
+  },
+  {
+    date: '2026-04-17',
+    month: 4,
+    emoji: '🎮',
+    title: '死亡搁浅一周目通关',
+    detail: '🎮 死亡搁浅一周目通关！｜走完了每一步',
+    type: 'milestone',
+    calendar: '计划的提醒事项',
+    memo: '凌晨通关，DS一周目完成'
   },
 ];
 
