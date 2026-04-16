@@ -39,7 +39,8 @@ const Q2_GOALS = [
     mediaTypes: ['movie', 'tv', 'book'],  // 统计这三类，不含音乐
     wishlist: [
       { title: '🎬 挽救计划', status: 'pending' },
-      { title: '🎬 我许可',   status: 'pending' }
+      { title: '🎬 我许可',   status: 'pending' },
+      { title: '🎬 太平年',   status: 'pending' }
     ],
     checkinEmpty: '暂无记录',
     showInMonthBadge: true,
@@ -125,6 +126,20 @@ const Q2_GOALS = [
     showInMonthBadge: true,
     showInMonthCard: true,
     cardDesc: '补录历年电影节观影记录<br>书影音页未来可开电影节专区'
+  },
+  {
+    id: 'moving',
+    icon: '📦',
+    name: '搬家',
+    hint: 'Q2 内完成搬家',
+    status: 'active',
+    type: 'progress',
+    progress: 0,
+    progressColor: 'linear-gradient(90deg,#e87a5a,#f4b47a)',
+    checkinEmpty: '暂无进展',
+    showInMonthBadge: true,
+    showInMonthCard: true,
+    cardDesc: 'Q2 内完成搬家'
   },
   {
     id: 'dance-history',
@@ -232,6 +247,7 @@ const DIARY = [
   { date: '2026-04-12', content: '去龙潭公园拍完了想拍的视频，花、风和柳絮都刚刚好，树给我当了支架。晚上看了挽救计划，电波对上好幸福☺️' },
   { date: '2026-04-13', content: '凌晨来姨妈，但还是点卯上了一天班。最近在思考“比较”和“无聊”这两个关键词。 比较很不好。意识到身边人让我无意识参与焦虑的点在于，ta们一直在做片面的比较。最好的解决方法就是不参与，和我从前的做法一样。 身边的人说“好无聊”的时候，我才发现自己已经很久没有感觉到无聊了。想做的太多，时间不够用精力不够用。这是一种好状态，意味着我有主心骨和自己的主线。' },
   { date: '2026-04-14', content: '突如其来的落户杂事打破了美好的一天🥲抓紧去过世界之外剧情了，欠的账真是越来越多！' },
+  { date: '2026-04-15', content: '身份证刚补办完就找到了……笑不出来……为了走完剧情在死亡搁浅把自己雷的游戏类型玩了个遍🥲玩出一身汗，绝对不可能再有二周目了！' },
 ];
 
 // ── 自媒体灵感库 ────────────────────────────────────────────────────────
@@ -247,7 +263,8 @@ const IDEAS = [
   { icon: '\uD83C\uDFAE', title: '地球online-底特律变人（给AI起名）', desc: '现实给AI命名 vs 游戏里人类给安卓命名', date: '2026-04-10', status: 'todo' },
   { icon: '\uD83C\uDFAE', title: '地球online-燕云（国博大历元宝→麻布袋）', desc: '等去国博拍', date: '2026-04-09', status: 'todo' },
   { icon: '\uD83C\uDFAE', title: '地球online-燕云十六声（待挖）', desc: '剧情点待定', date: '2026-04-09', status: 'todo' },
-  { icon: '\u2705',  title: 'Delulu 课堂视频', desc: '已发布', date: '2026-04-04', status: 'done' }
+  { icon: '\u2705',  title: 'Delulu 课堂视频', desc: '已发布', date: '2026-04-04', status: 'done' },
+  { icon: '💃', title: '跳舞 爱情鸟', desc: '待定', date: '2026-04-16', status: 'todo' }
 ];
 
 // ── 发帖记录（自媒体更新日志） ──────────────────────────────────────
