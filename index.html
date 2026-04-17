@@ -414,6 +414,12 @@
       <div class="stat-label">📚 书影 →</div>
     </div>
     </a>
+    <a href="game.html" style="text-decoration:none;">
+    <div class="stat-card" style="cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(90,159,212,0.18)'" onmouseout="this.style.boxShadow=''">
+      <div class="stat-num" style="color:#5a9fd4;" id="gameCount">—</div>
+      <div class="stat-label">🎮 游戏 →</div>
+    </div>
+    </a>
     <div class="stat-card">
       <div class="stat-num blue">19</div>
       <div class="stat-label">📱 自媒体发帖数</div>
@@ -856,6 +862,14 @@
     return m.date && m.date.startsWith(year);
   }).length;
   el.textContent = count;
+})();
+
+// ── 游戏在玩数（从 GAME_LOG 读取） ──
+(function() {
+  var el = document.getElementById('gameCount');
+  if (!el || typeof GAME_LOG === 'undefined') return;
+  var playing = GAME_LOG.filter(function(g) { return g.status === 'playing'; }).length;
+  el.textContent = playing + ' 在玩';
 })();
 </script>
 </body>

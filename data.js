@@ -865,3 +865,56 @@ const INVESTMENT_CONFIG = [
   { name: '鹏华债基', freq: '周投', amount: 93, monthly: 372 },
   { name: '金信债券', freq: '周投', amount: 200, monthly: 800 }
 ];
+
+// ── 游戏记录 ──────────────────────────────────────────────────────────────
+// status: 'wishlist' | 'playing' | 'done'
+// platform: 'PS5' | 'PC' | 'Switch' | 'iOS' | 'Android' | 其他
+// rating: 1-5，0 = 待评
+// startDate: 开始玩的日期（YYYY-MM-DD）
+// endDate: 通关/结束日期（YYYY-MM-DD），仅 done 状态填写
+// note: 短评
+// cover: 封面图 URL（可选）
+const GAME_LOG = [
+  {
+    id: 'death-stranding',
+    title: '死亡搁浅',
+    titleEn: 'Death Stranding',
+    icon: '💀',
+    status: 'done',
+    platform: 'PS5',
+    genre: '步行模拟 / 动作',
+    startDate: '2026-04-01',
+    endDate: '2026-04-17',
+    rating: 5,
+    note: '一周目通关。凌晨通关，整个人还没缓过来。本来是最不喜欢的游戏类型，结果玩出了一身汗。绝对不会有二周目。',
+    cover: ''
+  },
+  {
+    id: 'yangyun-16',
+    title: '燕云十六声',
+    titleEn: 'Where Winds Meet',
+    icon: '🏮',
+    status: 'playing',
+    platform: 'PC',
+    genre: '开放世界 / 角色扮演',
+    startDate: '2026-03-01',
+    endDate: '',
+    rating: 0,
+    note: '剧情进行中，慢慢推，不用赶。',
+    cover: ''
+  },
+  {
+    id: 'beyond-the-world',
+    title: '世界之外',
+    titleEn: 'Beyond the World',
+    icon: '🌌',
+    status: 'playing',
+    platform: 'PC',
+    genre: '剧情 / 冒险',
+    startDate: '2026-03-01',
+    endDate: '',
+    rating: 0,
+    note: '把没看完的剧情补完，别让故事烂尾在收藏夹。',
+    cover: ''
+  }
+];
