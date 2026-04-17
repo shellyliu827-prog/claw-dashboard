@@ -1461,7 +1461,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2019-01-11', month: 1,
-    type: 'movie',
+    type: 'tv',
     title: '声入人心 第一季',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/30353394/'
@@ -1818,21 +1818,21 @@ const MEDIA_LOG = [
   },
   {
     date: '2019-05-03', month: 5,
-    type: 'movie',
+    type: 'tv',
     title: '风中的女王 第三季 / Reign Season 3',
     rating: 2,
     douban_url: 'https://movie.douban.com/subject/26302918/'
   },
   {
     date: '2019-05-03', month: 5,
-    type: 'movie',
+    type: 'tv',
     title: '风中的女王 第二季 / Reign Season 2',
     rating: 3,
     douban_url: 'https://movie.douban.com/subject/25863909/'
   },
   {
     date: '2019-05-03', month: 5,
-    type: 'movie',
+    type: 'tv',
     title: '风中的女王 第一季 / Reign Season 1',
     rating: 3,
     note: '最近听歌随机到了插曲，突然想起来这部初中时觉得各个方面都奇奇怪怪却莫名其妙追了三季的剧hhhhh（不当历史剧看配乐和审美还是在线的…emmmm进一步论证烂剧出好配乐吗？',
@@ -1882,7 +1882,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2019-05-13', month: 5,
-    type: 'movie',
+    type: 'tv',
     title: '和陌生人说话 第一季',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/27075258/'
@@ -2019,7 +2019,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2019-06-12', month: 6,
-    type: 'movie',
+    type: 'tv',
     title: '和陌生人说话 第二季',
     rating: 5,
     note: '人间戏不散场。',
@@ -2211,7 +2211,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2019-07-08', month: 7,
-    type: 'movie',
+    type: 'tv',
     title: '历史那些事 第一季',
     rating: 4,
     note: '真的很可爱，也是很别出心裁的尝试。',
@@ -2551,7 +2551,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2019-11-13', month: 11,
-    type: 'movie',
+    type: 'tv',
     title: '国家宝藏 第一季',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/27186619/'
@@ -2795,14 +2795,14 @@ const MEDIA_LOG = [
   },
   {
     date: '2019-12-27', month: 12,
-    type: 'movie',
+    type: 'tv',
     title: '请吃红小豆吧！第一季',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/30259908/'
   },
   {
     date: '2019-12-27', month: 12,
-    type: 'movie',
+    type: 'tv',
     title: '水果传 第一季',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/27621014/'
@@ -3676,7 +3676,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2020-01-28', month: 1,
-    type: 'movie',
+    type: 'tv',
     title: '请吃红小豆吧！第二季',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/30409718/'
@@ -3698,21 +3698,21 @@ const MEDIA_LOG = [
   },
   {
     date: '2020-01-29', month: 1,
-    type: 'movie',
+    type: 'tv',
     title: '神探夏洛克 第三季 / Sherlock Season 3',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/10455629/'
   },
   {
     date: '2020-01-29', month: 1,
-    type: 'movie',
+    type: 'tv',
     title: '神探夏洛克  第二季 / Sherlock Season 2',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/6522269/'
   },
   {
     date: '2020-01-29', month: 1,
-    type: 'movie',
+    type: 'tv',
     title: '神探夏洛克 第一季 / Sherlock Season 1',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/3986493/'
@@ -3970,7 +3970,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2020-03-18', month: 3,
-    type: 'movie',
+    type: 'tv',
     title: '航拍中国 第一季',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/26694967/'
@@ -3991,7 +3991,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2020-04-14', month: 4,
-    type: 'movie',
+    type: 'tv',
     title: '请吃红小豆吧！ 第三季',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/34925289/'
@@ -4012,7 +4012,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2020-05-12', month: 5,
-    type: 'movie',
+    type: 'tv',
     title: '青春有你 第二季',
     rating: 3,
     note: '二轮之后弃了……',
@@ -4207,7 +4207,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2020-12-25', month: 12,
-    type: 'movie',
+    type: 'tv',
     title: '到了30岁还是处男，似乎会变成魔法师 番外篇 / 30歳まで童貞だと魔法使いになれるらしい 番外編',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/35288733/'
@@ -4461,7 +4461,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2021-07-10', month: 7,
-    type: 'movie',
+    type: 'tv',
     title: '时光代理人 第一季',
     rating: 5,
     note: 'bug有，老套剧情有，但不妨碍好看🚬',
@@ -4689,7 +4689,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2021-11-24', month: 11,
-    type: 'movie',
+    type: 'tv',
     title: '继承之战 第一季 / Succession Season 1',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/26813224/'
@@ -4768,7 +4768,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2022-02-03', month: 2,
-    type: 'movie',
+    type: 'tv',
     title: '继承之战 第二季 / Succession Season 2',
     rating: 5,
     note: '每看一集都是在进行信仰充值的制作水平……',
@@ -4792,7 +4792,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2022-02-27', month: 2,
-    type: 'movie',
+    type: 'tv',
     title: '继承之战 第三季 / Succession Season 3',
     rating: 4,
     note: '更喜欢s2，但依然爽到！',
@@ -4816,7 +4816,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2022-03-07', month: 3,
-    type: 'movie',
+    type: 'tv',
     title: '但是还有书籍 第二季',
     rating: 5,
     note: '第二季不拘泥于纸页之间，而是真正进入了书中世界。 正处毕设创作期间，在形式和内核上都受益良多。 最感恩的是它带给阅者专注自己手中事的力量。节目时长有限，而流动的时间无限，人生这正是在这其中慢慢发酵，慢慢找到意义。',
@@ -4950,7 +4950,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2022-07-08', month: 7,
-    type: 'movie',
+    type: 'tv',
     title: '动物狂想曲 第一季 / BEASTARS',
     rating: 4,
     note: '喜欢一些天马行空的讲故事方式！',
@@ -4958,7 +4958,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2022-07-18', month: 7,
-    type: 'movie',
+    type: 'tv',
     title: '动物狂想曲 第二季 / BEASTARS 2nd Season',
     rating: 4,
     note: '就要“排列组合”就要“排列组合”',
@@ -4981,7 +4981,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2022-08-13', month: 8,
-    type: 'movie',
+    type: 'tv',
     title: '克拉克森的农场 第一季 / Clarkson&#39;s Farm Season 1',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/34839005/'
@@ -5010,28 +5010,28 @@ const MEDIA_LOG = [
   },
   {
     date: '2022-09-03', month: 9,
-    type: 'movie',
+    type: 'tv',
     title: '排球少年 第三季 / ハイキュー!! 烏野高校 VS 白鳥沢学園高校',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/26752075/'
   },
   {
     date: '2022-09-03', month: 9,
-    type: 'movie',
+    type: 'tv',
     title: '排球少年 第二季 / ハイキュー!! セカンドシーズン',
     rating: 5,
     douban_url: 'https://movie.douban.com/subject/26285156/'
   },
   {
     date: '2022-09-06', month: 9,
-    type: 'movie',
+    type: 'tv',
     title: '排球少年 第四季 Part.2 / ハイキュー!! TO THE TOP 第2クール',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/35131275/'
   },
   {
     date: '2022-09-06', month: 9,
-    type: 'movie',
+    type: 'tv',
     title: '排球少年 第四季 / ハイキュー!! TO THE TOP',
     rating: 4,
     douban_url: 'https://movie.douban.com/subject/30411330/'
@@ -5123,7 +5123,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2022-10-10', month: 10,
-    type: 'movie',
+    type: 'tv',
     title: '东京爱情故事特别篇 / 東京ラブストーリー 継続します！愛情のストーリの追憶',
     rating: 5,
     note: '被莉香美晕……',
@@ -5259,7 +5259,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2022-11-20', month: 11,
-    type: 'movie',
+    type: 'tv',
     title: '约翰·威尔逊的十万个怎么做 第一季 / How to with John Wilson Season 1',
     rating: 5,
     note: '最后一集有点封神了……',
@@ -5283,7 +5283,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2023-01-01', month: 1,
-    type: 'movie',
+    type: 'tv',
     title: '约翰·威尔逊的十万个怎么做 第二季 / How to with John Wilson Season 2',
     rating: 4,
     note: '第一季更精彩，但也很不错。喜欢带着相机出门和人聊天。',
@@ -5492,7 +5492,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2023-07-22', month: 7,
-    type: 'movie',
+    type: 'tv',
     title: '克拉克森的农场 第二季 / Clarkson&#39;s Farm Season 2',
     rating: 5,
     note: '最后一集名副其实的climax 从与自然斗到与人斗，其难无穷，其乐也无穷也。',
@@ -5500,7 +5500,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2023-07-22', month: 7,
-    type: 'movie',
+    type: 'tv',
     title: '时光代理人 番外篇 比武招亲',
     rating: 4,
     note: '补标补标',
@@ -5665,7 +5665,7 @@ const MEDIA_LOG = [
   },
   {
     date: '2023-09-22', month: 9,
-    type: 'movie',
+    type: 'tv',
     title: '时光代理人 第二季',
     rating: 3,
     note: '不如第一季。。。但是怎么评分更高啊？？？',
