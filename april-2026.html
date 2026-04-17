@@ -474,7 +474,7 @@
       } else if (g.type === 'media_count' && typeof MEDIA_LOG !== 'undefined') {
         // 输入&写作：从 MEDIA_LOG 统计当月数量
         var monthCount = 0;
-        MEDIA_LOG.forEach(function(m) { if (m.month === targetMonth) monthCount++; });
+        MEDIA_LOG.forEach(function(m) { if (m.date && m.date.startsWith('2026') && m.month === targetMonth) monthCount++; });
         statusBadge = monthCount > 0
           ? '<span style="font-size:12px;color:#e87a5a;font-weight:600;">本月输入 ' + monthCount + ' 部 / 本</span>'
           : '<span style="font-size:11px;color:#ccc;">本月暂无记录</span>';
@@ -672,11 +672,12 @@
     });
   }
 
-  // MEDIA_LOG（movie/tv 显示在日历，书不显示）
+  // MEDIA_LOG（movie/tv 显示在日历，书不显示，只显示当年数据）
   if (typeof MEDIA_LOG !== 'undefined') {
     MEDIA_LOG.forEach(function(m) {
       if (m.type !== 'movie' && m.type !== 'tv') return;
       var parts = m.date.split('-');
+      if (parts[0] !== '2026') return;
       if (parseInt(parts[1]) !== targetMonth) return;
       var dayEl = document.getElementById(CAL.prefix + '-' + parts[2]);
       if (!dayEl) return;

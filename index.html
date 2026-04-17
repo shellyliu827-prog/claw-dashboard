@@ -646,14 +646,20 @@
   var monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-  // 按月份分组
+  // 按月份分组（跳过节假日，时间轴只展示个人事件）
   var byMonth = {};
   for (var m = 1; m <= 12; m++) byMonth[m] = [];
   TIMELINE_EVENTS.forEach(function(ev) {
+    if (ev.type === 'holiday' || ev.type === 'trip') return;
     if (ev.month && byMonth[ev.month]) {
       byMonth[ev.month].push(ev);
     }
   });
+
+  // 每月事件按日期升序排列
+  for (var m = 1; m <= 12; m++) {
+    byMonth[m].sort(function(a, b) { return a.date > b.date ? 1 : -1; });
+  }
 
   // 合并连续同类型的节假日（如春节连休）
   function mergeConsecutive(events) {

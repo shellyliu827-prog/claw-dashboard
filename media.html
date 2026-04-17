@@ -376,10 +376,15 @@ function renderAll(filter) {
   });
   groupOrder.sort(function(a, b) { return b.localeCompare(a); });
 
+  var thisYear = new Date().getFullYear().toString();
+  var thisYearGroups = groupOrder.filter(function(k) { return k.startsWith(thisYear); });
+  var pastGroups = groupOrder.filter(function(k) { return !k.startsWith(thisYear); });
+
   var html = '';
-  groupOrder.forEach(function(monthKey) {
+
+  // 今年：正常按月展示
+  thisYearGroups.forEach(function(monthKey) {
     var items = groups[monthKey];
-    // 月内日期倒序
     items.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
     var m = parseInt(monthKey.split('-')[1]);
     var y = monthKey.split('-')[0];
@@ -389,13 +394,45 @@ function renderAll(filter) {
       +   '<span class="month-count">' + items.length + ' 条</span>'
       + '</div>'
       + '<div class="media-list">';
-    items.forEach(function(item) {
-      html += renderItem(item);
-    });
+    items.forEach(function(item) { html += renderItem(item); });
     html += '</div></div>';
   });
 
+  // 往年：折叠收起
+  if (pastGroups.length > 0) {
+    var pastTotal = pastGroups.reduce(function(sum, k) { return sum + groups[k].length; }, 0);
+    html += '<div class="month-group" style="margin-top:8px;">'
+      + '<div class="month-header" onclick="togglePast(this)" style="cursor:pointer;user-select:none;">'
+      +   '<span class="month-name" style="color:var(--text-muted);">往年记录</span>'
+      +   '<span class="month-count" style="color:var(--text-muted);">' + pastTotal + ' 条 ▼</span>'
+      + '</div>'
+      + '<div class="past-records" style="display:none;">';
+    pastGroups.forEach(function(monthKey) {
+      var items = groups[monthKey];
+      items.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+      var m = parseInt(monthKey.split('-')[1]);
+      var y = monthKey.split('-')[0];
+      html += '<div class="month-group" style="margin-top:10px;">'
+        + '<div class="month-header">'
+        +   '<span class="month-name">' + y + ' · ' + fmtMonth(m) + '</span>'
+        +   '<span class="month-count">' + items.length + ' 条</span>'
+        + '</div>'
+        + '<div class="media-list">';
+      items.forEach(function(item) { html += renderItem(item); });
+      html += '</div></div>';
+    });
+    html += '</div></div>';
+  }
+
   document.getElementById('mediaList').innerHTML = html;
+}
+
+function togglePast(header) {
+  var body = header.nextElementSibling;
+  var isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  var countEl = header.querySelector('.month-count');
+  if (countEl) countEl.textContent = countEl.textContent.replace(isOpen ? '▲' : '▼', isOpen ? '▼' : '▲');
 }
 
 function filterMedia(type, btn) {
