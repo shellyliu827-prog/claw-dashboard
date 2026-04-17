@@ -214,6 +214,7 @@
     <button class="tab-btn active" data-type="all" onclick="filterMedia('all',this)">全部</button>
     <button class="tab-btn" data-type="video" onclick="filterMedia('video',this)">🎬 影</button>
     <button class="tab-btn" data-type="book" onclick="filterMedia('book',this)">📚 书</button>
+    <button class="tab-btn" data-type="festival" onclick="filterMedia('festival',this)">🎪 电影节</button>
   </div>
 
   <!-- ── Media List ── -->
@@ -319,12 +320,49 @@ function renderAll(filter) {
     filtered = data;
   } else if (filter === 'video') {
     filtered = data.filter(function(d) { return d.type === 'movie' || d.type === 'tv'; });
+  } else if (filter === 'festival') {
+    filtered = data.filter(function(d) { return !!d.context; });
   } else {
     filtered = data.filter(function(d) { return d.type === filter; });
   }
 
   if (filtered.length === 0) {
     document.getElementById('mediaList').innerHTML = '<div class="empty-state">暂无记录</div>';
+    return;
+  }
+
+  // ── 电影节视图：按届次分组 ──
+  if (filter === 'festival') {
+    var festGroups = {};
+    var festOrder = [];
+    filtered.forEach(function(item) {
+      var key = item.context || '其他';
+      if (!festGroups[key]) { festGroups[key] = []; festOrder.push(key); }
+      festGroups[key].push(item);
+    });
+    // 按届次倒序（利用字符串比较，"第9届"在"第11届"前，手动排序）
+    var festSortMap = {};
+    festOrder.forEach(function(k) {
+      var m = k.match(/第(\d+)届/);
+      festSortMap[k] = m ? parseInt(m[1]) : 0;
+    });
+    festOrder.sort(function(a, b) { return festSortMap[b] - festSortMap[a]; });
+
+    var html = '';
+    festOrder.forEach(function(festKey) {
+      var items = festGroups[festKey];
+      // 月内日期倒序
+      items.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+      html += '<div class="month-group">'
+        + '<div class="month-header">'
+        +   '<span class="month-name">🎪 ' + festKey + '</span>'
+        +   '<span class="month-count">' + items.length + ' 部</span>'
+        + '</div>'
+        + '<div class="media-list">';
+      items.forEach(function(item) { html += renderItem(item); });
+      html += '</div></div>';
+    });
+    document.getElementById('mediaList').innerHTML = html;
     return;
   }
 
@@ -341,6 +379,8 @@ function renderAll(filter) {
   var html = '';
   groupOrder.forEach(function(monthKey) {
     var items = groups[monthKey];
+    // 月内日期倒序
+    items.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
     var m = parseInt(monthKey.split('-')[1]);
     var y = monthKey.split('-')[0];
     html += '<div class="month-group">'
