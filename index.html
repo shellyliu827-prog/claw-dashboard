@@ -417,7 +417,7 @@
     <a href="game.html" style="text-decoration:none;">
     <div class="stat-card" style="cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(90,159,212,0.18)'" onmouseout="this.style.boxShadow=''">
       <div class="stat-num" style="color:#5a9fd4;" id="gameCount">—</div>
-      <div class="stat-label">🎮 游戏 →</div>
+      <div class="stat-label">🎮 游戏通关 →</div>
     </div>
     </a>
     <div class="stat-card">
@@ -868,8 +868,8 @@
 (function() {
   var el = document.getElementById('gameCount');
   if (!el || typeof GAME_LOG === 'undefined') return;
-  var playing = GAME_LOG.filter(function(g) { return g.status === 'playing'; }).length;
-  el.textContent = playing + ' 在玩';
+  var done = GAME_LOG.filter(function(g) { return g.status === 'done'; }).length;
+  el.textContent = done;
 })();
 </script>
 </body>

@@ -237,7 +237,7 @@ function playDays(start, end) {
 
 // ── 状态配置 ──
 var STATUS_CFG = {
-  done:     { label: '通关', dot: 'dot-done',     icon: 'icon-done',     emoji: '✅' },
+  done:     { label: '通关 / 出坑', dot: 'dot-done',     icon: 'icon-done',     emoji: '✅' },
   playing:  { label: '在玩', dot: 'dot-playing',  icon: 'icon-playing',  emoji: '🎮' },
   wishlist: { label: '想玩', dot: 'dot-wishlist', icon: 'icon-wishlist', emoji: '📋' }
 };
@@ -301,7 +301,7 @@ function renderAll() {
     + '</div>'
     + '<div class="stat-card">'
     +   '<div class="stat-num" style="color:var(--done);">' + cDone + '</div>'
-    +   '<div class="stat-label">✅ 通关</div>'
+    +   '<div class="stat-label">✅ 通关/出坑</div>'
     + '</div>'
     + '<div class="stat-card">'
     +   '<div class="stat-num" style="color:var(--wishlist);">' + cWishlist + '</div>'
