@@ -265,7 +265,8 @@ const IDEAS = [
   { icon: '\uD83C\uDFAE', title: '地球online-燕云十六声（待挖）', desc: '剧情点待定', date: '2026-04-09', status: 'todo' },
   { icon: '\u2705',  title: 'Delulu 课堂视频', desc: '已发布', date: '2026-04-04', status: 'done' },
   { icon: '💃', title: '跳舞 爱情鸟', desc: '待定', date: '2026-04-16', status: 'todo' },
-  { icon: '🎵', title: '跳舞 Soul Below', desc: '舞蹈选题', date: '2026-04-17', status: 'todo' }
+  { icon: '🎵', title: '跳舞 Soul Below', desc: '舞蹈选题', date: '2026-04-17', status: 'todo' },
+  { icon: '👗', title: '上班路 OOTD', desc: '上班路发现好机位，下周试拍', date: '2026-04-17', status: 'todo' }
 ];
 
 // ── 发帖记录（自媒体更新日志） ──────────────────────────────────────
