@@ -474,21 +474,6 @@ const TIMELINE_EVENTS = [
     // 月小结邮件：以此事件为主，出发那条作为附注
     travelNote: '4/24 G1567 北京南→砀山南 16:22 出发'
   },
-  // ── 四月 · 北影节（活动框架，具体影片见 MEDIA_LOG） ──
-  // ⚠️ 不再在这里列片名，片名统一走 MEDIA_LOG + context:'北影节'
-  {
-    date: '2026-04-18',
-    month: 4,
-    emoji: '🎬',
-    title: '北影节 2026',
-    detail: '🎬 北影节 2026｜4/18-4/19 赶场3部',
-    type: 'note',
-    calendar: '',
-    group: '北影节2026',
-    groupTitle: '北影节 2026',
-    groupEmoji: '🎬',
-    dateEnd: '2026-04-19'  // 活动跨越的结束日期，日历格子用
-  },
   {
     date: '2026-04-17',
     month: 4,
