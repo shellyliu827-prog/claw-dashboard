@@ -118,9 +118,9 @@ const Q2_GOALS = [
     icon: '🎞️',
     name: '电影节记录补录',
     hint: '把参加过的电影节观影记录补进 MEDIA_LOG（上影节等）',
-    status: 'active',
+    status: 'done',
     type: 'progress',
-    progress: 1,   // 已补录上影节2025（8条）
+    progress: 100,
     progressColor: 'linear-gradient(90deg,#e87a5a,#f4b47a)',
     checkinEmpty: '还没有电影节记录',
     showInMonthBadge: true,
@@ -200,7 +200,9 @@ const DANCE_LOG = [
   { date: '2026-04-02', month: 4, teacher: '四火', genre: 'KPOP/MV', song: 'TWS - Over Drive', count: 2 },
   { date: '2026-04-04', month: 4, teacher: '兔兔子', genre: 'KPOP/MV', song: 'Delulu', count: 2 },
   // ── 4/11 周六 MV DANCE 国贸店 连堂 ──
-  { date: '2026-04-11', month: 4, teacher: '四火', genre: 'KPOP/MV', song: 'Like A Flower（裴珠泫）', count: 2 }
+  { date: '2026-04-11', month: 4, teacher: '四火', genre: 'KPOP/MV', song: 'Like A Flower（裴珠泫）', count: 2 },
+  // ── 4/18 周六 MV DANCE 国贸店 连堂 ──
+  { date: '2026-04-18', month: 4, teacher: '四火', genre: 'KPOP/MV', song: 'I Do Me（KGMA精灵ver.）', count: 2 }
 ];
 
 // ── 时间轴事件 ──────────────────────────────────────────────────────────────
