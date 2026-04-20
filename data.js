@@ -5983,6 +5983,16 @@ const MEDIA_LOG = [
     note: '谁会拒绝一个和你从什么是“1”开始理解彼此的朋友呢。 人类中心主义就人类中心主义吧，结局算是谁圈养谁还说不好呢。',
     douban_url: 'https://movie.douban.com/subject/35010610/'
   },
+
+  {
+    date: '2026-04-19', month: 4,
+    type: 'movie',
+    title: 'Space Cadet',
+    rating: 5,
+    note: '温柔和去繁留真，是最珍贵的一种风味。一边看一边哽咽，像被拥抱着。
+最近集中摄入了大量探讨人与“非人”（机器，ai，外星生物etc）关系的各路作品，所以在看到片尾献给grandparents的时候完全没转过脑子。但倒回去想，确实很贴啊……想外公外婆了。',
+    douban_url: 'https://movie.douban.com/subject/35633079/'
+  },
 ];
 
 // ── 财务数据（每月5号更新，来源：老金记账体系） ──────────────────────────
@@ -6001,9 +6011,9 @@ const MEDIA_LOG = [
 // ── 豆瓣历史总量（由豆瓣同步脚本定期更新，勿手改） ───────────────────────
 // 最后同步时间：2026-04-10
 const DOUBAN_STATS = {
-  movie: 583,   // 影视（含电影+剧集）
+  movie: 584,   // 影视（含电影+剧集）
   book: 158,    // 图书
-  lastSync: '2026-04-17'
+  lastSync: '2026-04-20'
 };
 
 const FINANCE_DATA = [
