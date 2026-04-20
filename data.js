@@ -503,33 +503,6 @@ const TIMELINE_EVENTS = [
 // 更新方式：豆瓣同步脚本每周自动抓取，手动补录走 context/note 字段
 const MEDIA_LOG = [
   // ── 2026年四月 · 北影节（context 标注观看背景） ──
-  {
-    date: '2026-04-18', month: 4,
-    type: 'movie',
-    title: '穿普拉达的女王',
-    rating: 0,  // 待豆瓣标记后自动同步
-    context: '北影节',
-    note: '英皇IMAX激光厅（建国门）18:00 · 致命赶场第一场',
-    douban_url: 'https://movie.douban.com/subject/1482022/'
-  },
-  {
-    date: '2026-04-18', month: 4,
-    type: 'movie',
-    title: '心火',
-    rating: 0,
-    context: '北影节',
-    note: 'CGS中国巨幕（学院南路）21:00 · 二刷！',
-    douban_url: 'https://movie.douban.com/subject/1292427/'
-  },
-  {
-    date: '2026-04-19', month: 4,
-    type: 'movie',
-    title: '太空见习生',
-    rating: 0,
-    context: '北影节',
-    note: 'CINITY巨幕（双井）15:00 · ×2张',
-    douban_url: ''
-  },
 
   // ── 2026年二月（豆瓣同步） ──
   {
@@ -5987,9 +5960,10 @@ const MEDIA_LOG = [
   {
     date: '2026-04-19', month: 4,
     type: 'movie',
-    title: 'Space Cadet',
+    title: '太空见习生 / Space Cadet',
     rating: 5,
-    note: '温柔和去繁留真，是最珍贵的一种风味。一边看一边哽咽，像被拥抱着。最近集中摄入了大量探讨人与"非人"（机器，ai，外星生物etc）关系的各路作品，所以在看到片尾献给grandparents的时候完全没转过脑子。但倒回去想，确实很贴啊……想外公外婆了。',
+    context: '北影节',
+    note: 'CINITY巨幕（双井）15:00 · 温柔和去繁留真，是最珍贵的一种风味。一边看一边哽咽，像被拥抱着。最近集中摄入了大量探讨人与"非人"（机器，ai，外星生物etc）关系的各路作品，所以在看到片尾献给grandparents的时候完全没转过脑子。但倒回去想，确实很贴啊……想外公外婆了。',
     douban_url: 'https://movie.douban.com/subject/35633079/'
   },
 ];
