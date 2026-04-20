@@ -5072,7 +5072,7 @@ const MEDIA_LOG = [
     type: 'movie',
     title: '卡萨布兰卡 / Casablanca',
     rating: 4,
-    note: 'We'll always have Paris.',
+    note: 'We\'ll always have Paris.',
     douban_url: 'https://movie.douban.com/subject/1296753/'
   },
   {
@@ -5548,7 +5548,7 @@ const MEDIA_LOG = [
     type: 'movie',
     title: '钢琴家 / The Pianist',
     rating: 5,
-    note: 'I'm cold.',
+    note: 'I\'m cold.',
     douban_url: 'https://movie.douban.com/subject/1296736/'
   },
   {
@@ -5593,7 +5593,7 @@ const MEDIA_LOG = [
     type: 'movie',
     title: '永安镇故事集',
     rating: 4,
-    note: 'Don't cry for me Argentina前奏一出来真的笑发财了…… 导演编剧都不看球还能打到这个梗真的天才…… 观影的良好体验与情绪延续到了映后，编剧老师红通着脸站在台上认真问答的形象仿佛是刚从荧幕里扣出来的，有趣。',
+    note: 'Don\'t cry for me Argentina前奏一出来真的笑发财了…… 导演编剧都不看球还能打到这个梗真的天才…… 观影的良好体验与情绪延续到了映后，编剧老师红通着脸站在台上认真问答的形象仿佛是刚从荧幕里扣出来的，有趣。',
     douban_url: 'https://movie.douban.com/subject/35231700/'
   },
   {
