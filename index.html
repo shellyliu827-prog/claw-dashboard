@@ -421,7 +421,7 @@
     </div>
     </a>
     <div class="stat-card">
-      <div class="stat-num blue">19</div>
+      <div class="stat-num blue" id="postCount">—</div>
       <div class="stat-label">📱 自媒体发帖数</div>
     </div>
     <div class="stat-card">
@@ -818,12 +818,7 @@
 <script>
 // ── 发帖数动态化（从 POST_LOG 读取） ──
 (function() {
-  var postEl;
-  var postEls = document.querySelectorAll('.stat-num.blue');
-  for (var i = 0; i < postEls.length; i++) {
-    if (!postEls[i].id) { postEl = postEls[i]; break; }
-  }
-  if (!postEl) postEl = document.querySelector('.stat-num.blue');
+  var postEl = document.getElementById('postCount');
   if (postEl && typeof POST_LOG !== 'undefined') {
     postEl.textContent = POST_LOG.length;
   }
