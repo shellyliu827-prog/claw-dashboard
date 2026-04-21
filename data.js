@@ -272,7 +272,9 @@ const IDEAS = [
   { icon: '\u2705',  title: 'Delulu 课堂视频', desc: '已发布', date: '2026-04-04', status: 'done' },
   { icon: '💃', title: '跳舞 爱情鸟', desc: '待定', date: '2026-04-16', status: 'todo' },
   { icon: '🎵', title: '跳舞 Soul Below', desc: '舞蹈选题', date: '2026-04-17', status: 'todo' },
-  { icon: '👗', title: '上班路 OOTD', desc: '上班路发现好机位，下周试拍', date: '2026-04-17', status: 'todo' }
+  { icon: '👗', title: '上班路 OOTD', desc: '上班路发现好机位，下周试拍', date: '2026-04-17', status: 'todo' },
+  { icon: '☀️', title: '跳舞 new dance 全曲', desc: '夏季目标', date: '2026-04-21', status: 'todo' },
+  { icon: '🎂', title: '跳舞 美丽的年纪25岁', desc: '26岁生日前完成', date: '2026-04-21', status: 'todo' }
 ];
 
 // ── 发帖记录（自媒体更新日志） ──────────────────────────────────────
