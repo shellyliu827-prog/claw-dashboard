@@ -256,26 +256,7 @@ const DIARY = [
   { date: '2026-04-19', content: '电影节盲买票的运气总是很好……《太空见习生》流露出来的那种温柔气质和细碎的真挚，真是很久没有见过了。最近的作息好像在倒逼我调整，可以的话下周开始试试看吧！' },
 ];
 
-// ── 自媒体灵感库 ────────────────────────────────────────────────────────
-// status: 'todo'(待做) | 'done'(已发) | 'paused'(搁置)
-// 来源：ideas.md，两边需同步维护
 
-const IDEAS = [
-  { icon: '🌸', title: '外景 like a flower', desc: '舞蹈外景拍摄 · 花为主题', date: '2026-03-25', status: 'done' },
-  { icon: '\uD83D\uDC57', title: '跳爵士怎么穿显的我很会跳', desc: '爵士穿搭分享 · 参考CBXLAB', date: '2026-03-26', status: 'paused' },
-  { icon: '\uD83D\uDC80', title: '跳死亡搁浅2的彩蛋舞蹈', desc: '游戏跨界舞蹈 · DS联动', date: '2026-04-02', status: 'todo' },
-  { icon: '\uD83C\uDFAE', title: '地球online-上班路', desc: '生活随手拍+游戏联想文案', date: '2026-04-09', status: 'done' },
-  { icon: '\uD83C\uDFAE', title: '地球online-底特律变人（鱼）', desc: '等合适镜头', date: '2026-04-09', status: 'todo' },
-  { icon: '\uD83C\uDFAE', title: '地球online-底特律变人（给AI起名）', desc: '现实给AI命名 vs 游戏里人类给安卓命名', date: '2026-04-10', status: 'todo' },
-  { icon: '\uD83C\uDFAE', title: '地球online-燕云（国博大历元宝→麻布袋）', desc: '等去国博拍', date: '2026-04-09', status: 'todo' },
-  { icon: '\uD83C\uDFAE', title: '地球online-燕云十六声（待挖）', desc: '剧情点待定', date: '2026-04-09', status: 'todo' },
-  { icon: '\u2705',  title: 'Delulu 课堂视频', desc: '已发布', date: '2026-04-04', status: 'done' },
-  { icon: '💃', title: '跳舞 爱情鸟', desc: '待定', date: '2026-04-16', status: 'todo' },
-  { icon: '🎵', title: '跳舞 Soul Below', desc: '舞蹈选题', date: '2026-04-17', status: 'todo' },
-  { icon: '👗', title: '上班路 OOTD', desc: '上班路发现好机位，下周试拍', date: '2026-04-17', status: 'todo' },
-  { icon: '☀️', title: '跳舞 new dance 全曲', desc: '夏季目标', date: '2026-04-21', status: 'todo' },
-  { icon: '🎂', title: '跳舞 美丽的年纪25岁', desc: '26岁生日前完成', date: '2026-04-21', status: 'todo' }
-];
 
 // ── 发帖记录（自媒体更新日志） ──────────────────────────────────────
 // 日历页面读取此数组，显示发帖标记；index.html 动态数 POST_LOG.length 作为发帖总数
@@ -486,6 +467,15 @@ const TIMELINE_EVENTS = [
     title: '死亡搁浅一周目通关',
     detail: '🎮 死亡搁浅一周目通关！｜走完了每一步',
     type: 'milestone',
+    calendar: '计划的提醒事项'
+  },
+  {
+    date: '2026-04-27',
+    month: 4,
+    emoji: '🎮',
+    title: '燕云十六声 Apple Store 活动',
+    detail: '🎮 燕云十六声 侠影共追光｜Apple授权双井富力中心店｜签到领好礼',
+    type: 'note',
     calendar: '计划的提醒事项'
   },
 ];
