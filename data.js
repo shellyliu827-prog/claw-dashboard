@@ -287,7 +287,8 @@ const POST_LOG = [
   { date: '2026-04-04', month: 4, platform: '小红书+视频号', title: 'Delulu 课堂直拍', icon: '📱' },
   { date: '2026-04-09', month: 4, platform: '小红书', title: '地球online-上班路', icon: '📱' },
   { date: '2026-04-11', month: 4, platform: '小红书', title: 'Like A Flower 课堂直拍', icon: '📱' },
-  { date: '2026-04-12', month: 4, platform: '小红书', title: 'Like A Flower 户外版', icon: '📱' }
+  { date: '2026-04-12', month: 4, platform: '小红书', title: 'Like A Flower 户外版', icon: '📱' },
+  { date: '2026-04-23', month: 4, platform: '视频号', title: 'I Do Me 课堂直拍', icon: '📱' }
 ];
 
 const TIMELINE_EVENTS = [
